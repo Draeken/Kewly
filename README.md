@@ -1,2 +1,40 @@
 # Kewly
 Cocktail recipe finder
+
+[link to Figma](https://www.figma.com/file/f47Y5JSzxOvpCuUnlxyW3Z/Kewly?node-id=0%3A1)
+
+## Home
+user can long press any product to trigger selection mode.
+### Recommended
+Recommended should list available products based on:
+- user tastes (similarity of composition - also could compute distance between two ingredients)
+- hour: 16h30 -> fruit / chocolate with low alcohol - before dining, after dining...
+### For a few dollars more
+Same as recommended but with near available products (1 missing ingredient)
+### All your cocktails
+All available products, sorted by user's appreciation.
+
+## Home - selection mode
+user can tap product to toggle selection. Then, user can add selection to "pin cocktails" or "add to shopping list".
+
+## Search
+Allow search of family product, eg: fruit juice, alcohol, frappé, Le Fruit.
+Combine chips to compute a score for each product, order by most revelant (use the quantity of each product to compute score). Apply OR operator to all chips.
+
+list chip by most frequently used. Each recipe had tag, that generate two chip : with / without.
+Chip list is filtered by user search
+
+## Shopping List
+Product grouped by family (all siryp, all alcohol, all fruit juice). Product already owned are listed last and scrimmed. User can tap to toggle state (owned/to buy).
+
+## Ingrédient page
+Inform all the product the user can perform (with the ingredients he owns and those he has to buy).
+Inform all the product that needs this ingredient. (minus those listed above)
+
+## Profil
+### No-go
+default filter, that apply to all sections.
+### Pinned
+Pinned product to try later, they automatically disappear when user scroll down to the cocktail page and had viewed it for more than 1min (that also add the cocktail to "to be rated" list)
+### Historic
+List all viewed product, ordered by last time seen.
