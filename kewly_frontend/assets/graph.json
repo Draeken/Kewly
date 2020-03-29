@@ -1,0 +1,36 @@
+{
+  "products": [
+    {
+      "name": "diabolo violette",
+      "origin": "fr",
+      "ingredients": [
+        {
+          "id": "ingre_00",
+          "quantity": 160
+        },
+        {
+          "id": "ingre_01",
+          "quantity": 20
+        },
+        {
+          "id": "ingre_02",
+          "quantity": 120
+        }
+      ]
+    }
+  ],
+  "ingredients": [
+    {
+      "name": "ice",
+      "id": "ingre_00"
+    },
+    {
+      "name": "violet syrup",
+      "id": "ingre_01"
+    },
+    {
+      "name": "lemonade",
+      "id": "ingre_02"
+    }
+  ]
+}

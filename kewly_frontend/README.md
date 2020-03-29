@@ -1,4 +1,4 @@
-# kewlyfrontend
+# kewly
 
 Manage your cocktails
 
