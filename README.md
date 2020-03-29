@@ -18,10 +18,10 @@ All available products, sorted by user's appreciation.
 user can tap product to toggle selection. Then, user can add selection to "pin cocktails" or "add to shopping list".
 
 ## Search
-Allow search of family product, eg: fruit juice, alcohol, frappé, Le Fruit.
+Allow search of family product, eg: fruit juice, alcohol, frappé, Le Fruit. (these family are ingredient's tags)
 Combine chips to compute a score for each product, order by most revelant (use the quantity of each product to compute score). Apply OR operator to all chips.
 
-list chip by most frequently used. Each recipe had tag, that generate two chip : with / without.
+list chip by most frequently used. Each ingredient had tag, that generate two chip : with / without.
 Chip list is filtered by user search
 
 ## Shopping List
@@ -33,7 +33,7 @@ Inform all the product that needs this ingredient. (minus those listed above)
 
 ## Profil
 ### No-go
-default filter, that apply to all sections.
+default filter, that apply to all sections. These filter aren't visible on search page. And they are the only way to filter out products with specific ingredient.
 ### Pinned
 Pinned product to try later, they automatically disappear when user scroll down to the cocktail page and had viewed it for more than 1min (that also add the cocktail to "to be rated" list)
 ### Historic
