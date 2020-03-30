@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kewly/app_model.dart';
 import 'package:kewly/components/kewly_search.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -24,10 +26,19 @@ class HomePage extends StatelessWidget {
             ListTile(
               title: Text('Mes ingrédients'),
             ),
-            ListTile(
-                title: Text('Mes courses')
-            )
+            ListTile(title: Text('Mes courses'))
           ],
+        ),
+      ),
+      body: Center(
+        child: Consumer<AppModel>(
+          builder: (_, appModel, __) {
+            return ListView(
+              children: appModel.products
+                  .map((product) => Text("product: ${product.name}"))
+                  .toList(),
+            );
+          },
         ),
       ),
     );
