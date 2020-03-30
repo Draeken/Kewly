@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'package:flutter/widgets.dart';
+import 'package:kewly/util.dart';
 
 class Composition {
   final int ingredientId;
@@ -8,7 +9,7 @@ class Composition {
 
   Composition({this.ingredientId, this.quantity});
 
-  factory Composition.fromJson(Map<String, dynamic> json) {
+  static Composition fromJson(Map<String, dynamic> json) {
     return Composition(
         ingredientId: json['ingredientId'] as int,
         quantity: json['quantity'] as int);
@@ -22,10 +23,9 @@ class Product {
 
   Product({this.id, this.name, this.composition});
 
-  factory Product.fromJson(Map<String, dynamic> json) {
-    final List<Composition> composition = (json['composition'] as List<dynamic>)
-        .map((rawCompo) => Composition.fromJson(rawCompo))
-        .toList(growable: false);
+  static Product fromJson(Map<String, dynamic> json) {
+    final List<Composition> composition =
+        mapJsonToList(json['composition'], Composition.fromJson);
     return Product(
         id: json['id'] as int,
         name: json['name'] as String,
@@ -33,16 +33,29 @@ class Product {
   }
 }
 
+class Ingredient {
+  final int id;
+  final String name;
+
+  Ingredient({this.id, this.name});
+
+  static Ingredient fromJson(Map<String, dynamic> json) {
+    return Ingredient(name: json['name'] as String, id: json['id'] as int);
+  }
+}
+
 class Graph {
   final List<Product> products;
+  final List<Ingredient> ingredients;
 
-  Graph({this.products});
+  Graph({this.products, this.ingredients});
 
   factory Graph.fromJson(Map<String, dynamic> json) {
-    final List<Product> products = (json['products'] as List<dynamic>)
-        .map((productRaw) => Product.fromJson(productRaw))
-        .toList(growable: false);
-    return Graph(products: products);
+    final List<Product> products =
+        mapJsonToList(json['products'], Product.fromJson);
+    final List<Ingredient> ingredients =
+        mapJsonToList(json['ingredients'], Ingredient.fromJson);
+    return Graph(products: products, ingredients: ingredients);
   }
 }
 
