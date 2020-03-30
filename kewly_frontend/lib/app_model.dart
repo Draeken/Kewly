@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:convert';
 import 'package:flutter/widgets.dart';
 import 'package:kewly/util.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Composition {
   final int ingredientId;
@@ -59,20 +60,83 @@ class Graph {
   }
 }
 
+class UserReview {
+  final int productId;
+  final double rating;
+
+  UserReview({this.productId, this.rating});
+
+  static UserReview fromJson(Map<String, dynamic> json) {
+    return UserReview(productId: json['productId'], rating: json['rating']);
+  }
+}
+
+class UserData {
+  final List<int> ownedIngredients;
+  final List<int> productsToPurchase;
+  final List<int> ingredientsToPurchase;
+  final List<int> nextToTest;
+  final List<int> historic;
+  final List<UserReview> reviewedProducts;
+
+  UserData(
+      {this.historic,
+      this.ingredientsToPurchase,
+      this.nextToTest,
+      this.ownedIngredients,
+      this.productsToPurchase,
+      this.reviewedProducts});
+
+  factory UserData.fromJson(Map<String, dynamic> json) {
+    if (json['ownedIngredients']) {
+      return UserData.empty();
+    }
+    final List<UserReview> reviewedProducts =
+        mapJsonToList(json['reviewedProducts'], UserReview.fromJson);
+    return UserData(
+        historic: List<int>.from(json['historic']),
+        ingredientsToPurchase: List<int>.from(json['ingredientsToPurchase']),
+        nextToTest: List<int>.from(json['nextToTest']),
+        ownedIngredients: List<int>.from(json['ownedIngredients']),
+        productsToPurchase: List<int>.from(json['productsToPurchase']),
+        reviewedProducts: reviewedProducts);
+  }
+
+  factory UserData.empty() {
+    return UserData(
+        historic: [],
+        ingredientsToPurchase: [],
+        nextToTest: [],
+        ownedIngredients: [],
+        productsToPurchase: [],
+        reviewedProducts: []);
+  }
+}
+
 class AppModel extends ChangeNotifier {
   Graph _graph;
+  UserData _userData;
 
   AppModel(BuildContext context) {
     _loadGraph(context);
+    _loadUserData();
   }
 
   UnmodifiableListView<Product> get products =>
       UnmodifiableListView(_graph?.products ?? []);
 
+  get userData => _userData;
+
   void _loadGraph(BuildContext context) async {
     final graph = await DefaultAssetBundle.of(context)
-        .loadStructuredData('assets/graph.json', (s) async => json.decode(s));
+        .loadStructuredData('assets/graph.json', (s) async => jsonDecode(s));
     _graph = Graph.fromJson(graph);
     notifyListeners();
+  }
+
+  void _loadUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final rawJson = jsonDecode(prefs.getString('userData') ?? '{}');
+    _userData = UserData.fromJson(rawJson);
   }
 }
