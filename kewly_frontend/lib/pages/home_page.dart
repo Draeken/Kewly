@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kewly/app_model.dart';
+import 'package:kewly/components/kewly_product_tile.dart';
 import 'package:kewly/components/kewly_search.dart';
 import 'package:provider/provider.dart';
 
@@ -34,14 +35,35 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: Consumer<AppModel>(
           builder: (_, appModel, __) {
-            return ListView(
-              children: appModel.products
-                  .map((product) => Text("product: ${product.name}"))
-                  .toList(),
-            );
+            return AllYourProducts(products: appModel.products);
           },
         ),
       ),
+    );
+  }
+}
+
+class AllYourProducts extends StatelessWidget {
+  final List<Product> products;
+
+  AllYourProducts({this.products});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Text('Toutes vos boissons'),
+        Flexible(
+            child: GridView.count(
+          primary: false,
+          crossAxisCount: 4,
+          scrollDirection: Axis.horizontal,
+          children: products
+              .map((product) => KewlyProductTile(product: product))
+              .toList(),
+        )),
+      ],
     );
   }
 }
