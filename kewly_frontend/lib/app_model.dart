@@ -69,6 +69,13 @@ class UserReview {
   static UserReview fromJson(Map<String, dynamic> json) {
     return UserReview(productId: json['productId'], rating: json['rating']);
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'productId': productId,
+      'rating': rating
+    };
+  }
 }
 
 class UserData {
@@ -88,7 +95,7 @@ class UserData {
       this.reviewedProducts});
 
   factory UserData.fromJson(Map<String, dynamic> json) {
-    if (json['ownedIngredients']) {
+    if (json['ownedIngredients'] == null) {
       return UserData.empty();
     }
     final List<UserReview> reviewedProducts =
@@ -111,9 +118,21 @@ class UserData {
         productsToPurchase: [],
         reviewedProducts: []);
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'historic': historic,
+      'ingredientsToPurchase': ingredientsToPurchase,
+      'nextToTest': nextToTest,
+      'ownedIngredients': ownedIngredients,
+      'productsToPurchase': productsToPurchase,
+      'reviewedProducts': reviewedProducts
+    };
+  }
 }
 
 class AppModel extends ChangeNotifier {
+  static const USER_PREF_KEY = 'userData';
   Graph _graph;
   UserData _userData;
 
@@ -125,7 +144,16 @@ class AppModel extends ChangeNotifier {
   UnmodifiableListView<Product> get products =>
       UnmodifiableListView(_graph?.products ?? []);
 
-  get userData => _userData;
+  UnmodifiableListView<Ingredient> get ingredients =>
+      UnmodifiableListView(_graph?.ingredients ?? []);
+
+  UserData get userData => _userData;
+
+  void addOwnedIngredient(Ingredient ingredient) {
+    _userData.ownedIngredients.add(ingredient.id);
+    _saveUserData();
+    notifyListeners();
+  }
 
   void _loadGraph(BuildContext context) async {
     final graph = await DefaultAssetBundle.of(context)
@@ -136,7 +164,13 @@ class AppModel extends ChangeNotifier {
 
   void _loadUserData() async {
     final prefs = await SharedPreferences.getInstance();
-    final rawJson = jsonDecode(prefs.getString('userData') ?? '{}');
+    final rawJson = jsonDecode(prefs.getString(AppModel.USER_PREF_KEY) ?? '{}');
     _userData = UserData.fromJson(rawJson);
+  }
+
+  void _saveUserData() async {
+    final String userDataRaw = jsonEncode(_userData);
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString(AppModel.USER_PREF_KEY, userDataRaw);
   }
 }

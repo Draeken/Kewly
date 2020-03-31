@@ -19,12 +19,13 @@ class HomePage extends StatelessWidget {
       ),
       drawer: Drawer(
         child: ListView(
-          children: const <Widget>[
+          children: <Widget>[
             DrawerHeader(
               child: Text('Kewly'),
             ),
             ListTile(
               title: Text('Mes ingrédients'),
+              onTap: () => Navigator.pushNamed(context, '/ingredients'),
             ),
             ListTile(title: Text('Mes courses'))
           ],

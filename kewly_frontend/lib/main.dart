@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kewly/app_model.dart';
 import 'package:kewly/pages/home_page.dart';
+import 'package:kewly/pages/ingredient_page.dart';
 import 'package:kewly/pages/search_page.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,9 @@ class MyApp extends StatelessWidget {
             title: 'Kewly',
             theme: appTheme,
             home: HomePage(),
-            routes: {'/search': (BuildContext context) => SearchPage()}));
+            routes: {
+              '/search': (BuildContext context) => SearchPage(),
+              '/ingredients': (BuildContext context) => IngredientPage()
+            }));
   }
 }
