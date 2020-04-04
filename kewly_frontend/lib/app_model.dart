@@ -37,11 +37,16 @@ class Product {
 class Ingredient {
   final int id;
   final String name;
+  final Color color;
 
-  Ingredient({this.id, this.name});
+  Ingredient({this.id, this.name, this.color});
 
   static Ingredient fromJson(Map<String, dynamic> json) {
-    return Ingredient(name: json['name'] as String, id: json['id'] as int);
+    return Ingredient(
+      name: json['name'] as String,
+      id: json['id'] as int,
+      color: Color(int.parse(json['color'])),
+    );
   }
 }
 
@@ -71,10 +76,7 @@ class UserReview {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'productId': productId,
-      'rating': rating
-    };
+    return {'productId': productId, 'rating': rating};
   }
 }
 
@@ -128,6 +130,11 @@ class UserData {
       'productsToPurchase': productsToPurchase,
       'reviewedProducts': reviewedProducts
     };
+  }
+
+  getOwnedIngredientObj(List<Ingredient> ingredients) {
+    return this.ownedIngredients.map((ingreId) =>
+        ingredients.firstWhere((ingre) => ingre.id == ingreId));
   }
 }
 

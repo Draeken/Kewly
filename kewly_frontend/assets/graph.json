@@ -22,14 +22,17 @@
   "ingredients": [
     {
       "name": "ice",
+      "color": "0xFFFFFFFF",
       "id": 0
     },
     {
       "name": "violet syrup",
+      "color": "0xFF5922A1",
       "id": 1
     },
     {
       "name": "lemonade",
+      "color": "0xFFF2F2DF",
       "id": 2
     }
   ]

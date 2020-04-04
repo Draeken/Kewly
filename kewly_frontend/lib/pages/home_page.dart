@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kewly/app_model.dart';
+import 'package:kewly/components/kewly_category_title.dart';
 import 'package:kewly/components/kewly_product_tile.dart';
 import 'package:kewly/components/kewly_search.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +28,10 @@ class HomePage extends StatelessWidget {
             ),
             ListTile(
               title: Text('Mes ingrédients'),
-              onTap: () => Navigator.pushNamed(context, '/ingredients'),
+              onTap: () {
+                Navigator.of(context).popAndPushNamed('/ingredients');
+                // Navigator.pushNamed(context, '/ingredients')
+              },
             ),
             ListTile(title: Text('Mes courses'))
           ],
@@ -52,15 +57,16 @@ class AllYourProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text('Toutes vos boissons'),
+        KewlyCategoryTitle('Toutes vos boissons'),
         Flexible(
             child: GridView.count(
           primary: false,
           crossAxisCount: 4,
           scrollDirection: Axis.horizontal,
           children: products
-              .map((product) => KewlyProductTile(product: product))
+              .map((product) => KewlyProductTile(product))
               .toList(),
         )),
       ],
