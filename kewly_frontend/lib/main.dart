@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
             home: HomePage(),
             routes: {
               '/search': (BuildContext context) => SearchPage(),
-              '/ingredients': (BuildContext context) => IngredientPage()
+              '/ingredients': (BuildContext context) => IngredientPage(),
             }));
   }
 }

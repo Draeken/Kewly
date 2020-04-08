@@ -147,10 +147,17 @@ const convertNb = (nb) => {
   return +nb;
 };
 
-const handleIngredientWithUnit = (product, content) => {
-  const [quantity, unit, ingredientNameToTrim] = content.split(
-    /\s?(ml de|ml d'|gramme\(s\)|spray|slice\(s\)|feuille\(s\) de|feuilles de|feuille de|leaf\(ves\)|tranche\(s\)|tranches de|sachet|pièce|rondelle\(s\)|verre de|verre|double shot|cuillère\(s\) à café|gros morceau\(x\)|petit morceau\(x\)|petits morceaux de|cuillères à soupe de|cuillère à café de|cuillères de|cuillères|cube\(s\)|cubes d'|litre\(s\)|cuillère\(s\) à soupe|morceau\(x\)|pincée de|grande\(s\) boule\(s\)|feuille\(s\)|feuilles|traits d'|traits de|trait de|trait\(s\)|traits|trait|cuillère de|branche\(s\)|branches|pincé\(es\)|cuillère \(s\)|cuillère|shot\(s\)|shot|g|cl|bag|ml)\s?/
+const splitContent = (content) => {
+  if (/^\d+((\.|,|\/)\d+)?\s(ml d'|cubes d'|traits d')([A-zÀ-ú]|\s)*/g.test(content)) {
+    return content.split(/\s?(ml d'|cubes d'|traits d')\s?/);
+  }
+  return content.split(
+    /\s?(ml de|ml d'|gramme\(s\)|spray|slice\(s\)|feuille\(s\) de|feuilles de|feuille de|leaf\(ves\)|tranche\(s\)|tranches de|sachet|pièce|rondelle\(s\)|verre de|verre|double shot|cuillère\(s\) à café|gros morceau\(x\)|petit morceau\(x\)|petits morceaux de|cuillères à soupe de|cuillère à café de|cuillères de|cuillères|cube\(s\)|cubes d'|litre\(s\)|cuillère\(s\) à soupe|morceau\(x\)|pincée de|grande\(s\) boule\(s\)|feuille\(s\)|feuilles|traits d'|traits de|trait de|trait\(s\)|traits|trait|cuillère de|branche\(s\)|branches|pincé\(es\)|cuillère \(s\)|cuillère|shot\(s\)|shot|g|cl|bag|ml)\s/
   );
+}
+
+const handleIngredientWithUnit = (product, content) => {  
+  const [quantity, unit, ingredientNameToTrim] = splitContent(content);
   const ingredientName = ingredientNameToTrim.trim();  
   let ingredientObj = graph.ingredients.find((ingre) => ingre.name === ingredientName);
   if (ingredientObj == null) {

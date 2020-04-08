@@ -65,9 +65,8 @@ class AllYourProducts extends StatelessWidget {
           primary: false,
           crossAxisCount: 4,
           scrollDirection: Axis.horizontal,
-          children: products
-              .map((product) => KewlyProductTile(product))
-              .toList(),
+          children:
+              products.map((product) => KewlyProductTile(product)).toList(),
         )),
       ],
     );

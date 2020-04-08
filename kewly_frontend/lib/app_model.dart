@@ -6,23 +6,26 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Composition {
   final int ingredientId;
-  final int quantity;
+  final double quantity;
+  final String unit;
 
-  Composition({this.ingredientId, this.quantity});
+  Composition({this.ingredientId, this.quantity, this.unit});
 
   static Composition fromJson(Map<String, dynamic> json) {
     return Composition(
         ingredientId: json['ingredientId'] as int,
-        quantity: json['quantity'] as int);
+        quantity: json['quantity'].toDouble(),
+        unit: json['unit'] ?? "");
   }
 }
 
 class Product {
   final int id;
   final String name;
+  final String link;
   final List<Composition> composition;
 
-  Product({this.id, this.name, this.composition});
+  Product({this.id, this.name, this.link, this.composition});
 
   static Product fromJson(Map<String, dynamic> json) {
     final List<Composition> composition =
@@ -30,6 +33,7 @@ class Product {
     return Product(
         id: json['id'] as int,
         name: json['name'] as String,
+        link: json['link'] as String,
         composition: composition);
   }
 }
@@ -38,14 +42,16 @@ class Ingredient {
   final int id;
   final String name;
   final Color color;
+  final List<int> usedBy;
 
-  Ingredient({this.id, this.name, this.color});
+  Ingredient({this.id, this.name, this.color, this.usedBy});
 
   static Ingredient fromJson(Map<String, dynamic> json) {
     return Ingredient(
       name: json['name'] as String,
       id: json['id'] as int,
-      color: Color(int.parse(json['color'])),
+      usedBy: List<int>.from(json['usedBy'], growable: false),
+      color: Color(int.parse(json['color'] ?? "0xFF5922A1")),
     );
   }
 }
@@ -132,9 +138,12 @@ class UserData {
     };
   }
 
-  getOwnedIngredientObj(List<Ingredient> ingredients) {
-    return this.ownedIngredients.map((ingreId) =>
-        ingredients.firstWhere((ingre) => ingre.id == ingreId));
+  List<Ingredient> getOwnedIngredientObj(List<Ingredient> ingredients) {
+    return this
+        .ownedIngredients
+        .map(
+            (ingreId) => ingredients.firstWhere((ingre) => ingre.id == ingreId))
+        .toList(growable: false);
   }
 }
 
@@ -158,6 +167,12 @@ class AppModel extends ChangeNotifier {
 
   void addOwnedIngredient(Ingredient ingredient) {
     _userData.ownedIngredients.add(ingredient.id);
+    _saveUserData();
+    notifyListeners();
+  }
+
+  void removeOwnedIngredient(Ingredient ingredient) {
+    _userData.ownedIngredients.remove(ingredient.id);
     _saveUserData();
     notifyListeners();
   }
