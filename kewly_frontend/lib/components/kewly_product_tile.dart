@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:kewly/app_model.dart';
 
 class KewlyProductTile extends StatelessWidget {
@@ -9,7 +10,7 @@ class KewlyProductTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTapDown: (_) {},
+        onTapDown: _launchDrinkURL,
         child: Column(children: [
           Container(
               decoration: BoxDecoration(
@@ -20,5 +21,14 @@ class KewlyProductTile extends StatelessWidget {
               width: 100.0),
           Text('${product.name}'),
         ]));
+  }
+
+  void _launchDrinkURL(_) async {
+    var url = product.link;
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

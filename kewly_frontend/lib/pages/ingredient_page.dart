@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:kewly/app_model.dart';
 import 'package:kewly/components/kewly_app_bar.dart';
@@ -87,6 +89,8 @@ class IngredientCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var crossAxisCount = min(3, (ingredients.length / 3).ceil());
+    double maxHeight = crossAxisCount * 150.0;
     if (ingredients.length == 0) {
       return SizedBox(
         height: 0,
@@ -108,12 +112,11 @@ class IngredientCategory extends StatelessWidget {
       children: <Widget>[
         KewlyCategoryTitle(title),
         LimitedBox(
-            maxHeight: 600,
+            maxHeight: maxHeight,
             child: GridView.count(
               primary: false,
-              shrinkWrap: true,
-              crossAxisCount: 3,
               scrollDirection: Axis.horizontal,
+              crossAxisCount: crossAxisCount,
               children: ingredients
                   .map<KewlyIngredientTile>((ingredient) => KewlyIngredientTile(
                         ingredient: ingredient,

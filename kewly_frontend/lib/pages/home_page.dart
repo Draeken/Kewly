@@ -40,7 +40,15 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: Consumer<AppModel>(
           builder: (_, appModel, __) {
-            return AllYourProducts(products: appModel.products);
+            /*var products = appModel.products.where((product) => product.composition.every(
+                (ingredient) => appModel.userData.ownedIngredients
+                    .contains(ingredient.ingredientId))).toList();*/
+            var products = appModel.products.where((product) {
+              var nbOfOwned = product.composition.fold(0, (acc, ingredient) => appModel.userData.ownedIngredients
+                  .contains(ingredient.ingredientId) ? acc + 1 : acc);
+              return nbOfOwned == product.composition.length - 1;
+            }).toList();
+            return AllYourProducts(products: products);
           },
         ),
       ),
@@ -62,12 +70,12 @@ class AllYourProducts extends StatelessWidget {
         KewlyCategoryTitle('Toutes vos boissons'),
         Flexible(
             child: GridView.count(
-          primary: false,
-          crossAxisCount: 4,
-          scrollDirection: Axis.horizontal,
-          children:
+              primary: false,
+              crossAxisCount: 4,
+              scrollDirection: Axis.horizontal,
+              children:
               products.map((product) => KewlyProductTile(product)).toList(),
-        )),
+            )),
       ],
     );
   }

@@ -10,19 +10,22 @@ class KewlyIngredientTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var baseWidget = Container(
-        decoration: BoxDecoration(
-            border: Border.all(width: 1, color: Theme.of(context).dividerColor),
-            color: ingredient.color),
-        height: 100.0,
-        width: 100.0);
+        padding: EdgeInsets.fromLTRB(12.5, 12.5, 12.5, 5),
+        child: Container(
+            decoration: BoxDecoration(
+                border:
+                    Border.all(width: 1, color: Theme.of(context).dividerColor),
+                color: ingredient.color),
+            height: 100.0,
+            width: 100.0));
     var stackedWidgets = this.action != null
         ? [
             baseWidget,
             Positioned(
-              top: -25,
-              right: -25,
-              width: 50,
-              height: 50,
+              top: 0,
+              right: 0,
+              width: 25,
+              height: 25,
               child: action,
             )
           ]
