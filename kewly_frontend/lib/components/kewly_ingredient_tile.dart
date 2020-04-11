@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kewly/app_model.dart';
 
@@ -39,9 +40,10 @@ class KewlyIngredientTile extends StatelessWidget {
               children: stackedWidgets,
               overflow: Overflow.visible,
             ),
-            Text('${ingredient.name}'),
+            Text('${ingredient.name}', textAlign: TextAlign.center),
           ],
           crossAxisAlignment: CrossAxisAlignment.center,
+
           mainAxisSize: MainAxisSize.min,
         ));
   }

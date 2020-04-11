@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:kewly/app_model.dart';
@@ -15,11 +16,11 @@ class KewlyProductTile extends StatelessWidget {
           Container(
               decoration: BoxDecoration(
                   border: Border.all(
-                      width: 1, color: Theme.of(context).dividerColor),
-                  color: Theme.of(context).accentColor),
+                      width: 2, color: Theme.of(context).dividerColor),
+                  color: Theme.of(context).primaryColor),
               height: 100.0,
               width: 100.0),
-          Text('${product.name}'),
+          Text('${product.name}', textAlign: TextAlign.center,),
         ]));
   }
 
