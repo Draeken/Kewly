@@ -1,9 +1,11 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:kewly/app_model.dart';
 import 'package:kewly/components/kewly_category.dart';
 import 'package:kewly/components/kewly_product_tile.dart';
+import 'package:kewly/util.dart';
 import 'package:provider/provider.dart';
-import 'dart:developer' as developer;
 
 class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
   final ValueChanged<String> onSearchChanged;
@@ -45,18 +47,6 @@ class _HomeAppBar extends State<HomeAppBar> {
     });
   }
 
-  _getActions() {
-    return isSearchEnabled
-        ? <Widget>[]
-        : <Widget>[
-            IconButton(
-              icon: const Icon(Icons.account_circle),
-              tooltip: 'Go to your profile',
-              onPressed: () {},
-            )
-          ];
-  }
-
   _getLeading() {
     return isSearchEnabled
         ? IconButton(
@@ -70,22 +60,22 @@ class _HomeAppBar extends State<HomeAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-        leading: _getLeading(),
-        title: TextField(
-          controller: _inputController,
-          onTap: _openSearch,
-          onChanged: widget.onSearchChanged,
-          decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 25),
-              isDense: true,
-              labelText: 'Recherche',
-              filled: true,
-              hasFloatingPlaceholder: false,
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
-              fillColor: Theme.of(context).backgroundColor.withAlpha(200)),
-        ),
-        actions: _getActions());
+      leading: _getLeading(),
+      title: TextField(
+        controller: _inputController,
+        onTap: _openSearch,
+        onChanged: widget.onSearchChanged,
+        decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 25),
+            isDense: true,
+            labelText: 'Recherche',
+            filled: true,
+            hasFloatingPlaceholder: false,
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
+            fillColor: Theme.of(context).backgroundColor.withAlpha(200)),
+      ),
+      backgroundColor: Colors.transparent,
+    );
   }
 
   @override
@@ -127,32 +117,44 @@ const NavigationLinks = <NavigationLink>[
       namedRoute: '/profile'),
 ];
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _HomePageState();
+  }
+}
+
+class _HomePageState extends State<HomePage> {
   final _bottomNavIndex = 0;
+  String _searchInput = "";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HomeAppBar(
-        onSearchChanged: (String str) {
-          developer.log(str);
-        },
+        onSearchChanged: _updateSearchInput,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _bottomNavIndex,
-        onTap: (index) => _bottomNavOnTap(context, index),
-        items: NavigationLinks.map((navLink) => BottomNavigationBarItem(
-            icon: navLink.icon,
-            title: Text(navLink.title),
-            backgroundColor: navLink.backgroundColor)).toList(),
-      ),
+          currentIndex: _bottomNavIndex,
+          onTap: (index) => _bottomNavOnTap(context, index),
+          items: _createBottomNavBarItem()),
       body: Center(
           child: ListView(
         scrollDirection: Axis.vertical,
-        children: <Widget>[AllYourProducts(), ForAFewDollarsMore()],
+        children: <Widget>[
+          AllYourProducts(_searchInput),
+          ForAFewDollarsMore(_searchInput)
+        ],
       )),
       resizeToAvoidBottomInset: true,
     );
+  }
+
+  List<BottomNavigationBarItem> _createBottomNavBarItem() {
+    return NavigationLinks.map((navLink) => BottomNavigationBarItem(
+        icon: navLink.icon,
+        title: Text(navLink.title),
+        backgroundColor: navLink.backgroundColor)).toList();
   }
 
   void _bottomNavOnTap(BuildContext context, int index) {
@@ -162,22 +164,41 @@ class HomePage extends StatelessWidget {
     String route = NavigationLinks.elementAt(index).namedRoute;
     Navigator.of(context).pushReplacementNamed(route);
   }
+
+  void _updateSearchInput(newVal) {
+    setState(() {
+      _searchInput = newVal;
+    });
+  }
 }
 
 class AllYourProducts extends StatelessWidget {
-  AllYourProducts();
+  final String searchInput;
+
+  AllYourProducts(this.searchInput);
 
   @override
   Widget build(BuildContext context) {
     return Consumer<AppModel>(
       builder: (_, appModel, __) {
-        var products = appModel.products
+        var eligibleProducts = appModel.products.toList(growable: false);
+        if (searchInput.length > 0) {
+          var eligibleIngredientIds = appModel.ingredients
+              .where((ingredient) =>
+                  containsIgnoreCase(ingredient.name, searchInput))
+              .map((ingredient) => ingredient.id);
+          eligibleProducts = appModel.products.where(
+              (product) => product.composition.any((compo) =>
+                  eligibleIngredientIds.contains(compo.ingredientId))).toList(growable: false);
+        }
+        var products = eligibleProducts
             .where((product) => product.composition.every((ingredient) =>
                 appModel.userData.ownedIngredients
                     .contains(ingredient.ingredientId)))
-            .toList();
-        var children =
-            products.map((product) => KewlyProductTile(product)).toList();
+            .toList(growable: false);
+        var children = products
+            .map((product) => KewlyProductTile(product))
+            .toList(growable: false);
         return KewlyCategory(title: 'Toutes vos boissons', children: children);
       },
     );
@@ -192,11 +213,25 @@ class ProductWithMissing {
 }
 
 class ForAFewDollarsMore extends StatelessWidget {
+  final String searchInput;
+
+  ForAFewDollarsMore(this.searchInput);
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AppModel>(
       builder: (_, appModel, __) {
-        List<ProductWithMissing> productWithMissing = appModel.products
+        var eligibleProducts = appModel.products.toList(growable: false);
+        if (searchInput.length > 0) {
+          var eligibleIngredientIds = appModel.ingredients
+              .where((ingredient) =>
+                  containsIgnoreCase(ingredient.name, searchInput))
+              .map((ingredient) => ingredient.id);
+          eligibleProducts = appModel.products.where(
+              (product) => product.composition.any((compo) =>
+                  eligibleIngredientIds.contains(compo.ingredientId))).toList(growable: false);
+        }
+        List<ProductWithMissing> productWithMissing = eligibleProducts
             .map((product) {
               var missing = product.composition
                   .where((compo) => !appModel.userData.ownedIngredients
@@ -206,7 +241,7 @@ class ForAFewDollarsMore extends StatelessWidget {
               return ProductWithMissing(missing: missing, product: product);
             })
             .where((ProductWithMissing pwm) => pwm.missing.length == 1)
-            .toList();
+            .toList(growable: false);
         productWithMissing.sort((a, b) {
           var ingredientA = appModel.ingredients
               .firstWhere((ingredient) => ingredient.id == a.missing[0]);
@@ -216,7 +251,7 @@ class ForAFewDollarsMore extends StatelessWidget {
         });
         var children = productWithMissing
             .map((pwm) => KewlyProductTile(pwm.product))
-            .toList();
+            .toList(growable: false);
         return KewlyCategory(
             title: 'Pour quelques \$ de plus', children: children);
       },
