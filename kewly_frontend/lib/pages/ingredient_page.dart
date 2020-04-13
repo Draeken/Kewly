@@ -4,6 +4,7 @@ import 'package:kewly/components/kewly_app_bar.dart';
 import 'package:kewly/components/kewly_button_badge.dart';
 import 'package:kewly/components/kewly_category.dart';
 import 'package:kewly/components/kewly_ingredient_tile.dart';
+import 'package:kewly/pages/home_page.dart';
 import 'package:kewly/util.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +17,7 @@ class IngredientPage extends StatefulWidget {
 
 class _IngredientPageState extends State<IngredientPage> {
   String searchInput = "";
+  final _bottomNavIndex = 1;
 
   void _updateSearchInput(newVal) {
     setState(() {
@@ -30,6 +32,14 @@ class _IngredientPageState extends State<IngredientPage> {
         title: 'Produits',
         onSearchChanged: _updateSearchInput,
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _bottomNavIndex,
+        onTap: (index) => _bottomNavOnTap(context, index),
+        items: NavigationLinks.map((navLink) => BottomNavigationBarItem(
+            icon: navLink.icon,
+            title: Text(navLink.title),
+            backgroundColor: navLink.backgroundColor)).toList(),
+      ),
       body: Center(
         child: ListView(
           scrollDirection: Axis.vertical,
@@ -43,6 +53,14 @@ class _IngredientPageState extends State<IngredientPage> {
       ),
       resizeToAvoidBottomInset: false,
     );
+  }
+
+  void _bottomNavOnTap(BuildContext context, int index) {
+    if (_bottomNavIndex == index) {
+      return;
+    }
+    String route = NavigationLinks.elementAt(index).namedRoute;
+    Navigator.of(context).pushReplacementNamed(route);
   }
 }
 

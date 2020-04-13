@@ -17,10 +17,12 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
             title: 'Kewly',
             theme: appTheme,
-            home: HomePage(),
+            initialRoute: '/',
             routes: {
-              '/search': (BuildContext context) => SearchPage(),
+              '/': (BuildContext context) => HomePage(),
               '/ingredients': (BuildContext context) => IngredientPage(),
+              '/cart': (BuildContext context) => HomePage(),
+              '/profile': (BuildContext context) => HomePage(),
             }));
   }
 }

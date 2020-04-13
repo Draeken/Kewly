@@ -95,7 +95,41 @@ class _HomeAppBar extends State<HomeAppBar> {
   }
 }
 
+class NavigationLink {
+  final Widget icon;
+  final String title;
+  final String namedRoute;
+  final Color backgroundColor;
+
+  const NavigationLink(
+      {this.icon,
+      this.title,
+      this.namedRoute,
+      this.backgroundColor = Colors.amber});
+}
+
+const NavigationLinks = <NavigationLink>[
+  NavigationLink(
+      title: 'Les boissons',
+      icon: const Icon(Icons.local_bar),
+      namedRoute: '/'),
+  NavigationLink(
+      title: 'Vos produits',
+      icon: const Icon(Icons.local_drink),
+      namedRoute: '/ingredients'),
+  NavigationLink(
+      title: 'Votre panier',
+      icon: const Icon(Icons.shopping_cart),
+      namedRoute: '/cart'),
+  NavigationLink(
+      title: 'À goûter',
+      icon: const Icon(Icons.bookmark_border),
+      namedRoute: '/profile'),
+];
+
 class HomePage extends StatelessWidget {
+  final _bottomNavIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,22 +138,13 @@ class HomePage extends StatelessWidget {
           developer.log(str);
         },
       ),
-      drawer: Drawer(
-        child: ListView(
-          children: <Widget>[
-            DrawerHeader(
-              child: Text('Kewly'),
-            ),
-            ListTile(
-              title: Text('Mes ingrédients'),
-              onTap: () {
-                Navigator.of(context).popAndPushNamed('/ingredients');
-                // Navigator.pushNamed(context, '/ingredients')
-              },
-            ),
-            // ListTile(title: Text('Mes courses'))
-          ],
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _bottomNavIndex,
+        onTap: (index) => _bottomNavOnTap(context, index),
+        items: NavigationLinks.map((navLink) => BottomNavigationBarItem(
+            icon: navLink.icon,
+            title: Text(navLink.title),
+            backgroundColor: navLink.backgroundColor)).toList(),
       ),
       body: Center(
           child: ListView(
@@ -128,6 +153,14 @@ class HomePage extends StatelessWidget {
       )),
       resizeToAvoidBottomInset: true,
     );
+  }
+
+  void _bottomNavOnTap(BuildContext context, int index) {
+    if (_bottomNavIndex == index) {
+      return;
+    }
+    String route = NavigationLinks.elementAt(index).namedRoute;
+    Navigator.of(context).pushReplacementNamed(route);
   }
 }
 
