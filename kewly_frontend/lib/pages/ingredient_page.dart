@@ -112,7 +112,7 @@ class MoreChoiceWithCategory extends StatelessWidget {
         notOwnedIngredients
             .sort((a, b) => b.usedBy.length.compareTo(a.usedBy.length));
         var filteredIngredients = searchInput == ''
-            ? notOwnedIngredients.take(10)
+            ? notOwnedIngredients.take(100)
             : notOwnedIngredients
                 .where((ingredient) =>
                     containsIgnoreCase(ingredient.name, searchInput));
