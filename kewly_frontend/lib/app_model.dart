@@ -83,8 +83,10 @@ class Ingredient implements Id {
   final String name;
   final Color color;
   final List<Product> usedBy;
+  bool isOwned;
 
-  Ingredient({this.id, this.name, this.color, this.usedBy});
+  Ingredient(
+      {this.id, this.name, this.color, this.usedBy, this.isOwned = false});
 }
 
 class UserReviewRaw {
@@ -200,6 +202,7 @@ class AppModel extends ChangeNotifier {
   void addOwnedIngredient(Ingredient ingredient) {
     _userData.ownedIngredients.add(ingredient.id);
     _ownedIngredients.add(ingredient);
+    ingredient.isOwned = true;
     _saveUserData();
     notifyListeners();
   }
@@ -207,6 +210,7 @@ class AppModel extends ChangeNotifier {
   void removeOwnedIngredient(Ingredient ingredient) {
     _userData.ownedIngredients.remove(ingredient.id);
     _ownedIngredients.remove(ingredient);
+    ingredient.isOwned = false;
     _saveUserData();
     notifyListeners();
   }
@@ -256,8 +260,12 @@ class AppModel extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     final rawJson = jsonDecode(prefs.getString(AppModel.USER_PREF_KEY) ?? '{}');
     _userData = UserData.fromJson(rawJson);
-    _ownedIngredients =
-        _objectifyIdList(_userData.ownedIngredients, _ingredients);
+    _ownedIngredients = _userData.ownedIngredients.map((ingredientId) {
+      final ingredient = _firstWithId(_ingredients)(ingredientId);
+      ingredient.isOwned = true;
+      return ingredient;
+    }).toList();
+    _objectifyIdList(_userData.ownedIngredients, _ingredients);
     _productsToPurchase =
         _objectifyIdList(_userData.productsToPurchase, _products);
     _ingredientsToPurchase =

@@ -189,8 +189,8 @@ class AllYourProducts extends StatelessWidget {
               .toList(growable: false);
         }
         var products = eligibleProducts
-            .where((product) => product.composition.every(
-                (compo) => appModel.ownedIngredients.contains(compo.ingredient)))
+            .where((product) =>
+                product.composition.every((compo) => compo.ingredient.isOwned))
             .toList(growable: false);
         var children = products
             .map((product) => KewlyProductTile(product))
@@ -229,8 +229,7 @@ class ForAFewDollarsMore extends StatelessWidget {
         List<ProductWithMissing> productWithMissing = eligibleProducts
             .map((product) {
               var missing = product.composition
-                  .where((compo) =>
-                      !appModel.ownedIngredients.contains(compo.ingredient))
+                  .where((compo) => !compo.ingredient.isOwned)
                   .map((compo) => compo.ingredient)
                   .toList(growable: false);
               return ProductWithMissing(missing: missing, product: product);
