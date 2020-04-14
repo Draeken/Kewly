@@ -4,33 +4,33 @@ import 'package:flutter/widgets.dart';
 import 'package:kewly/util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Composition {
+class CompositionRaw {
   final int ingredientId;
   final double quantity;
   final String unit;
 
-  Composition({this.ingredientId, this.quantity, this.unit});
+  CompositionRaw({this.ingredientId, this.quantity, this.unit});
 
-  static Composition fromJson(Map<String, dynamic> json) {
-    return Composition(
+  static CompositionRaw fromJson(Map<String, dynamic> json) {
+    return CompositionRaw(
         ingredientId: json['ingredientId'] as int,
         quantity: json['quantity'].toDouble(),
         unit: json['unit'] ?? "");
   }
 }
 
-class Product {
+class ProductRaw {
   final int id;
   final String name;
   final String link;
-  final List<Composition> composition;
+  final List<CompositionRaw> composition;
 
-  Product({this.id, this.name, this.link, this.composition});
+  ProductRaw({this.id, this.name, this.link, this.composition});
 
-  static Product fromJson(Map<String, dynamic> json) {
-    final List<Composition> composition =
-        mapJsonToList(json['composition'], Composition.fromJson);
-    return Product(
+  static ProductRaw fromJson(Map<String, dynamic> json) {
+    final List<CompositionRaw> composition =
+        mapJsonToList(json['composition'], CompositionRaw.fromJson);
+    return ProductRaw(
         id: json['id'] as int,
         name: json['name'] as String,
         link: json['link'] as String,
@@ -38,16 +38,38 @@ class Product {
   }
 }
 
-class Ingredient {
+class Composition {
+  Ingredient ingredient;
+  final int ingredientId;
+  final double quantity;
+  final String unit;
+
+  Composition({this.ingredient, this.ingredientId, this.quantity, this.unit});
+}
+
+abstract class Id {
+  int get id;
+}
+
+class Product implements Id {
+  final int id;
+  final String name;
+  final String link;
+  final Iterable<Composition> composition;
+
+  Product({this.id, this.name, this.link, this.composition});
+}
+
+class IngredientRaw {
   final int id;
   final String name;
   final Color color;
   final List<int> usedBy;
 
-  Ingredient({this.id, this.name, this.color, this.usedBy});
+  IngredientRaw({this.id, this.name, this.color, this.usedBy});
 
-  static Ingredient fromJson(Map<String, dynamic> json) {
-    return Ingredient(
+  static IngredientRaw fromJson(Map<String, dynamic> json) {
+    return IngredientRaw(
       name: json['name'] as String,
       id: json['id'] as int,
       usedBy: List<int>.from(json['usedBy'], growable: false),
@@ -56,34 +78,35 @@ class Ingredient {
   }
 }
 
-class Graph {
-  final List<Product> products;
-  final List<Ingredient> ingredients;
+class Ingredient implements Id {
+  final int id;
+  final String name;
+  final Color color;
+  final List<Product> usedBy;
 
-  Graph({this.products, this.ingredients});
-
-  factory Graph.fromJson(Map<String, dynamic> json) {
-    final List<Product> products =
-        mapJsonToList(json['products'], Product.fromJson);
-    final List<Ingredient> ingredients =
-        mapJsonToList(json['ingredients'], Ingredient.fromJson);
-    return Graph(products: products, ingredients: ingredients);
-  }
+  Ingredient({this.id, this.name, this.color, this.usedBy});
 }
 
-class UserReview {
+class UserReviewRaw {
   final int productId;
   final double rating;
 
-  UserReview({this.productId, this.rating});
+  UserReviewRaw({this.productId, this.rating});
 
-  static UserReview fromJson(Map<String, dynamic> json) {
-    return UserReview(productId: json['productId'], rating: json['rating']);
+  static UserReviewRaw fromJson(Map<String, dynamic> json) {
+    return UserReviewRaw(productId: json['productId'], rating: json['rating']);
   }
 
   Map<String, dynamic> toJson() {
     return {'productId': productId, 'rating': rating};
   }
+}
+
+class UserReview {
+  final Product product;
+  final double rating;
+
+  UserReview({this.product, this.rating});
 }
 
 class UserData {
@@ -92,7 +115,7 @@ class UserData {
   final List<int> ingredientsToPurchase;
   final List<int> nextToTest;
   final List<int> historic;
-  final List<UserReview> reviewedProducts;
+  final List<UserReviewRaw> reviewedProducts;
 
   UserData(
       {this.historic,
@@ -106,8 +129,8 @@ class UserData {
     if (json['ownedIngredients'] == null) {
       return UserData.empty();
     }
-    final List<UserReview> reviewedProducts =
-        mapJsonToList(json['reviewedProducts'], UserReview.fromJson);
+    final List<UserReviewRaw> reviewedProducts =
+        mapJsonToList(json['reviewedProducts'], UserReviewRaw.fromJson);
     return UserData(
         historic: List<int>.from(json['historic']),
         ingredientsToPurchase: List<int>.from(json['ingredientsToPurchase']),
@@ -138,7 +161,7 @@ class UserData {
     };
   }
 
-  List<Ingredient> getOwnedIngredientObj(List<Ingredient> ingredients) {
+  List<IngredientRaw> getOwnedIngredientObj(List<IngredientRaw> ingredients) {
     return this
         .ownedIngredients
         .map(
@@ -149,45 +172,104 @@ class UserData {
 
 class AppModel extends ChangeNotifier {
   static const USER_PREF_KEY = 'userData';
-  Graph _graph;
+
+  List<Product> _products;
+  List<Ingredient> _ingredients;
+
   UserData _userData;
+  List<Ingredient> _ownedIngredients;
+  List<Product> _productsToPurchase;
+  List<Ingredient> _ingredientsToPurchase;
+  List<Product> _nextToTest;
+  List<Product> _historic;
+  List<UserReview> _reviewedProducts;
 
   AppModel(BuildContext context) {
-    _loadGraph(context);
-    _loadUserData();
+    _initData(context);
   }
 
   UnmodifiableListView<Product> get products =>
-      UnmodifiableListView(_graph?.products ?? []);
+      UnmodifiableListView(_products ?? []);
 
   UnmodifiableListView<Ingredient> get ingredients =>
-      UnmodifiableListView(_graph?.ingredients ?? []);
+      UnmodifiableListView(_ingredients ?? []);
 
-  UserData get userData => _userData;
+  UnmodifiableListView<Ingredient> get ownedIngredients =>
+      UnmodifiableListView(_ownedIngredients ?? []);
 
   void addOwnedIngredient(Ingredient ingredient) {
     _userData.ownedIngredients.add(ingredient.id);
+    _ownedIngredients.add(ingredient);
     _saveUserData();
     notifyListeners();
   }
 
   void removeOwnedIngredient(Ingredient ingredient) {
     _userData.ownedIngredients.remove(ingredient.id);
+    _ownedIngredients.remove(ingredient);
     _saveUserData();
     notifyListeners();
   }
 
-  void _loadGraph(BuildContext context) async {
+  void _initData(BuildContext context) async {
+    await _loadGraph(context);
+    _loadUserData();
+    notifyListeners();
+  }
+
+  Future<void> _loadGraph(BuildContext context) async {
     final graph = await DefaultAssetBundle.of(context)
         .loadStructuredData('assets/graph.json', (s) async => jsonDecode(s));
-    _graph = Graph.fromJson(graph);
-    notifyListeners();
+    final Iterable<ProductRaw> products =
+        mapJsonToList(graph['products'], ProductRaw.fromJson, toList: false);
+    final Iterable<IngredientRaw> ingredients = mapJsonToList(
+        graph['ingredients'], IngredientRaw.fromJson,
+        toList: false);
+    _products = products
+        .map((productRaw) => Product(
+            name: productRaw.name,
+            id: productRaw.id,
+            link: productRaw.link,
+            composition: productRaw.composition
+                .map((compoRaw) => Composition(
+                    unit: compoRaw.unit,
+                    quantity: compoRaw.quantity,
+                    ingredientId: compoRaw.ingredientId))
+                .toList(growable: false)))
+        .toList(growable: false);
+    _ingredients = ingredients
+        .map((ingredientRaw) => Ingredient(
+            id: ingredientRaw.id,
+            name: ingredientRaw.name,
+            color: ingredientRaw.color,
+            usedBy: _objectifyIdList<Product>(ingredientRaw.usedBy, _products,
+                growable: false)))
+        .toList(growable: false);
+    _products.forEach((product) {
+      product.composition.forEach((compo) {
+        compo.ingredient = _firstWithId(_ingredients)(compo.ingredientId);
+      });
+    });
   }
 
   void _loadUserData() async {
     final prefs = await SharedPreferences.getInstance();
     final rawJson = jsonDecode(prefs.getString(AppModel.USER_PREF_KEY) ?? '{}');
     _userData = UserData.fromJson(rawJson);
+    _ownedIngredients =
+        _objectifyIdList(_userData.ownedIngredients, _ingredients);
+    _productsToPurchase =
+        _objectifyIdList(_userData.productsToPurchase, _products);
+    _ingredientsToPurchase =
+        _objectifyIdList(_userData.ingredientsToPurchase, _ingredients);
+    _nextToTest = _objectifyIdList(_userData.nextToTest, _products);
+    _historic = _objectifyIdList(_userData.historic, _products);
+    _reviewedProducts = _userData.reviewedProducts
+        .map((rawReview) => UserReview(
+              rating: rawReview.rating,
+              product: _firstWithId(_products)(rawReview.productId),
+            ))
+        .toList();
   }
 
   void _saveUserData() async {
@@ -195,4 +277,17 @@ class AppModel extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString(AppModel.USER_PREF_KEY, userDataRaw);
   }
+}
+
+List<U> _objectifyIdList<U extends Id>(List<int> listOfId, List<U> listOfObj,
+    {growable = true}) {
+  return listOfId.map(_firstWithId<U>(listOfObj)).toList(growable: growable);
+}
+
+U Function(int) _firstWithId<U extends Id>(List<U> list) {
+  return (int id) => list.firstWhere(_checkById<U>(id));
+}
+
+bool Function(T) _checkById<T extends Id>(int toCheck) {
+  return (T against) => against.id == toCheck;
 }

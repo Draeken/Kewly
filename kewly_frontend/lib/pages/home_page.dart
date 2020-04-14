@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:kewly/app_model.dart';
 import 'package:kewly/components/kewly_category.dart';
@@ -182,19 +180,17 @@ class AllYourProducts extends StatelessWidget {
     return Consumer<AppModel>(
       builder: (_, appModel, __) {
         var eligibleProducts = appModel.products.toList(growable: false);
-        if (searchInput.length > 0) {
-          var eligibleIngredientIds = appModel.ingredients
-              .where((ingredient) =>
-                  containsIgnoreCase(ingredient.name, searchInput))
-              .map((ingredient) => ingredient.id);
-          eligibleProducts = appModel.products.where(
-              (product) => product.composition.any((compo) =>
-                  eligibleIngredientIds.contains(compo.ingredientId))).toList(growable: false);
+        if (searchInput.isNotEmpty) {
+          var eligibleIngredient = appModel.ingredients.where(
+              (ingredient) => containsIgnoreCase(ingredient.name, searchInput));
+          eligibleProducts = appModel.products
+              .where((product) => product.composition.any(
+                  (compo) => eligibleIngredient.contains(compo.ingredient)))
+              .toList(growable: false);
         }
         var products = eligibleProducts
-            .where((product) => product.composition.every((ingredient) =>
-                appModel.userData.ownedIngredients
-                    .contains(ingredient.ingredientId)))
+            .where((product) => product.composition.every(
+                (compo) => appModel.ownedIngredients.contains(compo.ingredient)))
             .toList(growable: false);
         var children = products
             .map((product) => KewlyProductTile(product))
@@ -207,7 +203,7 @@ class AllYourProducts extends StatelessWidget {
 
 class ProductWithMissing {
   final Product product;
-  final List<int> missing;
+  final List<Ingredient> missing;
 
   ProductWithMissing({this.product, this.missing});
 }
@@ -222,32 +218,28 @@ class ForAFewDollarsMore extends StatelessWidget {
     return Consumer<AppModel>(
       builder: (_, appModel, __) {
         var eligibleProducts = appModel.products.toList(growable: false);
-        if (searchInput.length > 0) {
-          var eligibleIngredientIds = appModel.ingredients
-              .where((ingredient) =>
-                  containsIgnoreCase(ingredient.name, searchInput))
-              .map((ingredient) => ingredient.id);
-          eligibleProducts = appModel.products.where(
-              (product) => product.composition.any((compo) =>
-                  eligibleIngredientIds.contains(compo.ingredientId))).toList(growable: false);
+        if (searchInput.isNotEmpty) {
+          var eligibleIngredient = appModel.ingredients.where(
+              (ingredient) => containsIgnoreCase(ingredient.name, searchInput));
+          eligibleProducts = appModel.products
+              .where((product) => product.composition.any(
+                  (compo) => eligibleIngredient.contains(compo.ingredient)))
+              .toList(growable: false);
         }
         List<ProductWithMissing> productWithMissing = eligibleProducts
             .map((product) {
               var missing = product.composition
-                  .where((compo) => !appModel.userData.ownedIngredients
-                      .contains(compo.ingredientId))
-                  .map((compo) => compo.ingredientId)
+                  .where((compo) =>
+                      !appModel.ownedIngredients.contains(compo.ingredient))
+                  .map((compo) => compo.ingredient)
                   .toList(growable: false);
               return ProductWithMissing(missing: missing, product: product);
             })
             .where((ProductWithMissing pwm) => pwm.missing.length == 1)
             .toList(growable: false);
         productWithMissing.sort((a, b) {
-          var ingredientA = appModel.ingredients
-              .firstWhere((ingredient) => ingredient.id == a.missing[0]);
-          var ingredientB = appModel.ingredients
-              .firstWhere((ingredient) => ingredient.id == b.missing[0]);
-          return ingredientB.usedBy.length.compareTo(ingredientA.usedBy.length);
+          return b.missing[0].usedBy.length
+              .compareTo(a.missing[0].usedBy.length);
         });
         var children = productWithMissing
             .map((pwm) => KewlyProductTile(pwm.product))

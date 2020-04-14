@@ -69,4 +69,9 @@ class ProductPainter extends CustomPainter {
     // TODO: implement shouldRepaint
     return false;
   }
+
+  List<Color> _getColors() {
+    return product.composition.map((compo) => compo.ingredient.color).toList(growable: false);
+  }
+
 }

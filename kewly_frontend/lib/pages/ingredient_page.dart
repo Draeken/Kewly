@@ -73,11 +73,9 @@ class OwnedIngredientCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AppModel>(
       builder: (context, appModel, _) {
-        var ownedIngredients =
-            appModel.userData.getOwnedIngredientObj(appModel.ingredients);
         var filteredIngredients = searchInput == ''
-            ? ownedIngredients
-            : ownedIngredients.where((ingredient) =>
+            ? appModel.ownedIngredients
+            : appModel.ownedIngredients.where((ingredient) =>
                 containsIgnoreCase(ingredient.name, searchInput));
         var children = filteredIngredients
             .map<KewlyIngredientTile>((ingredient) => KewlyIngredientTile(
@@ -108,7 +106,7 @@ class MoreChoiceWithCategory extends StatelessWidget {
     return Consumer<AppModel>(
       builder: (context, appModel, _) {
         List<Ingredient> notOwnedIngredients = appModel.ingredients
-            .where((ingredient) => !appModel.userData.ownedIngredients.contains(ingredient.id)).toList();
+            .where((ingredient) => !appModel.ownedIngredients.contains(ingredient)).toList();
         notOwnedIngredients
             .sort((a, b) => b.usedBy.length.compareTo(a.usedBy.length));
         var filteredIngredients = searchInput == ''
