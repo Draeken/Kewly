@@ -183,9 +183,8 @@ class AllYourProducts extends StatelessWidget {
         if (searchInput.isNotEmpty) {
           var eligibleIngredient = appModel.ingredients.where(
               (ingredient) => containsIgnoreCase(ingredient.name, searchInput));
-          eligibleProducts = appModel.products
-              .where((product) => product.composition.any(
-                  (compo) => eligibleIngredient.contains(compo.ingredient)))
+          eligibleProducts = Set<Product>.from(
+                  eligibleIngredient.expand((ingredient) => ingredient.usedBy))
               .toList(growable: false);
         }
         var products = eligibleProducts
@@ -220,10 +219,9 @@ class ForAFewDollarsMore extends StatelessWidget {
         var eligibleProducts = appModel.products.toList(growable: false);
         if (searchInput.isNotEmpty) {
           var eligibleIngredient = appModel.ingredients.where(
-              (ingredient) => containsIgnoreCase(ingredient.name, searchInput));
-          eligibleProducts = appModel.products
-              .where((product) => product.composition.any(
-                  (compo) => eligibleIngredient.contains(compo.ingredient)))
+                  (ingredient) => containsIgnoreCase(ingredient.name, searchInput));
+          eligibleProducts = Set<Product>.from(
+              eligibleIngredient.expand((ingredient) => ingredient.usedBy))
               .toList(growable: false);
         }
         List<ProductWithMissing> productWithMissing = eligibleProducts
