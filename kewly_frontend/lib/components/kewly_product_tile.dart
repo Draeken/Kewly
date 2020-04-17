@@ -1,4 +1,6 @@
+import 'dart:math';
 import 'dart:ui' as ui;
+import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -18,7 +20,7 @@ class KewlyProductTile extends StatelessWidget {
               decoration: BoxDecoration(
                   border: Border.all(
                       width: 2, color: Theme.of(context).dividerColor),
-                  color: Theme.of(context).primaryColor),
+                  color: Colors.white),
               child: CustomPaint(
                 size: Size(100, 100),
                 painter: ProductPainter(product),
@@ -51,9 +53,9 @@ class ProductPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final myPaint = Paint()
       ..style = PaintingStyle.fill
-      ..shader = ui.Gradient.linear(Offset(0, 85), Offset(0, 15),
-          const <Color>[Colors.cyanAccent, Colors.amberAccent])
+      ..color = _getColor()
       ..strokeWidth = 2;
+
     final myPath = Path()
       ..moveTo(15, 15)
       ..lineTo(25, 85)
@@ -70,8 +72,42 @@ class ProductPainter extends CustomPainter {
     return false;
   }
 
-  List<Color> _getColors() {
-    return product.composition.map((compo) => compo.ingredient.color).toList(growable: false);
+  Color _getColor() {
+    final compos = product.composition.where((compo) => compo.unit == 'ml').toList(growable: false);
+    final colors = _getAdjustedColors(compos);
+    if (colors.isEmpty) {
+      return Colors.transparent;
+    }
+    return colors.reduce((acc, cur) => Color.alphaBlend(acc, cur));
+  }
+
+  _getGradient() {
+    final compos = product.composition.where((compo) => compo.unit == 'ml').toList(growable: false);
+    final colors = compos.map((compo) => compo.ingredient.color).toList(growable: false);
+    final colorStops = _getColorStops(compos);
+    return ui.Gradient.linear(Offset(0, 85), Offset(0, 15), colors, colorStops);
+  }
+
+  List<double> _getColorStops(List<Composition> compos) {
+    final sum = compos.fold(0 ,(acc, cur) => acc + cur.quantity);
+    final capacity = ((product.capacity ?? 0) > sum) ? product.capacity : sum;
+    final quantities = compos.map((compo) => compo.quantity / capacity).toList();
+
+    for (var i = 1; i < quantities.length; i++) {
+      quantities[i] = quantities[i] + quantities[i - 1];
+    }
+    return quantities;
+  }
+
+  List<Color> _getAdjustedColors(List<Composition> compos) {
+    final sum = compos.fold(0 ,(acc, cur) => acc + cur.quantity);
+    return compos.map((compo) {
+      final hslColor = HSLColor.fromColor(compo.ingredient.color);
+      final quantityFactor = min<double>(sum, compo.quantity * 1.5) / sum;
+      final maxLightness = 1 - hslColor.lightness;
+      final newLightness = maxLightness * quantityFactor;
+      return hslColor.withLightness(1 - newLightness).toColor();
+    }).toList();
   }
 
 }

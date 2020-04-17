@@ -24,8 +24,9 @@ class ProductRaw {
   final String name;
   final String link;
   final List<CompositionRaw> composition;
+  final double capacity;
 
-  ProductRaw({this.id, this.name, this.link, this.composition});
+  ProductRaw({this.id, this.name, this.link, this.composition, this.capacity});
 
   static ProductRaw fromJson(Map<String, dynamic> json) {
     final List<CompositionRaw> composition =
@@ -34,6 +35,7 @@ class ProductRaw {
         id: json['id'] as int,
         name: json['name'] as String,
         link: json['link'] as String,
+        capacity: json['capacity']?.toDouble(),
         composition: composition);
   }
 }
@@ -55,9 +57,10 @@ class Product implements Id {
   final int id;
   final String name;
   final String link;
+  final double capacity;
   final Iterable<Composition> composition;
 
-  Product({this.id, this.name, this.link, this.composition});
+  Product({this.id, this.name, this.link, this.composition, this.capacity});
 }
 
 class IngredientRaw {
@@ -73,7 +76,7 @@ class IngredientRaw {
       name: json['name'] as String,
       id: json['id'] as int,
       usedBy: List<int>.from(json['usedBy'], growable: false),
-      color: Color(int.parse(json['color'] ?? "0xFF5922A1")),
+      color: Color(int.parse(json['color'] ?? "0xFFFFFF")),
     );
   }
 }
@@ -234,6 +237,7 @@ class AppModel extends ChangeNotifier {
             name: productRaw.name,
             id: productRaw.id,
             link: productRaw.link,
+            capacity: productRaw.capacity,
             composition: productRaw.composition
                 .map((compoRaw) => Composition(
                     unit: compoRaw.unit,

@@ -15207,6 +15207,7 @@
     {
       "name": "lait",
       "id": 27,
+      "color": "0xFFFFFFFF",
       "usedBy": [
         5,
         6,
@@ -15476,6 +15477,7 @@
     {
       "name": "Sirop de Grenadine",
       "id": 30,
+      "color": "0xBF380000",
       "usedBy": [
         7,
         178,
@@ -15557,6 +15559,7 @@
     {
       "name": "jus de citron",
       "id": 32,
+      "color": "0xF7fce1a2",
       "usedBy": [
         7,
         8,
@@ -16065,6 +16068,7 @@
     {
       "name": "rhum",
       "id": 60,
+      "color": "0xFFe39b1e",
       "usedBy": [
         16,
         46,
@@ -16989,7 +16993,7 @@
       ]
     },
     { "name": "aperitif", "id": 117, "usedBy": [48] },
-    { "name": "vermouth rouge", "id": 118, "usedBy": [48, 420, 627, 628, 789, 790, 791, 904] },
+    { "name": "vermouth rouge", "id": 118, "color": "0xFF520707", "usedBy": [48, 420, 627, 628, 789, 790, 791, 904] },
     {
       "name": "Sirop de Pamplemousse",
       "id": 119,
@@ -17612,12 +17616,14 @@
     {
       "name": "Sirop de Chocolate Cookie",
       "id": 151,
+      "color": "0xFF452305",
       "usedBy": [74, 77, 118, 147, 148, 149, 150, 179, 221, 376, 648, 650, 720]
     },
     { "name": "lait écrèmé", "id": 152, "usedBy": [74, 75, 102, 107, 432, 1172] },
     {
       "name": "Sirop de Noisette",
       "id": 153,
+      "color": "0xFF913713",
       "usedBy": [
         75,
         99,
@@ -17727,6 +17733,7 @@
     {
       "name": "Le Frappé Chocolat",
       "id": 180,
+      "color": "0xFF573511",
       "usedBy": [
         98,
         104,
@@ -17791,6 +17798,7 @@
     {
       "name": "Sirop de Rose",
       "id": 184,
+      "color": "0xFFffd9ed",
       "usedBy": [
         100,
         240,
@@ -17821,6 +17829,7 @@
     {
       "name": "Sauce Chocolat Noir",
       "id": 188,
+      "color": "0xFF331a03",
       "usedBy": [
         106,
         126,
@@ -17882,7 +17891,7 @@
     },
     { "name": "Sirop de Chocolat Menthe", "id": 199, "usedBy": [117, 277, 504, 511, 1187] },
     { "name": "sirop de MONIN saveur Cookie Cacahuète", "id": 200, "usedBy": [119, 300, 506] },
-    { "name": "Le Frappé de MONIN Chocolat", "id": 201, "usedBy": [119] },
+    { "name": "Le Frappé de MONIN Chocolat", "color": "0xFF573511", "id": 201, "usedBy": [119] },
     {
       "name": "Le Fruit Fruits Rouges",
       "id": 202,
@@ -17930,7 +17939,7 @@
     { "name": "Crème de Cacao Brun", "id": 209, "usedBy": [142, 179, 1187] },
     { "name": "rhum saveur coco", "id": 210, "usedBy": [142] },
     { "name": "Sirop de Tiramisu", "id": 211, "usedBy": [144, 679, 1173, 1174, 1175, 1176] },
-    { "name": "Sauce Chocolat Noisette", "id": 212, "usedBy": [145, 704, 714, 720, 863, 1079] },
+    { "name": "Sauce Chocolat Noisette", "id": 212, "color": "0xFF99500e", "usedBy": [145, 704, 714, 720, 863, 1079] },
     { "name": "café sérré", "id": 213, "usedBy": [147] },
     { "name": "cidre brut", "id": 214, "usedBy": [152, 153, 154, 155, 156, 157, 857] },
     {
@@ -17981,6 +17990,7 @@
     {
       "name": "eau",
       "id": 222,
+      "color": "0xFFFFFF",
       "usedBy": [
         159,
         160,
@@ -18325,7 +18335,7 @@
       "id": 248,
       "usedBy": [188, 225, 497, 655, 936, 938, 985, 1161]
     },
-    { "name": "eau gazeuse", "id": 249, "usedBy": [189, 573, 573, 615, 1049, 1156] },
+    { "name": "eau gazeuse", "id": 249, "usedBy": [189, 573, 573, 615, 1049, 1156], "color": "0xFFFFFF" },
     {
       "name": "Sirop de Lavande",
       "id": 250,
@@ -18431,7 +18441,7 @@
     },
     { "name": "orange", "id": 267, "usedBy": [211, 304, 797, 803, 806, 856, 915, 924, 1223] },
     { "name": "Sirop de Litchi", "id": 268, "usedBy": [212, 258, 666, 770, 945, 1044, 1113] },
-    { "name": "Sirop Violette", "id": 269, "usedBy": [217, 260, 411, 983, 1027, 1189, 1261] },
+    { "name": "Sirop Violette", "id": 269, "color": "0xFF7a0dff", "usedBy": [217, 260, 411, 983, 1027, 1189, 1261] },
     {
       "name": "glace à la vanille",
       "id": 270,
@@ -18451,6 +18461,7 @@
     {
       "name": "Sirop de Fruit de la Passion",
       "id": 278,
+      "color": "0xFFffbe26",
       "usedBy": [235, 442, 528, 607, 621, 624, 641, 890, 912, 1054, 1098, 1113, 1247]
     },
     { "name": "Sweet and Sour", "id": 279, "usedBy": [236, 360, 389, 639, 640, 932, 1135] },
@@ -18513,6 +18524,7 @@
     {
       "name": "Sirop Orange Spritz",
       "id": 303,
+      "color": "0xFFde3207",
       "usedBy": [
         288,
         372,
@@ -18617,6 +18629,7 @@
     {
       "name": "Sirop de Fraise Bonbon",
       "id": 320,
+      "color": "0xFFff0d0d",
       "usedBy": [321, 486, 577, 636, 764, 1103, 1163]
     },
     { "name": "Sirop de Tarte aux Pommes", "id": 321, "usedBy": [322, 437, 551, 974, 1154, 1178] },
@@ -18782,9 +18795,9 @@
     { "name": "framboise(s)", "id": 380, "usedBy": [457, 939, 995, 1006, 1040, 1104, 1191, 1225] },
     { "name": "crème glacée Mangue & Crème", "id": 381, "usedBy": [458] },
     { "name": "porto", "id": 382, "usedBy": [460, 819, 858] },
-    { "name": "Sirop de MONIN Fruit de la Passion", "id": 383, "usedBy": [468] },
+    { "name": "Sirop de MONIN Fruit de la Passion", "color": "0xFFffbe26", "id": 383, "usedBy": [468] },
     { "name": "Crème de Framboise", "id": 384, "usedBy": [471, 907] },
-    { "name": "Sirop de MONIN Violette", "id": 385, "usedBy": [473] },
+    { "name": "Sirop de MONIN Violette", "color": "0xFF7a0dff", "id": 385, "usedBy": [473] },
     { "name": "Le Fruit Poire Williams", "id": 386, "usedBy": [480, 884, 885, 887, 889, 892, 894] },
     { "name": "Sirop de MONIN Vanille", "id": 387, "usedBy": [480] },
     { "name": "Seedlip Spice", "id": 388, "usedBy": [480] },
