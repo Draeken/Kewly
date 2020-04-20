@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kewly/app_model.dart';
@@ -16,7 +18,7 @@ class KewlyIngredientTile extends StatelessWidget {
             decoration: BoxDecoration(
                 border:
                     Border.all(width: 1, color: Theme.of(context).dividerColor),
-                color: ingredient.color),
+                color: _getIngredientColor()),
             height: 100.0,
             width: 100.0));
     var stackedWidgets = this.action != null
@@ -46,5 +48,9 @@ class KewlyIngredientTile extends StatelessWidget {
 
           mainAxisSize: MainAxisSize.min,
         ));
+  }
+
+  _getIngredientColor() {
+    return ingredient.color.withLightness(min(ingredient.color.lightness + 0.2, 1.0)).toColor();
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:kewly/util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -63,10 +64,28 @@ class Product implements Id {
   Product({this.id, this.name, this.link, this.composition, this.capacity});
 }
 
+class ColorRaw {
+  final double alpha;
+  final double hue;
+  final double lightness;
+  final double saturation;
+
+  ColorRaw({this.lightness, this.alpha, this.hue, this.saturation});
+
+  static ColorRaw fromJson(Map<String, dynamic> json) {
+    return ColorRaw(
+        alpha: json['alpha']?.toDouble(),
+        hue: json['hue']?.toDouble(),
+        lightness: json['lightness']?.toDouble(),
+        saturation: json['saturation']?.toDouble());
+  }
+}
+
+// Color(int.parse(json['color'] ?? "0xFFFFFF"))
 class IngredientRaw {
   final int id;
   final String name;
-  final Color color;
+  final ColorRaw color;
   final List<int> usedBy;
 
   IngredientRaw({this.id, this.name, this.color, this.usedBy});
@@ -76,7 +95,7 @@ class IngredientRaw {
       name: json['name'] as String,
       id: json['id'] as int,
       usedBy: List<int>.from(json['usedBy'], growable: false),
-      color: Color(int.parse(json['color'] ?? "0xFFFFFF")),
+      color: json['color'] == null ? null : ColorRaw.fromJson(json['color']),
     );
   }
 }
@@ -84,12 +103,16 @@ class IngredientRaw {
 class Ingredient implements Id {
   final int id;
   final String name;
-  final Color color;
+  final HSLColor color;
   final List<Product> usedBy;
   bool isOwned;
 
   Ingredient(
-      {this.id, this.name, this.color, this.usedBy, this.isOwned = false});
+      {this.id, this.name, ColorRaw color, this.usedBy, this.isOwned = false})
+      : this.color = color == null
+            ? HSLColor.fromColor(Colors.transparent)
+            : HSLColor.fromAHSL(
+                color.alpha, color.hue, color.saturation, color.lightness);
 }
 
 class UserReviewRaw {

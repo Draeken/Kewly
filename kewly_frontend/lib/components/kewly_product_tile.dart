@@ -83,7 +83,7 @@ class ProductPainter extends CustomPainter {
 
   _getGradient() {
     final compos = product.composition.where((compo) => compo.unit == 'ml').toList(growable: false);
-    final colors = compos.map((compo) => compo.ingredient.color).toList(growable: false);
+    final colors = compos.map((compo) => compo.ingredient.color.toColor()).toList(growable: false);
     final colorStops = _getColorStops(compos);
     return ui.Gradient.linear(Offset(0, 85), Offset(0, 15), colors, colorStops);
   }
@@ -102,7 +102,7 @@ class ProductPainter extends CustomPainter {
   List<Color> _getAdjustedColors(List<Composition> compos) {
     final sum = compos.fold(0 ,(acc, cur) => acc + cur.quantity);
     return compos.map((compo) {
-      final hslColor = HSLColor.fromColor(compo.ingredient.color);
+      final hslColor = compo.ingredient.color;
       final quantityFactor = min<double>(sum, compo.quantity * 1.5) / sum;
       final maxLightness = 1 - hslColor.lightness;
       final newLightness = maxLightness * quantityFactor;
