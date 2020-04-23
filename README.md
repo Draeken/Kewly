@@ -38,3 +38,28 @@ default filter, that apply to all sections. These filter aren't visible on searc
 Pinned product to try later, they automatically disappear when user scroll down to the cocktail page and had viewed it for more than 1min (that also add the cocktail to "to be rated" list)
 ### Historic
 List all viewed product, ordered by last time seen.
+
+## Glass priority
+- 11
+- 20
+- 26
+- 30
+- 4
+- 17
+- 16
+- 6
+- 25
+- 23
+- 7
+- 3
+- 13
+- 12
+- 24
+- 18
+- 5
+- 10
+- 8
+- 15
+- 29
+- 27
+- 1 (< 10)

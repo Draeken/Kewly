@@ -26,14 +26,16 @@ class ProductRaw {
   final String link;
   final List<CompositionRaw> composition;
   final double capacity;
+  final int glass;
 
-  ProductRaw({this.id, this.name, this.link, this.composition, this.capacity});
+  ProductRaw({this.id, this.name, this.link, this.composition, this.capacity, this.glass});
 
   static ProductRaw fromJson(Map<String, dynamic> json) {
     final List<CompositionRaw> composition =
         mapJsonToList(json['composition'], CompositionRaw.fromJson);
     return ProductRaw(
         id: json['id'] as int,
+        glass: json['glass'] as int,
         name: json['name'] as String,
         link: json['link'] as String,
         capacity: json['capacity']?.toDouble(),
@@ -59,9 +61,10 @@ class Product implements Id {
   final String name;
   final String link;
   final double capacity;
+  final int glass;
   final Iterable<Composition> composition;
 
-  Product({this.id, this.name, this.link, this.composition, this.capacity});
+  Product({this.id, this.name, this.link, this.composition, this.capacity, this.glass});
 }
 
 class ColorRaw {
@@ -247,6 +250,20 @@ class AppModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  _debugGraph() {
+    final List<GlassInfo> glassList = [];
+    for (var product in _products) {
+      final glassInfo = glassList.firstWhere((g) => g.id == product.glass, orElse: () => null);
+      if (glassInfo == null) {
+        glassList.add(GlassInfo(id: product.glass, count: 1));
+        continue;
+      }
+      glassInfo.count += 1;
+    }
+    glassList.sort((a, b) => b.count.compareTo(a.count));
+    return glassList;
+  }
+
   Future<void> _loadGraph(BuildContext context) async {
     final graph = await DefaultAssetBundle.of(context)
         .loadStructuredData('assets/graph.json', (s) async => jsonDecode(s));
@@ -261,6 +278,7 @@ class AppModel extends ChangeNotifier {
             id: productRaw.id,
             link: productRaw.link,
             capacity: productRaw.capacity,
+            glass: productRaw.glass,
             composition: productRaw.composition
                 .map((compoRaw) => Composition(
                     unit: compoRaw.unit,
@@ -312,6 +330,13 @@ class AppModel extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString(AppModel.USER_PREF_KEY, userDataRaw);
   }
+}
+
+class GlassInfo {
+  final int id;
+  int count;
+
+  GlassInfo({ this.id, this.count });
 }
 
 List<U> _objectifyIdList<U extends Id>(List<int> listOfId, List<U> listOfObj,
