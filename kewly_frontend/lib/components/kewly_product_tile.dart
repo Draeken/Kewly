@@ -19,8 +19,7 @@ class KewlyProductTile extends StatelessWidget {
         onTapDown: _launchDrinkURL,
         child: Column(children: [
           Container(
-              decoration: BoxDecoration(
-                  color: Colors.white),
+              decoration: BoxDecoration(color: Colors.white),
               child: CustomPaint(
                 size: Size(100, 100),
                 painter: ProductPainter(product),
@@ -54,12 +53,14 @@ class ProductPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final fillColor = _getColor();
-    final myPaint = Paint()
-      ..style = PaintingStyle.fill;
+    final myPaint = Paint()..style = PaintingStyle.fill;
 
     if (fillColor.alpha < 255) {
       final hslColor = HSLColor.fromColor(fillColor);
-      myPaint.shader = ui.Gradient.linear(Offset(0, 85), Offset(0, 15), [fillColor, hslColor.withLightness(max(0, hslColor.lightness - 0.15)).toColor()]);
+      myPaint.shader = ui.Gradient.linear(Offset(0, 85), Offset(0, 15), [
+        fillColor,
+        hslColor.withLightness(max(0, hslColor.lightness - 0.15)).toColor()
+      ]);
     } else {
       myPaint.color = fillColor;
     }
@@ -83,7 +84,7 @@ class ProductPainter extends CustomPainter {
     // TODO: implement shouldRepaint
     return false;
   }
-  
+
   void _drawIceCubes(Canvas canvas) {
     canvas.drawPicture(GlassEffect.ice);
   }
@@ -207,7 +208,7 @@ class GlassPath {
       ..lineTo(65, 69)
       ..cubicTo(67.4, 67, 70, 45.5, 70, 26)
   ];
-  
+
   static final glass30_glass_left = Path()
     ..moveTo(24, 28.5)
     ..cubicTo(-13, 79.5, 47, 87, 47, 100);
@@ -260,26 +261,29 @@ class GlassEffect {
       final xOffset = rand.nextDouble() * 15 - 7.5;
       for (var j = 0; j < maxOnX; j++) {
         final yOffset = rand.nextDouble() * 3 - 1.5;
-        final position = boundOffset + Offset(16.0 * j + xOffset, 16.0 * i + yOffset);
-        final iceCube = iceCubeTemplate.transform(Matrix4.rotationZ(rand.nextDouble() * 2 * pi).storage).shift(position);
+        final position =
+            boundOffset + Offset(16.0 * j + xOffset, 16.0 * i + yOffset);
+        final iceCube = iceCubeTemplate
+            .transform(Matrix4.rotationZ(rand.nextDouble() * 2 * pi).storage)
+            .shift(position);
         canvas.drawPath(
             iceCube,
             Paint()
               ..style = PaintingStyle.stroke
               ..strokeJoin = StrokeJoin.round
               ..color = Colors.black
-              ..strokeWidth = 0.03
-
-
-        );
+              ..strokeWidth = 0.03);
         canvas.drawPath(
             iceCube,
             Paint()
               ..style = PaintingStyle.fill
-              ..shader = ui.Gradient.linear(position, position.translate(16, 16), [Colors.white.withOpacity(rand.nextDouble()), Colors.transparent])
+              ..shader = ui.Gradient.linear(
+                  position, position.translate(16, 16), [
+                Colors.white.withOpacity(rand.nextDouble()),
+                Colors.transparent
+              ])
               ..blendMode = BlendMode.softLight
-              ..maskFilter = MaskFilter.blur(BlurStyle.inner, 3)
-        );
+              ..maskFilter = MaskFilter.blur(BlurStyle.inner, 3));
       }
     }
     return pictureRecorded.endRecording();

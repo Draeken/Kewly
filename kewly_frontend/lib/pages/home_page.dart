@@ -191,10 +191,10 @@ class AllYourProducts extends StatelessWidget {
             .where((product) =>
                 product.composition.every((compo) => compo.ingredient.isOwned))
             .toList(growable: false);
-        var children = products
-            .map((product) => KewlyProductTile(product))
-            .toList(growable: false);
-        return KewlyCategory(title: 'Toutes vos boissons', children: children);
+        final builder = (BuildContext context, int index) {
+          return KewlyProductTile(products[index]);
+        };
+        return KewlyCategory(title: 'Toutes vos boissons', itemCount: products.length, builder: builder);
       },
     );
   }
@@ -238,11 +238,11 @@ class ForAFewDollarsMore extends StatelessWidget {
           return b.missing[0].usedBy.length
               .compareTo(a.missing[0].usedBy.length);
         });
-        var children = productWithMissing
-            .map((pwm) => KewlyProductTile(pwm.product))
-            .toList(growable: false);
+        final builder = (BuildContext _context, int index) {
+          return KewlyProductTile(productWithMissing[index].product);
+        };
         return KewlyCategory(
-            title: 'Pour quelques \$ de plus', children: children);
+            title: 'Pour quelques \$ de plus', builder: builder, itemCount: productWithMissing.length);
       },
     );
   }
