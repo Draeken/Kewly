@@ -1469,7 +1469,7 @@
       "composition": [
         { "ingredientId": 180, "quantity": 1, "unit": "tbsp" },
         { "ingredientId": 151, "quantity": 20, "unit": "ml" },
-        { "ingredientId": 27, "quantity": 180 }
+        { "ingredientId": 27, "quantity": 180, "unit": "ml" }
       ],
       "capacity": 300,
       "glass": 26

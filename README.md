@@ -12,7 +12,7 @@ Recommended should list available products based on:
 ### For a few dollars more
 Same as recommended but with near available products (1 missing ingredient)
 ### All your cocktails
-All available products, sorted by user's appreciation.
+All available products, sorted by user's appreciation. (or random)
 
 ## Home - selection mode
 user can tap product to toggle selection. Then, user can add selection to "pin cocktails" or "add to shopping list".
@@ -21,11 +21,11 @@ user can tap product to toggle selection. Then, user can add selection to "pin c
 Allow search of family product, eg: fruit juice, alcohol, frappé, Le Fruit. (these family are ingredient's tags)
 Combine chips to compute a score for each product, order by most revelant (use the quantity of each product to compute score). Apply OR operator to all chips.
 
-list chip by most frequently used. Each ingredient had tag, that generate two chip : with / without.
+list chip by most frequently used. ~~Each ingredient had tag, that generate two chip : with / without.~~
 Chip list is filtered by user search
 
 ## Shopping List
-Product grouped by family (all siryp, all alcohol, all fruit juice). Product already owned are listed last and scrimmed. User can tap to toggle state (owned/to buy).
+Product grouped by ~~family (all siryp, all alcohol, all fruit juice)~~ drink composition. Product already owned are listed last and scrimmed. User can tap to toggle state (owned/to buy).
 
 ## Ingrédient page
 Inform all the product the user can perform (with the ingredients he owns and those he has to buy).
