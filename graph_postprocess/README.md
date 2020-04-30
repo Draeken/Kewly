@@ -30,7 +30,7 @@ cappucino -> nom de la boisson
 17. 80, 120, 150, 120 (daiquiri x9), 140 (aquafaba x2)
 18. 290, 450, 400, 250, 300 (bière x10), 330
 19. 360 (bière x3), 400 (mojito x1)
-20. 360, 350, 400, 450 (thé x27) (limonade x10) (mojito x10) (expresso x3) (chocolat x4)
+20. 360, 350, 400, 450 (thé x27) (limonade x10) (mojito x10) (expresso x3) (chocolat x4) - https://www.monin.com/fr/cuba-libre-vanille-cafe.html
 21. 180, 200 (cappuccino x5)
 22. 350 (thé x1), 420
 23. 360 (thé x2), 350, 300 (smoothie x6) (mojito x1) (lait x3) (chocolat x2)
