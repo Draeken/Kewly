@@ -4,24 +4,23 @@ const fs = require('fs'),
 const graph = JSON.parse(fs.readFileSync(path.join(__dirname, 'graph.json')));
 const products = graph.products;
 const ingredients = graph.ingredients;
-const instructions = graph.instructions;
 const ingredientToReview = [];
 
-products.forEach((product) => {
-  if (product.decoratedWith) {
-    product.decoratedWith = product.decoratedWith.map((id) => ({ id }));
-  }
-});
+// products.forEach((product) => {
+//   if (product.decoratedWith) {
+//     product.decoratedWith = product.decoratedWith.map((id) => ({ id }));
+//   }
+// });
 
 ingredients.forEach((ingredient) => {
   if (!ingredient.decorates) {
     ingredient.decorates = [];
   }
-})
+});
 
 const main = () => {
   normalizeIngredients();
-  graph.ingredients = graph.ingredients.filter(ingre => !ingre.markObsolete);
+  graph.ingredients = graph.ingredients.filter((ingre) => !ingre.markObsolete);
   writeFile();
 };
 
@@ -99,16 +98,16 @@ const normalizeIngredients = () => {
     ['crème chantilly', 198],
     ['cookies ', 614],
     ['Bonbons guimauve', 579],
-    ["Menthe", 139],
-    ["Fraise fraîche", 236],
-    ["Fraises", 236],
-    ["mini billes de sucre", 556],
-    ["une boule de glace à la vanille", 270],
-    ["nappage caramel", 653],
-    ["Sel", 501],
-    ["estragon", 534],
-    ["Mûres", 389],
-    ["mûres", 389],
+    ['Menthe', 139],
+    ['Fraise fraîche', 236],
+    ['Fraises', 236],
+    ['mini billes de sucre', 556],
+    ['une boule de glace à la vanille', 270],
+    ['nappage caramel', 653],
+    ['Sel', 501],
+    ['estragon', 534],
+    ['Mûres', 389],
+    ['mûres', 389],
   ];
   manualMerge.forEach((tuple) => {
     const [a, b] = findTwoIngredients(tuple);
@@ -117,12 +116,12 @@ const normalizeIngredients = () => {
 
   const alias = [
     ['jus de citron frais', 227],
-    ["Zeste citron", 227],
-    ["zeste de citron", 227],
+    ['Zeste citron', 227],
+    ['zeste de citron', 227],
     ['jus de citron vert frais', 83],
-    ["Zeste de Citron Vert", 83],
-    ["Tranche de citron vert", 83],
-    ["rondelle de citron vert", 83],
+    ['Zeste de Citron Vert', 83],
+    ['Tranche de citron vert', 83],
+    ['rondelle de citron vert', 83],
     ['quart citron vert', 83],
     ['quartier de citron vert', 83],
     ['jus de pamplemousse frais', 513],
@@ -135,8 +134,8 @@ const normalizeIngredients = () => {
     ['thé fraichement infusé', 325],
     ['Thé noir glacé', 491],
     ['Tranche de Citron / Morceaux', 227],
-    ["Tranche de citron", 227],
-    ["tranche de citron", 227],
+    ['Tranche de citron', 227],
+    ['tranche de citron', 227],
     ['Eventail de pommes', 421],
     ['tranche de pomme', 421],
     ["Tranche d'Ananas", 244],
@@ -150,64 +149,55 @@ const normalizeIngredients = () => {
     ["zeste d'orange", 267],
     ['Tranche de Pamplemousse/Morceaux', 513],
     ['feuille de menthe', 139],
-    ["feuilles de menthe", 139],
-    ["Feuilles de menthe", 139],
+    ['feuilles de menthe', 139],
+    ['Feuilles de menthe', 139],
     ['Poudre de Cannelle', 352],
     ['cookies émiettés', 614],
-    ["Morceaux de Cookie en poudre pour givrer le verre", 614],
-    ["Tranche de Kiwi", 216],
-    ["morceau de poire", 642],
-    ["tranche de concombre", 253],
-    ["tranches de concombre", 253],
-    ["Tranche(s) de concombre", 253],
-    ["Quartier de pamplemousse rose", 513],
-    ["Branche de Menthe", 139],
-    ["Feuille de combava", 499],
-    ["Tranche(s) de mandarine", 466]
+    ['Morceaux de Cookie en poudre pour givrer le verre', 614],
+    ['Tranche de Kiwi', 216],
+    ['morceau de poire', 642],
+    ['tranche de concombre', 253],
+    ['tranches de concombre', 253],
+    ['Tranche(s) de concombre', 253],
+    ['Quartier de pamplemousse rose', 513],
+    ['Branche de Menthe', 139],
+    ['Feuille de combava', 499],
+    ['Tranche(s) de mandarine', 466],
   ];
 
   const aliasWithNew = [
-    { alias: [
-      'chocolat liquide',
-      'chocolat noir râpé',
-      'chocolat pour givrer le verre',
-      'Copeaux de Chocolat',
-      "filet de chocolat",
-    ], name: 'chocolat' },
+    { alias: ['chocolat liquide', 'chocolat noir râpé', 'chocolat pour givrer le verre', 'Copeaux de Chocolat', 'filet de chocolat'], name: 'chocolat' },
     {
-      alias: [
-        "Eclats de Banane",
-        "rondelle de banane"
-      ],
-      name: 'banane'
-    }
+      alias: ['Eclats de Banane', 'rondelle de banane'],
+      name: 'banane',
+    },
   ];
 
-  aliasWithNew.forEach(obj => {
+  aliasWithNew.forEach((obj) => {
     const id = ingredients.length;
     ingredients.push({ id, name: obj.name, usedBy: [], decorates: [] });
-    obj.alias.forEach(alia => {
+    obj.alias.forEach((alia) => {
       alias.push([alia, id]);
     });
   });
 
-  alias.forEach(tuple => {
+  alias.forEach((tuple) => {
     const [aliased, origin] = findTwoIngredients(tuple);
     aliased.markObsolete = true;
     aliased.usedBy.forEach((productId) => {
-      const product = products.find(p => p.id === productId);
-      const compo = product.composition.find(comp => comp.ingredientId == aliased.id);
+      const product = products.find((p) => p.id === productId);
+      const compo = product.composition.find((comp) => comp.ingredientId == aliased.id);
       compo.ingredientId = origin.id;
       compo.as = aliased.name;
       origin.usedBy.push(productId);
-      console.log(' - aliased composition of ', product.name, ' for ', aliased.name);      
+      console.log(' - aliased composition of ', product.name, ' for ', aliased.name);
     });
     if (!aliased.decorates) {
       return;
     }
-    aliased.decorates.forEach(productId => {
-      const product = products.find(p => p.id === productId);
-      const deco = product.decoratedWith.find(dec => dec.id === aliased.id);
+    aliased.decorates.forEach((productId) => {
+      const product = products.find((p) => p.id === productId);
+      const deco = product.decoratedWith.find((dec) => dec.id === aliased.id);
       deco.id = origin.id;
       deco.as = aliased.name;
       origin.decorates.push(productId);
@@ -236,7 +226,7 @@ const findTwoIngredients = (tuple) => {
     }
   }
   return [a, b];
-}
+};
 
 const searchCorrespondance = (searachIn, ingredient, toRemove) => {
   const searchFor = ingredient.name.replace(new RegExp(toRemove, 'i'), '').trim();
@@ -247,9 +237,19 @@ const mergeIngredients = (a, b) => {
   a.usedBy = a.usedBy.concat(b.usedBy);
   console.log(`${a.name} merged with ${b.name}`);
   b.markObsolete = true;
+  b.usedBy.forEach((productId) => {
+    const product = products.find((p) => p.id === productId);
+    const compo = product.composition.find((compo) => compo.ingredientId === b.id);
+    compo.ingredientId = a.id;
+  });
   if (!b.decorates) {
     return a;
   }
+  b.decorates.forEach((productId) => {
+    const product = products.find((p) => p.id === productId);
+    const compo = product.decoratedWith.find((compo) => compo.id === b.id);
+    compo.id = a.id;
+  });
   if (a.decorates) {
     a.decorates.concat(b.decorates);
     return a;
@@ -262,7 +262,7 @@ const writeFile = () => {
   const jsonContent = JSON.stringify(graph);
   // const toReview = JSON.stringify(ingredientToReview);
 
-  fs.writeFile('graphPostProcessed.json', jsonContent, 'utf-8', (err) => {
+  fs.writeFile('graph-without-doublons.json', jsonContent, 'utf-8', (err) => {
     if (!err) {
       return;
     }

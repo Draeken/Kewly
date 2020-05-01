@@ -9,7 +9,7 @@ const ingredients = graph.ingredients;
 const instructions = [];
 
 const main = async () => {
-  for (let i = 200; i < products.length; i++) {
+  for (let i = 0; i < products.length; i++) {
     await enrichProduct(products[i]);
   }
   graph.instructions = instructions;
@@ -23,26 +23,28 @@ const main = async () => {
 };
 
 const enrichProduct = async (product) => {
-  return axios(product.link).then((response) => {
-    const $ = cheerio.load(response.data);
-    const decorationNode = $('span:contains("Décoration")', '.recipe_content_information')[0];
-    if (decorationNode) {
-      const decoration = decorationNode.nextSibling.nodeValue;
-      const decorIngredients = decoration.trim().split(/,\s/);
-      product.decoratedWith = [];
-      decorIngredients.forEach((ingredientName) => linkDecoration(product, ingredientName));
-    }
-    const instructions = $('.product-info-main-content').find('ol');
-    if (instructions.length) {
-      product.instructions = [];
-      instructions.find('li').each((_i, instruction) => {
-        const instructionName = $(instruction).text().trim();
-        linkInstruction(product, instructionName);
-      });
-    }
-  }).catch(e => {
-    console.log('error', e, product.link);
-  });
+  return axios(product.link)
+    .then((response) => {
+      const $ = cheerio.load(response.data);
+      const decorationNode = $('span:contains("Décoration")', '.recipe_content_information')[0];
+      if (decorationNode) {
+        const decoration = decorationNode.nextSibling.nodeValue;
+        const decorIngredients = decoration.trim().split(/,\s/);
+        product.decoratedWith = [];
+        decorIngredients.forEach((ingredientName) => linkDecoration(product, ingredientName));
+      }
+      const instructions = $('.product-info-main-content').find('ol');
+      if (instructions.length) {
+        product.instructions = [];
+        instructions.find('li').each((_i, instruction) => {
+          const instructionName = $(instruction).text().trim();
+          linkInstruction(product, instructionName);
+        });
+      }
+    })
+    .catch((e) => {
+      console.log('error', e, product.link);
+    });
 };
 
 const linkInstruction = (product, instructionName) => {
@@ -53,7 +55,7 @@ const linkInstruction = (product, instructionName) => {
   }
   instructionObj.usedBy.push(product.id);
   product.instructions.push(instructionObj.id);
-}
+};
 
 const linkDecoration = (product, ingredientName) => {
   let ingredientObj = ingredients.find((ingre) => ingre.name === ingredientName);
@@ -66,7 +68,7 @@ const linkDecoration = (product, ingredientName) => {
   } else {
     ingredientObj.decorates.push(product.id);
   }
-  product.decoratedWith.push(ingredientObj.id);
+  product.decoratedWith.push({ id: ingredientObj.id });
 };
 
 main();
