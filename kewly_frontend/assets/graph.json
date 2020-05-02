@@ -30,7 +30,8 @@
       ],
       "capacity": 300,
       "glass": 3,
-      "tags": ["alcool", "syriup", "mixed", "ice"]
+      "tags": ["alcool", "syriup", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 2,
@@ -120,7 +121,8 @@
       ],
       "capacity": 200,
       "glass": 16,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 8,
@@ -190,7 +192,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["alcool", "sparkling", "mixed"]
+      "tags": ["alcool", "sparkling", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 13,
@@ -203,7 +206,8 @@
       ],
       "capacity": 200,
       "glass": 16,
-      "tags": ["syriup", "alcool", "sparkling", "filtered", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "filtered", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 14,
@@ -220,7 +224,8 @@
       ],
       "capacity": 140,
       "glass": 28,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 15,
@@ -263,7 +268,8 @@
       ],
       "capacity": 290,
       "glass": 18,
-      "tags": ["syriup", "alcool", "sparkling", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 18,
@@ -277,7 +283,8 @@
       ],
       "capacity": 450,
       "glass": 18,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 19,
@@ -289,7 +296,8 @@
       ],
       "capacity": 400,
       "glass": 4,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 20,
@@ -315,7 +323,8 @@
       ],
       "capacity": 360,
       "glass": 18,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 22,
@@ -340,7 +349,8 @@
       ],
       "capacity": 250,
       "glass": 18,
-      "tags": ["syriup", "alcool", "sparkling", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 24,
@@ -353,7 +363,8 @@
       ],
       "capacity": 300,
       "glass": 4,
-      "tags": ["syriup", "alcool", "sparkling", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 25,
@@ -365,7 +376,8 @@
       ],
       "capacity": 300,
       "glass": 18,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 26,
@@ -404,7 +416,8 @@
       ],
       "capacity": 250,
       "glass": 18,
-      "tags": ["syriup", "alcool", "sparkling", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 29,
@@ -447,7 +460,8 @@
       ],
       "capacity": 300,
       "glass": 18,
-      "tags": ["syriup", "alcool", "sparkling", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 32,
@@ -472,7 +486,8 @@
       ],
       "capacity": 300,
       "glass": 18,
-      "tags": ["syriup", "alcool", "sparkling", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 34,
@@ -498,7 +513,8 @@
       ],
       "capacity": 250,
       "glass": 18,
-      "tags": ["syriup", "alcool", "sparkling", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 36,
@@ -512,7 +528,8 @@
       ],
       "capacity": 360,
       "glass": 18,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 37,
@@ -555,7 +572,8 @@
       ],
       "capacity": 420,
       "glass": 20,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 40,
@@ -567,7 +585,8 @@
       ],
       "capacity": 300,
       "glass": 25,
-      "tags": ["alcool", "syriup", "ice", "mixed"]
+      "tags": ["alcool", "syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 41,
@@ -594,7 +613,8 @@
       ],
       "capacity": 300,
       "glass": 25,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 43,
@@ -622,7 +642,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 45,
@@ -777,7 +798,8 @@
       ],
       "capacity": 300,
       "glass": 3,
-      "tags": ["syriup", "alcool", "mixed", "ice"]
+      "tags": ["syriup", "alcool", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 55,
@@ -869,7 +891,8 @@
       ],
       "capacity": 420,
       "glass": 20,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 61,
@@ -909,7 +932,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 64,
@@ -938,7 +962,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 66,
@@ -952,7 +977,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 67,
@@ -1008,7 +1034,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 71,
@@ -1021,7 +1048,8 @@
       ],
       "capacity": 300,
       "glass": 3,
-      "tags": ["alcool", "ice", "mixed"]
+      "tags": ["alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 72,
@@ -1034,7 +1062,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 73,
@@ -1089,7 +1118,8 @@
       ],
       "capacity": 150,
       "glass": 15,
-      "tags": ["syriup", "hot"]
+      "tags": ["syriup", "hot"],
+      "decoratedWith": []
     },
     {
       "id": 77,
@@ -1103,7 +1133,8 @@
       ],
       "capacity": 180,
       "glass": 21,
-      "tags": ["syriup", "hot"]
+      "tags": ["syriup", "hot"],
+      "decoratedWith": []
     },
     {
       "id": 78,
@@ -1117,7 +1148,8 @@
       ],
       "capacity": 180,
       "glass": 21,
-      "tags": ["syriup", "hot"]
+      "tags": ["syriup", "hot"],
+      "decoratedWith": []
     },
     {
       "id": 79,
@@ -1144,7 +1176,8 @@
       ],
       "capacity": 200,
       "glass": 15,
-      "tags": ["syriup", "hot"]
+      "tags": ["syriup", "hot"],
+      "decoratedWith": []
     },
     {
       "id": 81,
@@ -1157,7 +1190,8 @@
       ],
       "capacity": 200,
       "glass": 15,
-      "tags": ["syriup", "hot"]
+      "tags": ["syriup", "hot"],
+      "decoratedWith": []
     },
     {
       "id": 82,
@@ -1184,7 +1218,8 @@
       ],
       "capacity": 200,
       "glass": 21,
-      "tags": ["syriup", "hot"]
+      "tags": ["syriup", "hot"],
+      "decoratedWith": []
     },
     {
       "id": 84,
@@ -1225,7 +1260,8 @@
       ],
       "capacity": 60,
       "glass": 11,
-      "tags": ["syriup", "alcool", "mixed"]
+      "tags": ["syriup", "alcool", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 87,
@@ -1345,7 +1381,8 @@
       ],
       "capacity": 200,
       "glass": 16,
-      "tags": ["syriup"]
+      "tags": ["syriup"],
+      "decoratedWith": []
     },
     {
       "id": 95,
@@ -1386,7 +1423,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["syriup", "alcool", "ice"]
+      "tags": ["syriup", "alcool", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 98,
@@ -1528,7 +1566,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 108,
@@ -1582,7 +1621,8 @@
       ],
       "capacity": 300,
       "glass": 23,
-      "tags": ["syriup"]
+      "tags": ["syriup"],
+      "decoratedWith": []
     },
     {
       "id": 112,
@@ -1622,7 +1662,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["hot", "mixed", "filtered"]
+      "tags": ["hot", "mixed", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 115,
@@ -1663,7 +1704,8 @@
       ],
       "capacity": 300,
       "glass": 4,
-      "tags": ["syriup", "hot", "mixed", "filtered"]
+      "tags": ["syriup", "hot", "mixed", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 118,
@@ -1731,7 +1773,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 123,
@@ -1744,7 +1787,8 @@
       ],
       "capacity": 300,
       "glass": 4,
-      "tags": []
+      "tags": [],
+      "decoratedWith": []
     },
     {
       "id": 124,
@@ -1757,7 +1801,8 @@
       ],
       "capacity": 300,
       "glass": 23,
-      "tags": ["syriup"]
+      "tags": ["syriup"],
+      "decoratedWith": []
     },
     {
       "id": 125,
@@ -1770,7 +1815,8 @@
       ],
       "capacity": 300,
       "glass": 23,
-      "tags": ["syriup"]
+      "tags": ["syriup"],
+      "decoratedWith": []
     },
     {
       "id": 126,
@@ -1783,7 +1829,8 @@
       ],
       "capacity": 360,
       "glass": 23,
-      "tags": ["hot", "mixed", "filtered"]
+      "tags": ["hot", "mixed", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 127,
@@ -1809,7 +1856,8 @@
       ],
       "capacity": 300,
       "glass": 4,
-      "tags": ["syriup"]
+      "tags": ["syriup"],
+      "decoratedWith": []
     },
     {
       "id": 129,
@@ -1822,7 +1870,8 @@
       ],
       "capacity": 300,
       "glass": 4,
-      "tags": ["syriup"]
+      "tags": ["syriup"],
+      "decoratedWith": []
     },
     {
       "id": 130,
@@ -1862,7 +1911,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 133,
@@ -1905,7 +1955,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup"]
+      "tags": ["syriup"],
+      "decoratedWith": []
     },
     {
       "id": 136,
@@ -2030,7 +2081,8 @@
       ],
       "capacity": 350,
       "glass": 7,
-      "tags": ["syriup", "mixed", "ice"]
+      "tags": ["syriup", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 145,
@@ -2213,7 +2265,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 158,
@@ -2226,7 +2279,8 @@
       ],
       "capacity": 180,
       "glass": 15,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 159,
@@ -2254,7 +2308,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["syriup", "mixed"]
+      "tags": ["syriup", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 161,
@@ -2331,7 +2386,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 166,
@@ -2404,7 +2460,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 171,
@@ -2511,7 +2568,8 @@
       ],
       "capacity": 400,
       "glass": 20,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 178,
@@ -2524,7 +2582,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["alcool", "syriup", "ice", "mixed"]
+      "tags": ["alcool", "syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 179,
@@ -2538,7 +2597,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["alcool", "syriup", "ice", "mixed"]
+      "tags": ["alcool", "syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 180,
@@ -2550,7 +2610,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup", "alcool", "ice"]
+      "tags": ["syriup", "alcool", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 181,
@@ -2582,7 +2643,8 @@
       ],
       "capacity": 300,
       "glass": 3,
-      "tags": ["syriup", "alcool", "mixed", "ice"]
+      "tags": ["syriup", "alcool", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 183,
@@ -2610,7 +2672,8 @@
       ],
       "capacity": 480,
       "glass": 30,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 185,
@@ -2639,7 +2702,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup", "alcool", "blended", "ice"]
+      "tags": ["syriup", "alcool", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 187,
@@ -2652,7 +2716,8 @@
         { "ingredientId": 13, "quantity": 100, "unit": "ml" }
       ],
       "glass": 11,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 188,
@@ -2693,7 +2758,8 @@
       ],
       "capacity": 300,
       "glass": 23,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 191,
@@ -2721,7 +2787,8 @@
       ],
       "capacity": 300,
       "glass": 3,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 193,
@@ -2735,7 +2802,8 @@
       ],
       "capacity": 300,
       "glass": 25,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 194,
@@ -2749,7 +2817,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 195,
@@ -2761,7 +2830,8 @@
       ],
       "capacity": 420,
       "glass": 20,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 196,
@@ -2773,7 +2843,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 197,
@@ -2788,7 +2859,8 @@
       ],
       "capacity": 400,
       "glass": 20,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 198,
@@ -2835,7 +2907,8 @@
       ],
       "capacity": 300,
       "glass": 25,
-      "tags": ["alcool", "syriup", "sparkling", "ice", "mixed"]
+      "tags": ["alcool", "syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 201,
@@ -2884,7 +2957,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 204,
@@ -2900,7 +2974,8 @@
       ],
       "capacity": 420,
       "glass": 22,
-      "tags": ["syriup", "alcool", "sparkling", "mixed", "ice"]
+      "tags": ["syriup", "alcool", "sparkling", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 205,
@@ -2976,7 +3051,8 @@
       ],
       "capacity": 300,
       "glass": 25,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 210,
@@ -2991,7 +3067,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["alcool", "syriup", "sparkling", "mixed", "filtered", "ice"]
+      "tags": ["alcool", "syriup", "sparkling", "mixed", "filtered", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 211,
@@ -3023,7 +3100,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 213,
@@ -3119,7 +3197,8 @@
       ],
       "capacity": 300,
       "glass": 5,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 219,
@@ -3148,7 +3227,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 221,
@@ -3160,7 +3240,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup"]
+      "tags": ["syriup"],
+      "decoratedWith": []
     },
     {
       "id": 222,
@@ -3172,7 +3253,8 @@
       ],
       "capacity": 1,
       "glass": 11,
-      "tags": []
+      "tags": [],
+      "decoratedWith": []
     },
     {
       "id": 223,
@@ -3187,7 +3269,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 224,
@@ -3200,7 +3283,8 @@
       ],
       "capacity": 23,
       "glass": 11,
-      "tags": ["syriup", "alcool", "mixed"]
+      "tags": ["syriup", "alcool", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 225,
@@ -3245,7 +3329,8 @@
       ],
       "capacity": 200,
       "glass": 12,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 228,
@@ -3273,7 +3358,8 @@
       ],
       "capacity": 120,
       "glass": 12,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 230,
@@ -3286,7 +3372,8 @@
       ],
       "capacity": 150,
       "glass": 2,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 231,
@@ -3313,7 +3400,8 @@
       ],
       "capacity": 150,
       "glass": 17,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 233,
@@ -3355,7 +3443,8 @@
       ],
       "capacity": 120,
       "glass": 12,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 236,
@@ -3396,7 +3485,8 @@
       ],
       "capacity": 80,
       "glass": 17,
-      "tags": ["alcool", "ice", "mixed"]
+      "tags": ["alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 239,
@@ -3409,7 +3499,8 @@
       ],
       "capacity": 200,
       "glass": 12,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 240,
@@ -3423,7 +3514,8 @@
       ],
       "capacity": 120,
       "glass": 12,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 241,
@@ -3436,7 +3528,8 @@
       ],
       "capacity": 250,
       "glass": 12,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 242,
@@ -3449,7 +3542,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["alcool", "ice", "mixed"]
+      "tags": ["alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 243,
@@ -3476,7 +3570,8 @@
       ],
       "capacity": 140,
       "glass": 17,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 245,
@@ -3505,7 +3600,8 @@
       ],
       "capacity": 110,
       "glass": 17,
-      "tags": ["alcool", "ice", "mixed"]
+      "tags": ["alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 247,
@@ -3563,7 +3659,8 @@
       ],
       "capacity": 300,
       "glass": 4,
-      "tags": ["alcool", "sparkling", "mixed"]
+      "tags": ["alcool", "sparkling", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 251,
@@ -3593,7 +3690,8 @@
       ],
       "capacity": 300,
       "glass": 3,
-      "tags": []
+      "tags": [],
+      "decoratedWith": []
     },
     {
       "id": 253,
@@ -3607,7 +3705,8 @@
       ],
       "capacity": 300,
       "glass": 24,
-      "tags": ["syriup"]
+      "tags": ["syriup"],
+      "decoratedWith": []
     },
     {
       "id": 254,
@@ -3635,7 +3734,8 @@
       ],
       "capacity": 360,
       "glass": 20,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 256,
@@ -3662,7 +3762,8 @@
       ],
       "capacity": 360,
       "glass": 8,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 258,
@@ -3688,7 +3789,8 @@
       ],
       "capacity": 360,
       "glass": 8,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 260,
@@ -3700,7 +3802,8 @@
       ],
       "capacity": 300,
       "glass": 25,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 261,
@@ -3772,7 +3875,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 266,
@@ -3803,7 +3907,8 @@
       ],
       "capacity": 300,
       "glass": 3,
-      "tags": ["syriup"]
+      "tags": ["syriup"],
+      "decoratedWith": []
     },
     {
       "id": 268,
@@ -3894,7 +3999,8 @@
       ],
       "capacity": 300,
       "glass": 24,
-      "tags": ["alcool", "sparkling", "mixed", "filtered", "ice"]
+      "tags": ["alcool", "sparkling", "mixed", "filtered", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 274,
@@ -3924,7 +4030,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["alcool", "ice", "mixed"]
+      "tags": ["alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 276,
@@ -3965,7 +4072,8 @@
       ],
       "capacity": 400,
       "glass": 4,
-      "tags": ["alcool", "syriup", "blended", "ice"]
+      "tags": ["alcool", "syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 279,
@@ -4006,7 +4114,8 @@
       ],
       "capacity": 80,
       "glass": 17,
-      "tags": ["alcool", "hot"]
+      "tags": ["alcool", "hot"],
+      "decoratedWith": []
     },
     {
       "id": 282,
@@ -4020,7 +4129,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 283,
@@ -4047,7 +4157,8 @@
       ],
       "capacity": 200,
       "glass": 15,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 285,
@@ -4205,7 +4316,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 295,
@@ -4218,7 +4330,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 296,
@@ -4297,7 +4410,8 @@
       ],
       "capacity": 140,
       "glass": 28,
-      "tags": ["syriup", "alcool", "mixed", "ice"]
+      "tags": ["syriup", "alcool", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 301,
@@ -4311,7 +4425,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["alcool", "syriup", "ice", "mixed"]
+      "tags": ["alcool", "syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 302,
@@ -4340,7 +4455,8 @@
       ],
       "capacity": 140,
       "glass": 12,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 304,
@@ -4354,7 +4470,8 @@
       ],
       "capacity": 850,
       "glass": 11,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 305,
@@ -4383,7 +4500,8 @@
       ],
       "capacity": 300,
       "glass": 24,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 307,
@@ -4453,7 +4571,8 @@
       ],
       "capacity": 360,
       "glass": 7,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 312,
@@ -4497,7 +4616,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": []
+      "tags": [],
+      "decoratedWith": []
     },
     {
       "id": 315,
@@ -4511,7 +4631,8 @@
       ],
       "capacity": 400,
       "glass": 7,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 316,
@@ -4524,7 +4645,8 @@
       ],
       "capacity": 400,
       "glass": 4,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 317,
@@ -4551,7 +4673,8 @@
       ],
       "capacity": 400,
       "glass": 7,
-      "tags": ["syriup", "ice", "blended"]
+      "tags": ["syriup", "ice", "blended"],
+      "decoratedWith": []
     },
     {
       "id": 319,
@@ -4565,7 +4688,8 @@
       ],
       "capacity": 400,
       "glass": 10,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 320,
@@ -4578,7 +4702,8 @@
       ],
       "capacity": 400,
       "glass": 7,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 321,
@@ -4784,7 +4909,8 @@
       ],
       "capacity": 360,
       "glass": 7,
-      "tags": ["syriup", "ice", "blended"]
+      "tags": ["syriup", "ice", "blended"],
+      "decoratedWith": []
     },
     {
       "id": 335,
@@ -4797,7 +4923,8 @@
       ],
       "capacity": 400,
       "glass": 7,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 336,
@@ -4855,7 +4982,8 @@
       ],
       "capacity": 400,
       "glass": 7,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 340,
@@ -4883,7 +5011,8 @@
       ],
       "capacity": 400,
       "glass": 7,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 342,
@@ -4926,7 +5055,8 @@
       ],
       "capacity": 400,
       "glass": 4,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 345,
@@ -4940,7 +5070,8 @@
       ],
       "capacity": 360,
       "glass": 7,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 346,
@@ -5012,7 +5143,8 @@
       ],
       "capacity": 400,
       "glass": 4,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 351,
@@ -5025,7 +5157,8 @@
       ],
       "capacity": 400,
       "glass": 4,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 352,
@@ -5190,7 +5323,8 @@
       ],
       "capacity": 300,
       "glass": 24,
-      "tags": ["syriup", "alcool", "blended", "ice"]
+      "tags": ["syriup", "alcool", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 363,
@@ -5203,7 +5337,8 @@
         { "ingredientId": 281, "quantity": 50, "unit": "ml" }
       ],
       "glass": 11,
-      "tags": ["syriup", "alcool", "blended", "ice"]
+      "tags": ["syriup", "alcool", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 364,
@@ -5277,7 +5412,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["alcool", "blended", "ice"]
+      "tags": ["alcool", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 369,
@@ -5359,7 +5495,8 @@
       ],
       "capacity": 300,
       "glass": 3,
-      "tags": ["alcool", "syriup", "blended", "ice"]
+      "tags": ["alcool", "syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 374,
@@ -5392,7 +5529,8 @@
       ],
       "capacity": 400,
       "glass": 20,
-      "tags": ["ice", "blended"]
+      "tags": ["ice", "blended"],
+      "decoratedWith": []
     },
     {
       "id": 376,
@@ -5406,7 +5544,8 @@
       ],
       "capacity": 400,
       "glass": 20,
-      "tags": ["syriup", "ice", "blended"]
+      "tags": ["syriup", "ice", "blended"],
+      "decoratedWith": []
     },
     {
       "id": 377,
@@ -5419,7 +5558,8 @@
       ],
       "capacity": 400,
       "glass": 20,
-      "tags": ["syriup", "ice"]
+      "tags": ["syriup", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 378,
@@ -5433,7 +5573,8 @@
       ],
       "capacity": 400,
       "glass": 20,
-      "tags": ["syriup", "ice"]
+      "tags": ["syriup", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 379,
@@ -5480,7 +5621,8 @@
       ],
       "capacity": 140,
       "glass": 28,
-      "tags": ["alcool", "ice"]
+      "tags": ["alcool", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 382,
@@ -5494,7 +5636,8 @@
       ],
       "capacity": 350,
       "glass": 4,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 383,
@@ -5569,7 +5712,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 388,
@@ -5583,7 +5727,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 389,
@@ -5642,7 +5787,8 @@
       ],
       "capacity": 200,
       "glass": 16,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 393,
@@ -5672,7 +5818,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 395,
@@ -5685,7 +5832,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 396,
@@ -5699,7 +5847,8 @@
       ],
       "capacity": 200,
       "glass": 12,
-      "tags": ["alcool", "mixed", "ice"]
+      "tags": ["alcool", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 397,
@@ -5799,7 +5948,8 @@
       ],
       "capacity": 350,
       "glass": 18,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 404,
@@ -5812,7 +5962,8 @@
       ],
       "capacity": 450,
       "glass": 30,
-      "tags": ["syriup", "alcool", "mixed"]
+      "tags": ["syriup", "alcool", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 405,
@@ -5841,7 +5992,8 @@
       ],
       "capacity": 300,
       "glass": 25,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 407,
@@ -5855,7 +6007,8 @@
       ],
       "capacity": 350,
       "glass": 4,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 408,
@@ -5868,7 +6021,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 409,
@@ -5916,7 +6070,8 @@
       ],
       "capacity": 300,
       "glass": 24,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 412,
@@ -6024,7 +6179,8 @@
       ],
       "capacity": 140,
       "glass": 28,
-      "tags": ["syriup", "alcool", "ice"]
+      "tags": ["syriup", "alcool", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 419,
@@ -6038,7 +6194,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["syriup", "hot", "mixed"]
+      "tags": ["syriup", "hot", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 420,
@@ -6053,7 +6210,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["syriup", "alcool", "ice"]
+      "tags": ["syriup", "alcool", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 421,
@@ -6067,7 +6225,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 422,
@@ -6082,7 +6241,8 @@
       ],
       "capacity": 200,
       "glass": 16,
-      "tags": ["alcool", "ice", "mixed"]
+      "tags": ["alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 423,
@@ -6096,7 +6256,8 @@
       ],
       "capacity": 8,
       "glass": 11,
-      "tags": ["syriup", "mixed"]
+      "tags": ["syriup", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 424,
@@ -6124,7 +6285,8 @@
       ],
       "capacity": 300,
       "glass": 3,
-      "tags": ["blended", "ice"]
+      "tags": ["blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 426,
@@ -6137,7 +6299,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["alcool", "ice", "mixed"]
+      "tags": ["alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 427,
@@ -6149,7 +6312,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 428,
@@ -6164,7 +6328,8 @@
       ],
       "capacity": 420,
       "glass": 20,
-      "tags": ["alcool", "syriup", "ice", "mixed"]
+      "tags": ["alcool", "syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 429,
@@ -6224,7 +6389,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["alcool", "syriup", "hot", "filtered"]
+      "tags": ["alcool", "syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 433,
@@ -6254,7 +6420,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "alcool", "sparkling", "ice"]
+      "tags": ["syriup", "alcool", "sparkling", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 435,
@@ -6268,7 +6435,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["alcool", "syriup", "ice", "mixed"]
+      "tags": ["alcool", "syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 436,
@@ -6363,7 +6531,8 @@
       ],
       "capacity": 400,
       "glass": 30,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 442,
@@ -6407,7 +6576,8 @@
       ],
       "capacity": 360,
       "glass": 4,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 445,
@@ -6434,7 +6604,8 @@
       ],
       "capacity": 350,
       "glass": 18,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 447,
@@ -6492,7 +6663,8 @@
       ],
       "capacity": 200,
       "glass": 15,
-      "tags": ["syriup", "alcool", "hot", "filtered", "mixed"]
+      "tags": ["syriup", "alcool", "hot", "filtered", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 451,
@@ -6539,7 +6711,8 @@
       ],
       "capacity": 200,
       "glass": 12,
-      "tags": ["syriup", "alcool", "mixed", "ice"]
+      "tags": ["syriup", "alcool", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 454,
@@ -6630,7 +6803,8 @@
       ],
       "capacity": 350,
       "glass": 4,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 460,
@@ -6687,7 +6861,8 @@
       ],
       "capacity": 420,
       "glass": 20,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 464,
@@ -6742,7 +6917,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["alcool", "syriup", "mixed"]
+      "tags": ["alcool", "syriup", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 468,
@@ -6754,7 +6930,8 @@
       ],
       "capacity": 16,
       "glass": 11,
-      "tags": ["syriup", "alcool", "mixed"]
+      "tags": ["syriup", "alcool", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 469,
@@ -6767,7 +6944,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup", "alcool", "sparkling", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 470,
@@ -6779,7 +6957,8 @@
       ],
       "capacity": 200,
       "glass": 16,
-      "tags": ["alcool", "sparkling", "syriup", "mixed"]
+      "tags": ["alcool", "sparkling", "syriup", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 471,
@@ -6805,7 +6984,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup", "alcool", "sparkling", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 473,
@@ -6817,7 +6997,8 @@
       ],
       "capacity": 14,
       "glass": 11,
-      "tags": ["syriup", "alcool", "sparkling", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 474,
@@ -6830,7 +7011,8 @@
       ],
       "capacity": 170,
       "glass": 1,
-      "tags": ["syriup", "alcool", "mixed"]
+      "tags": ["syriup", "alcool", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 475,
@@ -6859,7 +7041,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 477,
@@ -6872,7 +7055,8 @@
       ],
       "capacity": 150,
       "glass": 12,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 478,
@@ -6885,7 +7069,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 479,
@@ -6962,7 +7147,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 484,
@@ -6974,7 +7160,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["syriup", "hot"]
+      "tags": ["syriup", "hot"],
+      "decoratedWith": []
     },
     {
       "id": 485,
@@ -7000,7 +7187,8 @@
       ],
       "capacity": 360,
       "glass": 7,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 487,
@@ -7026,7 +7214,8 @@
       ],
       "capacity": 300,
       "glass": 4,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 489,
@@ -7056,7 +7245,8 @@
       ],
       "capacity": 250,
       "glass": 12,
-      "tags": ["syriup", "alcool", "mixed", "ice"]
+      "tags": ["syriup", "alcool", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 491,
@@ -7069,7 +7259,8 @@
       ],
       "capacity": 200,
       "glass": 16,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 492,
@@ -7096,7 +7287,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 494,
@@ -7108,7 +7300,8 @@
       ],
       "capacity": 300,
       "glass": 23,
-      "tags": ["hot"]
+      "tags": ["hot"],
+      "decoratedWith": []
     },
     {
       "id": 495,
@@ -7150,7 +7343,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 498,
@@ -7164,7 +7358,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 499,
@@ -7177,7 +7372,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["hot", "filtered"]
+      "tags": ["hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 500,
@@ -7191,7 +7387,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 501,
@@ -7204,7 +7401,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 502,
@@ -7216,7 +7414,8 @@
       ],
       "capacity": 360,
       "glass": 4,
-      "tags": ["hot"]
+      "tags": ["hot"],
+      "decoratedWith": []
     },
     {
       "id": 503,
@@ -7230,7 +7429,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 504,
@@ -7329,7 +7529,8 @@
       ],
       "capacity": 300,
       "glass": 4,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 511,
@@ -7343,7 +7544,8 @@
       ],
       "capacity": 300,
       "glass": 23,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 512,
@@ -7413,7 +7615,8 @@
       ],
       "capacity": 12,
       "glass": 11,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 517,
@@ -7426,7 +7629,8 @@
       ],
       "capacity": 12,
       "glass": 11,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 518,
@@ -7439,7 +7643,8 @@
       ],
       "capacity": 12,
       "glass": 11,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 519,
@@ -7453,7 +7658,8 @@
       ],
       "capacity": 360,
       "glass": 4,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 520,
@@ -7466,7 +7672,8 @@
       ],
       "capacity": 360,
       "glass": 7,
-      "tags": ["ice"]
+      "tags": ["ice"],
+      "decoratedWith": []
     },
     {
       "id": 521,
@@ -7495,7 +7702,8 @@
       ],
       "capacity": 420,
       "glass": 20,
-      "tags": ["syriup", "ice"]
+      "tags": ["syriup", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 523,
@@ -7523,7 +7731,8 @@
       ],
       "capacity": 360,
       "glass": 10,
-      "tags": ["syriup", "ice"]
+      "tags": ["syriup", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 525,
@@ -7536,7 +7745,8 @@
       ],
       "capacity": 360,
       "glass": 20,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 526,
@@ -7563,7 +7773,8 @@
       ],
       "capacity": 360,
       "glass": 10,
-      "tags": ["syriup", "ice"]
+      "tags": ["syriup", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 528,
@@ -7604,7 +7815,8 @@
       ],
       "capacity": 360,
       "glass": 20,
-      "tags": ["syriup", "ice"]
+      "tags": ["syriup", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 531,
@@ -7617,7 +7829,8 @@
       ],
       "capacity": 350,
       "glass": 7,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 532,
@@ -7630,7 +7843,8 @@
       ],
       "capacity": 360,
       "glass": 7,
-      "tags": ["syriup", "ice"]
+      "tags": ["syriup", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 533,
@@ -7643,7 +7857,8 @@
       ],
       "capacity": 360,
       "glass": 10,
-      "tags": ["syriup", "ice"]
+      "tags": ["syriup", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 534,
@@ -7656,7 +7871,8 @@
       ],
       "capacity": 400,
       "glass": 7,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 535,
@@ -7669,7 +7885,8 @@
       ],
       "capacity": 360,
       "glass": 23,
-      "tags": ["syriup", "ice"]
+      "tags": ["syriup", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 536,
@@ -7683,7 +7900,8 @@
       ],
       "capacity": 360,
       "glass": 7,
-      "tags": ["syriup", "ice"]
+      "tags": ["syriup", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 537,
@@ -7696,7 +7914,8 @@
       ],
       "capacity": 360,
       "glass": 7,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 538,
@@ -7709,7 +7928,8 @@
       ],
       "capacity": 360,
       "glass": 23,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 539,
@@ -7723,7 +7943,8 @@
       ],
       "capacity": 300,
       "glass": 23,
-      "tags": ["syriup", "hot"]
+      "tags": ["syriup", "hot"],
+      "decoratedWith": []
     },
     {
       "id": 540,
@@ -7736,7 +7957,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 541,
@@ -7749,7 +7971,8 @@
       ],
       "capacity": 9,
       "glass": 11,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 542,
@@ -7763,7 +7986,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 543,
@@ -7820,7 +8044,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 547,
@@ -7847,7 +8072,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 549,
@@ -7860,7 +8086,8 @@
       ],
       "capacity": 200,
       "glass": 15,
-      "tags": ["syriup", "hot"]
+      "tags": ["syriup", "hot"],
+      "decoratedWith": []
     },
     {
       "id": 550,
@@ -7887,7 +8114,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 552,
@@ -7900,7 +8128,8 @@
       ],
       "capacity": 360,
       "glass": 7,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 553,
@@ -7947,7 +8176,8 @@
       ],
       "capacity": 200,
       "glass": 12,
-      "tags": ["syriup", "alcool", "mixed", "ice"]
+      "tags": ["syriup", "alcool", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 556,
@@ -7993,7 +8223,8 @@
       ],
       "capacity": 480,
       "glass": 30,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 559,
@@ -8081,7 +8312,8 @@
       ],
       "capacity": 400,
       "glass": 20,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 565,
@@ -8139,7 +8371,8 @@
       ],
       "capacity": 20,
       "glass": 11,
-      "tags": ["syriup", "sparkling", "mixed"]
+      "tags": ["syriup", "sparkling", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 569,
@@ -8182,7 +8415,8 @@
       ],
       "capacity": 2,
       "glass": 11,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 572,
@@ -8310,7 +8544,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 581,
@@ -8339,7 +8574,8 @@
       ],
       "capacity": 350,
       "glass": 4,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 583,
@@ -8352,7 +8588,8 @@
       ],
       "capacity": 360,
       "glass": 20,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 584,
@@ -8395,7 +8632,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "ice", "sparkling", "mixed"]
+      "tags": ["syriup", "ice", "sparkling", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 587,
@@ -8440,7 +8678,8 @@
       ],
       "capacity": 480,
       "glass": 30,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 590,
@@ -8481,7 +8720,8 @@
       ],
       "capacity": 12,
       "glass": 11,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 593,
@@ -8599,7 +8839,8 @@
       ],
       "capacity": 350,
       "glass": 4,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 601,
@@ -8612,7 +8853,8 @@
       ],
       "capacity": 400,
       "glass": 20,
-      "tags": ["syriup", "sparkling", "mixed"]
+      "tags": ["syriup", "sparkling", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 602,
@@ -8658,7 +8900,8 @@
       ],
       "capacity": 480,
       "glass": 30,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 605,
@@ -8779,7 +9022,8 @@
       ],
       "capacity": 350,
       "glass": 18,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 613,
@@ -8809,7 +9053,8 @@
       ],
       "capacity": 350,
       "glass": 18,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 615,
@@ -8842,7 +9087,8 @@
       ],
       "capacity": 420,
       "glass": 20,
-      "tags": ["alcool", "syriup", "ice", "mixed"]
+      "tags": ["alcool", "syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 617,
@@ -8924,7 +9170,8 @@
       ],
       "capacity": 300,
       "glass": 3,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 622,
@@ -8939,7 +9186,8 @@
       ],
       "capacity": 170,
       "glass": 1,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 623,
@@ -8984,7 +9232,8 @@
       ],
       "capacity": 400,
       "glass": 20,
-      "tags": ["syriup", "mixed", "ice"]
+      "tags": ["syriup", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 626,
@@ -8998,7 +9247,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["blended", "ice"]
+      "tags": ["blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 627,
@@ -9074,7 +9324,8 @@
       ],
       "capacity": 240,
       "glass": 16,
-      "tags": ["syriup", "alcool", "blended", "ice"]
+      "tags": ["syriup", "alcool", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 632,
@@ -9088,7 +9339,8 @@
       ],
       "capacity": 140,
       "glass": 16,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 633,
@@ -9133,7 +9385,8 @@
       ],
       "capacity": 250,
       "glass": 16,
-      "tags": ["syriup", "alcool"]
+      "tags": ["syriup", "alcool"],
+      "decoratedWith": []
     },
     {
       "id": 636,
@@ -9148,7 +9401,8 @@
       ],
       "capacity": 180,
       "glass": 16,
-      "tags": ["syriup", "alcool", "blended", "ice"]
+      "tags": ["syriup", "alcool", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 637,
@@ -9162,7 +9416,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 638,
@@ -9190,7 +9445,8 @@
       ],
       "capacity": 200,
       "glass": 16,
-      "tags": ["alcool", "ice", "mixed"]
+      "tags": ["alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 640,
@@ -9205,7 +9461,8 @@
       ],
       "capacity": 250,
       "glass": 16,
-      "tags": ["syriup", "alcool", "blended", "ice"]
+      "tags": ["syriup", "alcool", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 641,
@@ -9220,7 +9477,8 @@
       ],
       "capacity": 250,
       "glass": 16,
-      "tags": ["syriup", "alcool", "blended", "ice"]
+      "tags": ["syriup", "alcool", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 642,
@@ -9249,7 +9507,8 @@
       ],
       "capacity": 150,
       "glass": 16,
-      "tags": ["syriup", "alcool", "mixed"]
+      "tags": ["syriup", "alcool", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 644,
@@ -9278,7 +9537,8 @@
       ],
       "capacity": 200,
       "glass": 16,
-      "tags": ["syriup", "alcool", "ice"]
+      "tags": ["syriup", "alcool", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 646,
@@ -9308,7 +9568,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup", "alcool", "mixed", "ice"]
+      "tags": ["syriup", "alcool", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 648,
@@ -9322,7 +9583,8 @@
       ],
       "capacity": 250,
       "glass": 26,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 649,
@@ -9382,7 +9644,8 @@
       ],
       "capacity": 200,
       "glass": 16,
-      "tags": ["alcool", "syriup", "ice", "mixed"]
+      "tags": ["alcool", "syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 653,
@@ -9396,7 +9659,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup", "alcool", "mixed", "ice"]
+      "tags": ["syriup", "alcool", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 654,
@@ -9409,7 +9673,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 655,
@@ -9423,7 +9688,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup", "alcool", "blended", "ice"]
+      "tags": ["syriup", "alcool", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 656,
@@ -9436,7 +9702,8 @@
       ],
       "capacity": 240,
       "glass": 6,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 657,
@@ -9450,7 +9717,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 658,
@@ -9479,7 +9747,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 660,
@@ -9494,7 +9763,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["syriup", "alcool", "mixed", "ice"]
+      "tags": ["syriup", "alcool", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 661,
@@ -9539,7 +9809,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup", "alcool", "blended", "ice"]
+      "tags": ["syriup", "alcool", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 664,
@@ -9552,7 +9823,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 665,
@@ -9581,7 +9853,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 667,
@@ -9594,7 +9867,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["alcool", "ice", "mixed"]
+      "tags": ["alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 668,
@@ -9608,7 +9882,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 669,
@@ -9622,7 +9897,8 @@
       ],
       "capacity": 300,
       "glass": 25,
-      "tags": ["alcool", "syriup", "ice", "mixed"]
+      "tags": ["alcool", "syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 670,
@@ -9693,7 +9969,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 675,
@@ -9707,7 +9984,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 676,
@@ -9737,7 +10015,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 678,
@@ -9781,7 +10060,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 681,
@@ -9794,7 +10074,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 682,
@@ -9807,7 +10088,8 @@
       ],
       "capacity": 200,
       "glass": 16,
-      "tags": ["syriup", "alcool", "mixed"]
+      "tags": ["syriup", "alcool", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 683,
@@ -9867,7 +10149,8 @@
       ],
       "capacity": 150,
       "glass": 12,
-      "tags": ["syriup", "mixed", "ice"]
+      "tags": ["syriup", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 687,
@@ -9909,7 +10192,8 @@
       ],
       "capacity": 360,
       "glass": 4,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 690,
@@ -10054,7 +10338,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 700,
@@ -10066,7 +10351,8 @@
       ],
       "capacity": 400,
       "glass": 10,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 701,
@@ -10095,7 +10381,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 703,
@@ -10124,7 +10411,8 @@
       ],
       "capacity": 300,
       "glass": 4,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 705,
@@ -10301,7 +10589,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 717,
@@ -10344,7 +10633,8 @@
       ],
       "capacity": 400,
       "glass": 20,
-      "tags": ["syriup", "ice", "blended"]
+      "tags": ["syriup", "ice", "blended"],
+      "decoratedWith": []
     },
     {
       "id": 720,
@@ -10371,7 +10661,8 @@
       ],
       "capacity": 300,
       "glass": 23,
-      "tags": ["ice"]
+      "tags": ["ice"],
+      "decoratedWith": []
     },
     {
       "id": 722,
@@ -10400,7 +10691,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 724,
@@ -10414,7 +10706,8 @@
       ],
       "capacity": 350,
       "glass": 4,
-      "tags": ["syriup", "hot"]
+      "tags": ["syriup", "hot"],
+      "decoratedWith": []
     },
     {
       "id": 725,
@@ -10443,7 +10736,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 727,
@@ -10457,7 +10751,8 @@
       ],
       "capacity": 350,
       "glass": 7,
-      "tags": ["syriup", "hot"]
+      "tags": ["syriup", "hot"],
+      "decoratedWith": []
     },
     {
       "id": 728,
@@ -10502,7 +10797,8 @@
       ],
       "capacity": 360,
       "glass": 4,
-      "tags": ["syriup", "mixed", "ice"]
+      "tags": ["syriup", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 731,
@@ -10625,7 +10921,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "mixed", "ice"]
+      "tags": ["syriup", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 739,
@@ -10654,7 +10951,8 @@
       ],
       "capacity": 200,
       "glass": 16,
-      "tags": ["syriup", "mixed", "ice"]
+      "tags": ["syriup", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 741,
@@ -10729,7 +11027,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "mixed", "ice"]
+      "tags": ["syriup", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 746,
@@ -10804,7 +11103,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 751,
@@ -10834,7 +11134,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 753,
@@ -10919,7 +11220,8 @@
       ],
       "capacity": 100,
       "glass": 17,
-      "tags": ["alcool", "sparkling", "ice", "mixed"]
+      "tags": ["alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 758,
@@ -11134,7 +11436,8 @@
       ],
       "capacity": 360,
       "glass": 20,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 771,
@@ -11149,7 +11452,8 @@
       ],
       "capacity": 360,
       "glass": 19,
-      "tags": ["alcool", "sparkling", "ice", "mixed"]
+      "tags": ["alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 772,
@@ -11251,7 +11555,8 @@
       ],
       "capacity": 330,
       "glass": 23,
-      "tags": ["syriup", "sparkling", "alcool", "mixed"]
+      "tags": ["syriup", "sparkling", "alcool", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 778,
@@ -11264,7 +11569,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup", "sparkling", "alcool", "mixed"]
+      "tags": ["syriup", "sparkling", "alcool", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 779,
@@ -11475,7 +11781,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 793,
@@ -11612,7 +11919,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 802,
@@ -11672,7 +11980,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 806,
@@ -11687,7 +11996,8 @@
       ],
       "capacity": 300,
       "glass": 25,
-      "tags": ["syriup", "alcool", "mixed", "filtered"]
+      "tags": ["syriup", "alcool", "mixed", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 807,
@@ -11744,7 +12054,8 @@
       ],
       "capacity": 400,
       "glass": 8,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 811,
@@ -11775,7 +12086,8 @@
       ],
       "capacity": 200,
       "glass": 16,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 813,
@@ -11789,7 +12101,8 @@
       ],
       "capacity": 420,
       "glass": 20,
-      "tags": ["alcool", "syriup", "sparkling", "ice", "mixed"]
+      "tags": ["alcool", "syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 814,
@@ -11822,7 +12135,8 @@
       ],
       "capacity": 350,
       "glass": 4,
-      "tags": ["alcool", "sparkling", "ice", "mixed"]
+      "tags": ["alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 816,
@@ -11912,7 +12226,8 @@
       ],
       "capacity": 480,
       "glass": 30,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 822,
@@ -11927,7 +12242,8 @@
       ],
       "capacity": 160,
       "glass": 13,
-      "tags": ["alcool", "syriup", "sparkling", "ice", "mixed"]
+      "tags": ["alcool", "syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 823,
@@ -11956,7 +12272,8 @@
       ],
       "capacity": 200,
       "glass": 16,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 825,
@@ -11985,7 +12302,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 827,
@@ -12028,7 +12346,8 @@
       ],
       "capacity": 15,
       "glass": 11,
-      "tags": ["syriup", "ice", "blended"]
+      "tags": ["syriup", "ice", "blended"],
+      "decoratedWith": []
     },
     {
       "id": 830,
@@ -12060,7 +12379,8 @@
       ],
       "capacity": 300,
       "glass": 25,
-      "tags": ["alcool", "ice", "blended"]
+      "tags": ["alcool", "ice", "blended"],
+      "decoratedWith": []
     },
     {
       "id": 832,
@@ -12092,7 +12412,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 834,
@@ -12119,7 +12440,8 @@
       ],
       "capacity": 400,
       "glass": 30,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 836,
@@ -12132,7 +12454,8 @@
       ],
       "capacity": 350,
       "glass": 5,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 837,
@@ -12162,7 +12485,8 @@
       ],
       "capacity": 250,
       "glass": 12,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 839,
@@ -12205,7 +12529,8 @@
       ],
       "capacity": 350,
       "glass": 4,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 842,
@@ -12220,7 +12545,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup", "alcool", "mixed", "ice"]
+      "tags": ["syriup", "alcool", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 843,
@@ -12234,7 +12560,8 @@
       ],
       "capacity": 400,
       "glass": 8,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 844,
@@ -12531,7 +12858,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 863,
@@ -12574,7 +12902,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 866,
@@ -12588,7 +12917,8 @@
       ],
       "capacity": 100,
       "glass": 17,
-      "tags": ["alcool", "syriup", "ice", "mixed"]
+      "tags": ["alcool", "syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 867,
@@ -12600,7 +12930,8 @@
       ],
       "capacity": 200,
       "glass": 16,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 868,
@@ -12673,7 +13004,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 873,
@@ -12733,7 +13065,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["alcool", "syriup", "ice", "mixed"]
+      "tags": ["alcool", "syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 877,
@@ -12807,7 +13140,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["alcool", "ice"]
+      "tags": ["alcool", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 882,
@@ -12869,7 +13203,8 @@
       ],
       "capacity": 250,
       "glass": 12,
-      "tags": ["syriup", "alcool", "mixed", "ice"]
+      "tags": ["syriup", "alcool", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 886,
@@ -12881,7 +13216,8 @@
       ],
       "capacity": 300,
       "glass": 4,
-      "tags": ["syriup", "alcool", "sparkling"]
+      "tags": ["syriup", "alcool", "sparkling"],
+      "decoratedWith": []
     },
     {
       "id": 887,
@@ -13060,7 +13396,8 @@
       ],
       "capacity": 250,
       "glass": 29,
-      "tags": ["syriup", "mixed"]
+      "tags": ["syriup", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 899,
@@ -13086,7 +13423,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["mixed"]
+      "tags": ["mixed"],
+      "decoratedWith": []
     },
     {
       "id": 901,
@@ -13101,7 +13439,8 @@
       ],
       "capacity": 420,
       "glass": 20,
-      "tags": ["alcool", "syriup", "ice", "mixed"]
+      "tags": ["alcool", "syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 902,
@@ -13185,7 +13524,8 @@
       ],
       "capacity": 300,
       "glass": 25,
-      "tags": ["alcool", "sparkling", "mixed", "ice"]
+      "tags": ["alcool", "sparkling", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 908,
@@ -13213,7 +13553,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["alcool", "ice", "mixed"]
+      "tags": ["alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 910,
@@ -13258,7 +13599,8 @@
       ],
       "capacity": 400,
       "glass": 30,
-      "tags": ["syriup", "alcool", "mixed", "ice"]
+      "tags": ["syriup", "alcool", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 913,
@@ -13302,7 +13644,8 @@
       ],
       "capacity": 400,
       "glass": 5,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 916,
@@ -13360,7 +13703,8 @@
       ],
       "capacity": 420,
       "glass": 20,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 920,
@@ -13390,7 +13734,8 @@
       ],
       "capacity": 360,
       "glass": 23,
-      "tags": ["blended", "ice"]
+      "tags": ["blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 922,
@@ -13403,7 +13748,8 @@
       ],
       "capacity": 360,
       "glass": 4,
-      "tags": ["mixed", "ice"]
+      "tags": ["mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 923,
@@ -13447,7 +13793,8 @@
       ],
       "capacity": 5,
       "glass": 11,
-      "tags": ["syriup", "alcool", "mixed"]
+      "tags": ["syriup", "alcool", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 926,
@@ -13459,7 +13806,8 @@
       ],
       "capacity": 60,
       "glass": 11,
-      "tags": ["syriup", "alcool", "mixed"]
+      "tags": ["syriup", "alcool", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 927,
@@ -13489,7 +13837,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 929,
@@ -13566,7 +13915,8 @@
       ],
       "capacity": 300,
       "glass": 3,
-      "tags": ["alcool", "syriup", "sparkling", "ice", "mixed"]
+      "tags": ["alcool", "syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 934,
@@ -13613,7 +13963,8 @@
       ],
       "capacity": 400,
       "glass": 20,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 937,
@@ -13641,7 +13992,8 @@
       ],
       "capacity": 360,
       "glass": 10,
-      "tags": ["syriup", "ice", "blended"]
+      "tags": ["syriup", "ice", "blended"],
+      "decoratedWith": []
     },
     {
       "id": 939,
@@ -13714,7 +14066,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 944,
@@ -13726,7 +14079,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["ice", "blended"]
+      "tags": ["ice", "blended"],
+      "decoratedWith": []
     },
     {
       "id": 945,
@@ -13739,7 +14093,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 946,
@@ -13766,7 +14121,8 @@
       ],
       "capacity": 360,
       "glass": 4,
-      "tags": ["blended", "ice"]
+      "tags": ["blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 948,
@@ -13795,7 +14151,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 950,
@@ -13807,7 +14164,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["ice", "blended"]
+      "tags": ["ice", "blended"],
+      "decoratedWith": []
     },
     {
       "id": 951,
@@ -13821,7 +14179,8 @@
       ],
       "capacity": 360,
       "glass": 4,
-      "tags": ["syriup", "ice", "blended"]
+      "tags": ["syriup", "ice", "blended"],
+      "decoratedWith": []
     },
     {
       "id": 952,
@@ -13833,7 +14192,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["ice", "blended"]
+      "tags": ["ice", "blended"],
+      "decoratedWith": []
     },
     {
       "id": 953,
@@ -13847,7 +14207,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["blended", "ice"]
+      "tags": ["blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 954,
@@ -13876,7 +14237,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 956,
@@ -13889,7 +14251,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["blended", "ice"]
+      "tags": ["blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 957,
@@ -13902,7 +14265,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 958,
@@ -13931,7 +14295,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["blended", "ice"]
+      "tags": ["blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 960,
@@ -14017,7 +14382,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["blended", "ice"]
+      "tags": ["blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 966,
@@ -14092,7 +14458,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 971,
@@ -14256,7 +14623,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 982,
@@ -14286,7 +14654,8 @@
       ],
       "capacity": 360,
       "glass": 8,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 984,
@@ -14361,7 +14730,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 989,
@@ -14374,7 +14744,8 @@
       ],
       "capacity": 350,
       "glass": 4,
-      "tags": ["sparkling", "mixed"]
+      "tags": ["sparkling", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 990,
@@ -14387,7 +14758,8 @@
       ],
       "capacity": 300,
       "glass": 25,
-      "tags": ["mixed"]
+      "tags": ["mixed"],
+      "decoratedWith": []
     },
     {
       "id": 991,
@@ -14559,7 +14931,8 @@
       ],
       "capacity": 300,
       "glass": 25,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1003,
@@ -14605,7 +14978,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1006,
@@ -14633,7 +15007,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["sparkling", "ice", "mixed"]
+      "tags": ["sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1008,
@@ -14660,7 +15035,8 @@
       ],
       "capacity": 400,
       "glass": 20,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1010,
@@ -14687,7 +15063,8 @@
       ],
       "capacity": 480,
       "glass": 30,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1012,
@@ -14759,7 +15136,8 @@
       ],
       "capacity": 400,
       "glass": 20,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1017,
@@ -14804,7 +15182,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1020,
@@ -14845,7 +15224,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup", "sparkling", "ice"]
+      "tags": ["syriup", "sparkling", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 1023,
@@ -15002,7 +15382,8 @@
       ],
       "capacity": 18,
       "glass": 11,
-      "tags": ["syriup", "hot"]
+      "tags": ["syriup", "hot"],
+      "decoratedWith": []
     },
     {
       "id": 1034,
@@ -15032,7 +15413,8 @@
       ],
       "capacity": 500,
       "glass": 30,
-      "tags": ["syriup", "alcool", "ice"]
+      "tags": ["syriup", "alcool", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 1036,
@@ -15061,7 +15443,8 @@
       ],
       "capacity": 350,
       "glass": 4,
-      "tags": ["syriup", "alcool", "blended", "ice"]
+      "tags": ["syriup", "alcool", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 1038,
@@ -15362,7 +15745,8 @@
       ],
       "capacity": 400,
       "glass": 5,
-      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1057,
@@ -15405,7 +15789,8 @@
       ],
       "capacity": 400,
       "glass": 30,
-      "tags": ["alcool", "syriup", "sparkling", "ice", "mixed"]
+      "tags": ["alcool", "syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1060,
@@ -15462,7 +15847,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1064,
@@ -15492,7 +15878,8 @@
       ],
       "capacity": 300,
       "glass": 24,
-      "tags": []
+      "tags": [],
+      "decoratedWith": []
     },
     {
       "id": 1066,
@@ -15506,7 +15893,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 1067,
@@ -15582,7 +15970,8 @@
       ],
       "capacity": 300,
       "glass": 3,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1072,
@@ -15622,7 +16011,8 @@
       ],
       "capacity": 250,
       "glass": 29,
-      "tags": ["syriup", "hot"]
+      "tags": ["syriup", "hot"],
+      "decoratedWith": []
     },
     {
       "id": 1075,
@@ -15653,7 +16043,8 @@
       ],
       "capacity": 350,
       "glass": 23,
-      "tags": ["ice", "mixed"]
+      "tags": ["ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1077,
@@ -15860,7 +16251,8 @@
       ],
       "capacity": 360,
       "glass": 25,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1091,
@@ -15873,7 +16265,8 @@
       ],
       "capacity": 450,
       "glass": 30,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1092,
@@ -15900,7 +16293,8 @@
       ],
       "capacity": 420,
       "glass": 8,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1094,
@@ -16153,7 +16547,8 @@
       ],
       "capacity": 360,
       "glass": 22,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1112,
@@ -16185,7 +16580,8 @@
       ],
       "capacity": 200,
       "glass": 25,
-      "tags": ["syriup", "hot", "mixed", "filtered"]
+      "tags": ["syriup", "hot", "mixed", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 1114,
@@ -16246,7 +16642,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1118,
@@ -16259,7 +16656,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1119,
@@ -16271,7 +16669,8 @@
       ],
       "capacity": 360,
       "glass": 27,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1120,
@@ -16283,7 +16682,8 @@
       ],
       "capacity": 360,
       "glass": 23,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1121,
@@ -16379,7 +16779,8 @@
       ],
       "capacity": 360,
       "glass": 8,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1128,
@@ -16392,7 +16793,8 @@
       ],
       "capacity": 360,
       "glass": 29,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1129,
@@ -16434,7 +16836,8 @@
       ],
       "capacity": 360,
       "glass": 23,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1132,
@@ -16477,7 +16880,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1135,
@@ -16576,7 +16980,8 @@
       ],
       "capacity": 250,
       "glass": 29,
-      "tags": ["syriup", "hot", "mixed"]
+      "tags": ["syriup", "hot", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1142,
@@ -16589,7 +16994,8 @@
       ],
       "capacity": 350,
       "glass": 23,
-      "tags": ["hot"]
+      "tags": ["hot"],
+      "decoratedWith": []
     },
     {
       "id": 1143,
@@ -16616,7 +17022,8 @@
       ],
       "capacity": 250,
       "glass": 29,
-      "tags": ["syriup", "mixed"]
+      "tags": ["syriup", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1145,
@@ -16629,7 +17036,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1146,
@@ -16642,7 +17050,8 @@
       ],
       "capacity": 350,
       "glass": 23,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1147,
@@ -16655,7 +17064,8 @@
       ],
       "capacity": 450,
       "glass": 30,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1148,
@@ -16716,7 +17126,8 @@
       ],
       "capacity": 250,
       "glass": 29,
-      "tags": ["hot"]
+      "tags": ["hot"],
+      "decoratedWith": []
     },
     {
       "id": 1152,
@@ -16809,7 +17220,8 @@
       ],
       "capacity": 180,
       "glass": 1,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1158,
@@ -16837,7 +17249,8 @@
       ],
       "capacity": 200,
       "glass": 16,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1160,
@@ -16869,7 +17282,8 @@
       ],
       "capacity": 400,
       "glass": 20,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1162,
@@ -16899,7 +17313,8 @@
       ],
       "capacity": 420,
       "glass": 20,
-      "tags": ["syriup", "alcool", "mixed", "ice"]
+      "tags": ["syriup", "alcool", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 1164,
@@ -16964,7 +17379,8 @@
       ],
       "capacity": 300,
       "glass": 24,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1168,
@@ -17042,7 +17458,8 @@
       ],
       "capacity": 120,
       "glass": 17,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1173,
@@ -17056,7 +17473,8 @@
       ],
       "capacity": 420,
       "glass": 20,
-      "tags": ["syriup", "mixed", "ice"]
+      "tags": ["syriup", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 1174,
@@ -17069,7 +17487,8 @@
       ],
       "capacity": 150,
       "glass": 15,
-      "tags": ["syriup", "hot"]
+      "tags": ["syriup", "hot"],
+      "decoratedWith": []
     },
     {
       "id": 1175,
@@ -17097,7 +17516,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1177,
@@ -17157,7 +17577,8 @@
       ],
       "capacity": 180,
       "glass": 15,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1181,
@@ -17170,7 +17591,8 @@
       ],
       "capacity": 270,
       "glass": 26,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 1182,
@@ -17229,7 +17651,8 @@
       ],
       "capacity": 180,
       "glass": 12,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1186,
@@ -17243,7 +17666,8 @@
       ],
       "capacity": 420,
       "glass": 20,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1187,
@@ -17287,7 +17711,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "alcool", "mixed", "filtered", "ice"]
+      "tags": ["syriup", "alcool", "mixed", "filtered", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 1190,
@@ -17317,7 +17742,8 @@
       ],
       "capacity": 420,
       "glass": 20,
-      "tags": ["blended", "ice"]
+      "tags": ["blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 1192,
@@ -17417,7 +17843,8 @@
       ],
       "capacity": 250,
       "glass": 6,
-      "tags": ["syriup", "alcool", "hot", "filtered"]
+      "tags": ["syriup", "alcool", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 1199,
@@ -17446,7 +17873,8 @@
       ],
       "capacity": 240,
       "glass": 25,
-      "tags": ["syriup", "alcool", "hot", "filtered"]
+      "tags": ["syriup", "alcool", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 1201,
@@ -17473,7 +17901,8 @@
       ],
       "capacity": 400,
       "glass": 30,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1203,
@@ -17488,7 +17917,8 @@
       ],
       "capacity": 500,
       "glass": 30,
-      "tags": []
+      "tags": [],
+      "decoratedWith": []
     },
     {
       "id": 1204,
@@ -17530,7 +17960,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1207,
@@ -17561,7 +17992,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "mixed", "ice"]
+      "tags": ["syriup", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 1209,
@@ -17575,7 +18007,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1210,
@@ -17588,7 +18021,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1211,
@@ -17659,7 +18093,8 @@
       ],
       "capacity": 400,
       "glass": 20,
-      "tags": ["ice", "mixed"]
+      "tags": ["ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1216,
@@ -17734,7 +18169,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["ice", "mixed"]
+      "tags": ["ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1221,
@@ -17762,7 +18198,8 @@
       ],
       "capacity": 14,
       "glass": 11,
-      "tags": ["syriup", "ice", "mixed"]
+      "tags": ["syriup", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1223,
@@ -17797,7 +18234,8 @@
       ],
       "capacity": 17,
       "glass": 11,
-      "tags": ["syriup", "sparkling", "mixed"]
+      "tags": ["syriup", "sparkling", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1225,
@@ -17890,7 +18328,8 @@
       ],
       "capacity": 400,
       "glass": 20,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1231,
@@ -17970,7 +18409,8 @@
       ],
       "capacity": 400,
       "glass": 20,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1236,
@@ -18098,7 +18538,8 @@
       ],
       "capacity": 300,
       "glass": 3,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1244,
@@ -18112,7 +18553,8 @@
       ],
       "capacity": 420,
       "glass": 20,
-      "tags": ["syriup", "blended", "ice"]
+      "tags": ["syriup", "blended", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 1245,
@@ -18205,7 +18647,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "sparkling", "ice", "mixed"]
+      "tags": ["syriup", "sparkling", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1251,
@@ -18283,7 +18726,8 @@
       ],
       "capacity": 360,
       "glass": 11,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 1256,
@@ -18313,7 +18757,8 @@
       ],
       "capacity": 300,
       "glass": 25,
-      "tags": ["syriup", "hot", "filtered"]
+      "tags": ["syriup", "hot", "filtered"],
+      "decoratedWith": []
     },
     {
       "id": 1258,
@@ -18468,7 +18913,8 @@
       ],
       "capacity": 220,
       "glass": 12,
-      "tags": ["syriup", "alcool", "mixed", "ice"]
+      "tags": ["syriup", "alcool", "mixed", "ice"],
+      "decoratedWith": []
     },
     {
       "id": 1268,
@@ -18496,7 +18942,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1270,
@@ -18558,7 +19005,8 @@
       ],
       "capacity": 300,
       "glass": 24,
-      "tags": ["alcool", "ice", "mixed"]
+      "tags": ["alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1274,
@@ -18572,7 +19020,8 @@
       ],
       "capacity": 150,
       "glass": 13,
-      "tags": ["syriup", "alcool", "ice", "mixed"]
+      "tags": ["syriup", "alcool", "ice", "mixed"],
+      "decoratedWith": []
     },
     {
       "id": 1275,

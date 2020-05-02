@@ -76,7 +76,12 @@ class ProductPainter extends CustomPainter {
           ..strokeWidth = 2);
 
     canvas.clipPath(glassPaths[1]);
-    _drawIceCubes(canvas);
+    if (product.tags.contains(Tag.ice) &&
+        !product.tags.contains(Tag.hot) &&
+        !product.tags.contains(Tag.blended) &&
+        !product.tags.contains(Tag.filtered)) {
+      _drawIceCubes(canvas);
+    }
   }
 
   @override
@@ -112,10 +117,12 @@ class ProductPainter extends CustomPainter {
   }
 
   List<double> _getColorStops(List<Composition> compos) {
-    final sum = compos.fold(0, (acc, cur) => acc + cur.quantity);
+    final sum =
+        compos.fold(0, (acc, cur) => acc + (cur.eqQuantity ?? cur.quantity));
     final capacity = ((product.capacity ?? 0) > sum) ? product.capacity : sum;
-    final quantities =
-        compos.map((compo) => compo.quantity / capacity).toList();
+    final quantities = compos
+        .map((compo) => (compo.eqQuantity ?? compo.quantity) / capacity)
+        .toList();
 
     for (var i = 1; i < quantities.length; i++) {
       quantities[i] = quantities[i] + quantities[i - 1];
@@ -124,10 +131,12 @@ class ProductPainter extends CustomPainter {
   }
 
   List<Color> _getAdjustedColors(List<Composition> compos) {
-    final sum = compos.fold(0, (acc, cur) => acc + cur.quantity);
+    final sum = compos.fold(
+        0, (acc, Composition cur) => acc + (cur.eqQuantity ?? cur.quantity));
     return compos.map((compo) {
+      final quantity = compo.eqQuantity ?? compo.quantity;
       final hslColor = compo.ingredient.color;
-      final quantityFactor = min<double>(sum, compo.quantity * 1.5) / sum;
+      final quantityFactor = min<double>(sum, quantity * 1.5) / sum;
       final maxLightness = 1 - hslColor.lightness;
       final newLightness = maxLightness * quantityFactor;
       return hslColor.withLightness(1 - newLightness).toColor();

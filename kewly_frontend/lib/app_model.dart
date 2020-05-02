@@ -5,18 +5,47 @@ import 'package:flutter/widgets.dart';
 import 'package:kewly/util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+class Tag {
+  static const syriup = 'syriup';
+  static const alcohol = 'alcool';
+  static const ice = 'ice';
+  static const hot = 'hot';
+  static const sparkling = 'sparkling';
+  static const blended = 'blended';
+  static const mixed = 'mixed';
+  static const filtered = 'filtered';
+}
+
 class CompositionRaw {
   final int ingredientId;
   final double quantity;
+  final double eqQuantity;
   final String unit;
 
-  CompositionRaw({this.ingredientId, this.quantity, this.unit});
+  CompositionRaw(
+      {this.ingredientId, this.quantity, this.unit, this.eqQuantity});
 
   static CompositionRaw fromJson(Map<String, dynamic> json) {
     return CompositionRaw(
         ingredientId: json['ingredientId'] as int,
         quantity: json['quantity'].toDouble(),
+        eqQuantity:
+            json['_quantity'] != null ? json['_quantity'].toDouble() : null,
         unit: json['unit'] ?? "");
+  }
+}
+
+class DecorationRaw {
+  final int id;
+  final String as;
+
+  DecorationRaw({this.id, this.as});
+
+  static DecorationRaw fromJson(Map<String, dynamic> json) {
+    return DecorationRaw(
+      id: json['id'] as int,
+      as: json['as'],
+    );
   }
 }
 
@@ -25,19 +54,33 @@ class ProductRaw {
   final String name;
   final String link;
   final List<CompositionRaw> composition;
+  final List<DecorationRaw> decoratedWith;
+  final List<String> tags;
   final double capacity;
   final int glass;
 
-  ProductRaw({this.id, this.name, this.link, this.composition, this.capacity, this.glass});
+  ProductRaw(
+      {this.id,
+      this.tags,
+      this.name,
+      this.link,
+      this.composition,
+      this.decoratedWith,
+      this.capacity,
+      this.glass});
 
   static ProductRaw fromJson(Map<String, dynamic> json) {
     final List<CompositionRaw> composition =
         mapJsonToList(json['composition'], CompositionRaw.fromJson);
+    final List<DecorationRaw> decoration =
+        mapJsonToList(json['decoratedWith'], DecorationRaw.fromJson);
     return ProductRaw(
         id: json['id'] as int,
         glass: json['glass'] as int,
+        tags: List<String>.from(json['tags'], growable: false),
         name: json['name'] as String,
         link: json['link'] as String,
+        decoratedWith: decoration,
         capacity: json['capacity']?.toDouble(),
         composition: composition);
   }
@@ -47,9 +90,23 @@ class Composition {
   Ingredient ingredient;
   final int ingredientId;
   final double quantity;
+  final double eqQuantity;
   final String unit;
 
-  Composition({this.ingredient, this.ingredientId, this.quantity, this.unit});
+  Composition(
+      {this.ingredient,
+      this.eqQuantity,
+      this.ingredientId,
+      this.quantity,
+      this.unit});
+}
+
+class Decoration {
+  Ingredient ingredient;
+  final int ingredientId;
+  final String as;
+
+  Decoration({this.ingredient, this.ingredientId, this.as});
 }
 
 abstract class Id {
@@ -62,9 +119,19 @@ class Product implements Id {
   final String link;
   final double capacity;
   final int glass;
+  final List<String> tags;
   final Iterable<Composition> composition;
+  final Iterable<Decoration> decoratedWith;
 
-  Product({this.id, this.name, this.link, this.composition, this.capacity, this.glass});
+  Product(
+      {this.id,
+      this.name,
+      this.link,
+      this.composition,
+      this.decoratedWith,
+      this.tags,
+      this.capacity,
+      this.glass});
 }
 
 class ColorRaw {
@@ -90,14 +157,19 @@ class IngredientRaw {
   final String name;
   final ColorRaw color;
   final List<int> usedBy;
+  final List<int> decorates;
+  final List<String> tags;
 
-  IngredientRaw({this.id, this.name, this.color, this.usedBy});
+  IngredientRaw(
+      {this.id, this.name, this.color, this.usedBy, this.decorates, this.tags});
 
   static IngredientRaw fromJson(Map<String, dynamic> json) {
     return IngredientRaw(
       name: json['name'] as String,
       id: json['id'] as int,
+      tags: List<String>.from(json['tags'], growable: false),
       usedBy: List<int>.from(json['usedBy'], growable: false),
+      decorates: List<int>.from(json['decorates'], growable: false),
       color: json['color'] == null ? null : ColorRaw.fromJson(json['color']),
     );
   }
@@ -108,10 +180,18 @@ class Ingredient implements Id {
   final String name;
   final HSLColor color;
   final List<Product> usedBy;
+  final List<Product> decorates;
+  final List<String> tags;
   bool isOwned;
 
   Ingredient(
-      {this.id, this.name, ColorRaw color, this.usedBy, this.isOwned = false})
+      {this.id,
+      this.name,
+      ColorRaw color,
+      this.usedBy,
+      this.isOwned = false,
+      this.decorates,
+      this.tags})
       : this.color = color == null
             ? HSLColor.fromColor(Colors.transparent)
             : HSLColor.fromAHSL(
@@ -253,7 +333,8 @@ class AppModel extends ChangeNotifier {
   _debugGraph() {
     final List<GlassInfo> glassList = [];
     for (var product in _products) {
-      final glassInfo = glassList.firstWhere((g) => g.id == product.glass, orElse: () => null);
+      final glassInfo = glassList.firstWhere((g) => g.id == product.glass,
+          orElse: () => null);
       if (glassInfo == null) {
         glassList.add(GlassInfo(id: product.glass, count: 1));
         continue;
@@ -279,10 +360,16 @@ class AppModel extends ChangeNotifier {
             link: productRaw.link,
             capacity: productRaw.capacity,
             glass: productRaw.glass,
+            tags: productRaw.tags,
+            decoratedWith: productRaw.decoratedWith
+                .map((decorateRaw) => Decoration(
+                    ingredientId: decorateRaw.id, as: decorateRaw.as))
+                .toList(growable: false),
             composition: productRaw.composition
                 .map((compoRaw) => Composition(
                     unit: compoRaw.unit,
                     quantity: compoRaw.quantity,
+                    eqQuantity: compoRaw.eqQuantity,
                     ingredientId: compoRaw.ingredientId))
                 .toList(growable: false)))
         .toList(growable: false);
@@ -291,12 +378,18 @@ class AppModel extends ChangeNotifier {
             id: ingredientRaw.id,
             name: ingredientRaw.name,
             color: ingredientRaw.color,
+            tags: ingredientRaw.tags,
+            decorates: _objectifyIdList<Product>(
+                ingredientRaw.decorates, _products, growable: false),
             usedBy: _objectifyIdList<Product>(ingredientRaw.usedBy, _products,
                 growable: false)))
         .toList(growable: false);
     _products.forEach((product) {
       product.composition.forEach((compo) {
         compo.ingredient = _firstWithId(_ingredients)(compo.ingredientId);
+      });
+      product.decoratedWith.forEach((deco) {
+        deco.ingredient = _firstWithId(_ingredients)(deco.ingredientId);
       });
     });
   }
@@ -325,6 +418,53 @@ class AppModel extends ChangeNotifier {
         .toList();
   }
 
+  List<int> _getDefaultOwnedIngredients() {
+    return const <int>[
+      27,
+      32,
+      41,
+      222,
+      83,
+      35,
+      139,
+      87,
+      40,
+      60,
+      243,
+      227,
+      114,
+      136,
+      325,
+      180,
+      313,
+      205,
+      184,
+      30,
+      153,
+      188,
+      181,
+      303,
+      166,
+      278,
+      242,
+      328,
+      113,
+      33,
+      151,
+      69,
+      145,
+      491,
+      135,
+      71,
+      320,
+      140,
+      536,
+      269,
+      202,
+      212
+    ];
+  }
+
   void _saveUserData() async {
     final String userDataRaw = jsonEncode(_userData);
     final prefs = await SharedPreferences.getInstance();
@@ -336,7 +476,7 @@ class GlassInfo {
   final int id;
   int count;
 
-  GlassInfo({ this.id, this.count });
+  GlassInfo({this.id, this.count});
 }
 
 List<U> _objectifyIdList<U extends Id>(List<int> listOfId, List<U> listOfObj,

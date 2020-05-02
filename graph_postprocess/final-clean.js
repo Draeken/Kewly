@@ -3,10 +3,27 @@ const fs = require('fs'),
 
 const graph = JSON.parse(fs.readFileSync(path.join(__dirname, 'graph.json')));
 const products = graph.products;
+const ingredients = graph.ingredients;
 
 const main = () => {
   graph.instructions = undefined;
-  products.forEach(product => product.instructions = undefined);
+  products.forEach(product => {
+    product.instructions = undefined
+    if (!product.decoratedWith) {
+      product.decoratedWith = [];
+    }
+    if (!product.tags) {
+      product.tags = [];
+    }    
+  });
+  ingredients.forEach(ingredient => {
+    if (!ingredient.decorates) {
+      ingredient.decorates = [];
+    }
+    if (!ingredient.tags) {
+      ingredient.tags = [];
+    }
+  });
   writeFile();
 };
 const writeFile = () => {
