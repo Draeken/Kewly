@@ -5,6 +5,22 @@ import 'package:kewly/components/kewly_product_tile.dart';
 import 'package:kewly/util.dart';
 import 'package:provider/provider.dart';
 
+/**
+ * How does search works:
+ * - currently: just a raw user string that is matched against ingredient names;
+ * How it should works:
+ * user string should be used to search beverage by name;
+ * when user focus textfield:
+ * - show recent search (user input; ingredients)
+ * - show all filters (chips)
+ * - show all ingredients by usage
+ * when user type, it should
+ * - show relative filters (chips), eg: "alco" -> (With Alcohol) ; (Without Alcohol)
+ * - when user validate, unfocus search and display results with selected chips
+ * while searching, if user tap on a filter (chips):
+ * - toggle on, duplicate below textfield.
+ * - search screen stays opened
+ */
 class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
   final ValueChanged<String> onSearchChanged;
 
