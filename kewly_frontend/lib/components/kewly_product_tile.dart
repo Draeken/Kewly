@@ -96,7 +96,7 @@ class ProductPainter extends CustomPainter {
 
   Color _getColor() {
     final compos = product.composition
-        .where((compo) => compo.unit == 'ml')
+        .where((compo) => compo.eqQuantity != null || compo.unit == 'ml')
         .toList(growable: false);
     final colors = _getAdjustedColors(compos);
     if (colors.isEmpty) {

@@ -26,7 +26,8 @@ const main = () => {
   });
   writeFile();
 };
-const writeFile = () => {
+const writeFile = () => {  
+  ingredients.sort((a, b) => b.usedBy.length - a.usedBy.length);
   const jsonContent = JSON.stringify(graph);
   // const toReview = JSON.stringify(ingredientToReview);
 

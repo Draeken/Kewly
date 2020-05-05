@@ -19846,7 +19846,7 @@
     {
       "name": "jus de citron vert",
       "id": 41,
-      "color": { "alpha": 0.92, "hue": 95, "lightness": 0.81, "saturation": 0.94 },
+      "color": { "alpha": 0.92, "hue": 95, "lightness": 0.74, "saturation": 0.94 },
       "usedBy": [
         9,
         18,
@@ -20195,7 +20195,7 @@
     {
       "name": "citron vert",
       "id": 83,
-      "color": { "alpha": 0.92, "hue": 42, "lightness": 0.81, "saturation": 0.94 },
+      "color": { "alpha": 0.30, "hue": 42, "lightness": 0.81, "saturation": 0.94 },
       "usedBy": [
         29,
         65,
@@ -20562,7 +20562,7 @@
     {
       "name": "menthe",
       "id": 139,
-      "color": { "alpha": 1, "hue": 94, "lightness": 0.27, "saturation": 1 },
+      "color": { "alpha": 0.3, "hue": 94, "lightness": 0.27, "saturation": 1 },
       "usedBy": [
         59,
         175,
