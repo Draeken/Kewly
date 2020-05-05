@@ -8,13 +8,21 @@ import 'package:kewly/util.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:kewly/app_model.dart';
 
-class KewlyProductTile extends StatelessWidget {
+class KewlyProductTile extends StatefulWidget {
   final Product product;
 
-  KewlyProductTile(this.product);
+  KewlyProductTile({Key key, this.product}): super(key);
+
+  @override
+  State<StatefulWidget> createState() => _KewlyProductTile();
+}
+
+class _KewlyProductTile extends State<KewlyProductTile> {
+  bool _drawGlassDecor = false;
 
   @override
   Widget build(BuildContext context) {
+    Timer(Duration(seconds: 1), _enableGlassDecor);
     return GestureDetector(
         onTapDown: _launchDrinkURL,
         child: Column(children: [
@@ -22,7 +30,7 @@ class KewlyProductTile extends StatelessWidget {
               decoration: BoxDecoration(color: Colors.white),
               child: CustomPaint(
                 size: Size(100, 100),
-                painter: ProductPainter(product),
+                painter: ProductPainter(product, _drawGlassDecor),
               ),
               height: 104.0,
               width: 104.0),
@@ -31,6 +39,12 @@ class KewlyProductTile extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ]));
+  }
+
+  void _enableGlassDecor() {
+    setState(() {
+      _drawGlassDecor = true;
+    });
   }
 
   void _launchDrinkURL(_) async {
@@ -45,10 +59,11 @@ class KewlyProductTile extends StatelessWidget {
 
 class ProductPainter extends CustomPainter {
   final Product product;
+  final bool drawGlassDeco
 
   static final rand = Random();
 
-  ProductPainter(this.product);
+  ProductPainter(this.product, this.drawGlassDeco);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -76,7 +91,8 @@ class ProductPainter extends CustomPainter {
           ..strokeWidth = 2);
 
     canvas.clipPath(glassPaths[1]);
-    if (product.tags.contains(Tag.ice) &&
+    if (drawGlassDeco &&
+        product.tags.contains(Tag.ice) &&
         !product.tags.contains(Tag.hot) &&
         !product.tags.contains(Tag.blended) &&
         !product.tags.contains(Tag.filtered)) {
@@ -130,13 +146,18 @@ class ProductPainter extends CustomPainter {
     return quantities;
   }
 
+  /**
+   * issue: chocolate 99 & milk 1 -> would result in chocolate being blended with white 50%
+   * colorConcentration * quantity should asymptotic to sum value?
+   * maybe use a custom color.alphaBlend
+   */
   List<Color> _getAdjustedColors(List<Composition> compos) {
     final sum = compos.fold(
         0, (acc, Composition cur) => acc + (cur.eqQuantity ?? cur.quantity));
     return compos.map((compo) {
       final quantity = compo.eqQuantity ?? compo.quantity;
       final hslColor = compo.ingredient.color;
-      final quantityFactor = min<double>(sum, quantity * 1.5) / sum;
+      final quantityFactor = min<double>(sum, quantity * compo.ingredient.colorConcentration) / sum;
       final maxLightness = 1 - hslColor.lightness;
       final newLightness = maxLightness * quantityFactor;
       return hslColor.withLightness(1 - newLightness).toColor();

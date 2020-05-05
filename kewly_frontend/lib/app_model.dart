@@ -29,8 +29,7 @@ class CompositionRaw {
     return CompositionRaw(
         ingredientId: json['ingredientId'] as int,
         quantity: json['quantity'].toDouble(),
-        eqQuantity:
-            json['_quantity'] != null ? json['_quantity'].toDouble() : null,
+        eqQuantity: json['_quantity']?.toDouble(),
         unit: json['unit'] ?? "");
   }
 }
@@ -144,6 +143,7 @@ class ColorRaw {
 
   static ColorRaw fromJson(Map<String, dynamic> json) {
     return ColorRaw(
+        concentration: json['concentration']?.toDouble(),
         alpha: json['alpha']?.toDouble(),
         hue: json['hue']?.toDouble(),
         lightness: json['lightness']?.toDouble(),
@@ -179,6 +179,7 @@ class Ingredient implements Id {
   final int id;
   final String name;
   final HSLColor color;
+  final double colorConcentration;
   final List<Product> usedBy;
   final List<Product> decorates;
   final List<String> tags;
@@ -195,7 +196,8 @@ class Ingredient implements Id {
       : this.color = color == null
             ? HSLColor.fromColor(Colors.transparent)
             : HSLColor.fromAHSL(
-                color.alpha, color.hue, color.saturation, color.lightness);
+                color.alpha, color.hue, color.saturation, color.lightness),
+        this.colorConcentration = color?.concentration ?? 1;
 }
 
 class UserReviewRaw {
