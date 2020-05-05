@@ -5,10 +5,80 @@ import 'package:kewly/components/kewly_product_tile.dart';
 import 'package:kewly/util.dart';
 import 'package:provider/provider.dart';
 
+class SearchModal extends ModalRoute<void> {
+  @override
+  Duration get transitionDuration => Duration(milliseconds: 128);
+
+  @override
+  bool get opaque => false;
+
+  @override
+  bool get barrierDismissible => false;
+
+  @override
+  Color get barrierColor => Colors.black.withOpacity(0.5);
+
+  @override
+  String get barrierLabel => null;
+
+  @override
+  bool get maintainState => true;
+
+  @override
+  Widget buildPage(
+      BuildContext context,
+      Animation<double> animation,
+      Animation<double> secondaryAnimation,
+      ) {
+    // This makes sure that text and other content follows the material style
+    return Material(
+      type: MaterialType.transparency,
+      // make sure that the overlay content is not cut off
+      child: SafeArea(
+        child: _buildOverlayContent(context),
+      ),
+    );
+  }
+
+  Widget _buildOverlayContent(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(
+            'This is a nice overlay',
+            style: TextStyle(color: Colors.white, fontSize: 30.0),
+          ),
+          RaisedButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Dismiss'),
+          )
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget buildTransitions(
+      BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+    // You can add your own animations for the overlay content
+    return FadeTransition(
+      opacity: animation,
+      child: ScaleTransition(
+        scale: animation,
+        child: child,
+      ),
+    );
+  }
+}
+
+class SearchModel extends ChangeNotifier {
+  SearchResult _searchResult;
+
+  SearchModel() _searchInput: SearchResult.empty();
+}
+
 /**
- * How does search works:
- * - currently: just a raw user string that is matched against ingredient names;
- * How it should works:
  * user string should be used to search beverage by name;
  * when user focus textfield:
  * - show recent search (user input; ingredients)
@@ -19,10 +89,10 @@ import 'package:provider/provider.dart';
  * - when user validate, unfocus search and display results with selected chips
  * while searching, if user tap on a filter (chips):
  * - toggle on, duplicate below textfield.
- * - search screen stays opened
+ * - search screen closes
  */
 class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
-  final ValueChanged<String> onSearchChanged;
+  final ValueChanged<SearchResult> onSearchChanged;
 
   HomeAppBar({Key key, this.onSearchChanged}) : super(key: key);
 
@@ -33,22 +103,37 @@ class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(56);
 }
 
+/**
+ * states:
+ * - unfocused (default) (after textfield send, after chip toggle)
+ * - display search modal (after textfield focus)
+ *
+ * homeAppBar call Navigator.push(modalRoute)/pop
+ * textfield update -> call update on SearchModel (ChangeNotifier)
+ * modalRoute
+ * maybe use SearchModel to compute product set (which will be used by home categories)
+ */
 class _HomeAppBar extends State<HomeAppBar> {
   bool isSearchEnabled = false;
   final _inputController = TextEditingController();
+
+  void _closeAndResetSearch(BuildContext context) {
+    _closeSearch(context);
+    _inputController.clear();
+    this.widget.onSearchChanged(SearchResult.empty());
+  }
 
   void _closeSearch(BuildContext context) {
     if (!isSearchEnabled) {
       return;
     }
-    _inputController.clear();
-    this.widget.onSearchChanged("");
     FocusScopeNode currentFocus = FocusScope.of(context);
+    // TODO: user may not be focusing textfield
     if (!currentFocus.hasPrimaryFocus) {
       currentFocus.unfocus();
     }
     setState(() {
-      isSearchEnabled = !isSearchEnabled;
+      isSearchEnabled = false;
     });
   }
 
@@ -61,24 +146,36 @@ class _HomeAppBar extends State<HomeAppBar> {
     });
   }
 
-  _getLeading() {
+  _getLeading(BuildContext context) {
     return isSearchEnabled
         ? IconButton(
             icon: const Icon(Icons.close),
             tooltip: 'Close search',
-            onPressed: () => _closeSearch(context),
+            onPressed: () => _closeAndResetSearch(context),
           )
         : null;
+  }
+
+  void _submitSearchResult(BuildContext context) {
+    this.widget.onSearchChanged(SearchResult(
+      productName: _inputController.text,
+      ingredients: const [],
+      mustHave: const [],
+      mustNotHave: const []
+    ));
+    _closeSearch(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: _getLeading(),
+      leading: _getLeading(context),
       title: TextField(
         controller: _inputController,
         onTap: _openSearch,
-        onChanged: widget.onSearchChanged,
+        onSubmitted (_) => _submitSearchResult(context), // should emit a new SearchResult
+        onChanged: // should filter out chips widget.onSearchChanged,
+        textInputAction: TextInputAction.search,
         decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 25),
             isDense: true,
@@ -96,6 +193,24 @@ class _HomeAppBar extends State<HomeAppBar> {
   void dispose() {
     _inputController.dispose();
     super.dispose();
+  }
+}
+
+class SearchResult {
+  final String productName;
+  final List<Ingredient> ingredients;
+  final List<Tag> mustHave;
+  final List<Tag> mustNotHave;
+
+  SearchResult({this.productName, this.ingredients, this.mustHave, this.mustNotHave});
+
+  static SearchResult empty() {
+    return SearchResult(
+      productName: "",
+      ingredients: const [];
+      mustHave: const [];
+      mustNotHave: const [];
+    );
   }
 }
 

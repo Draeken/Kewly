@@ -21,8 +21,13 @@ class _KewlyProductTile extends State<KewlyProductTile> {
   bool _drawGlassDecor = false;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     Timer(Duration(seconds: 1), _enableGlassDecor);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
         onTapDown: _launchDrinkURL,
         child: Column(children: [
