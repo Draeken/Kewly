@@ -73,9 +73,28 @@ class SearchModal extends ModalRoute<void> {
 }
 
 class SearchModel extends ChangeNotifier {
-  SearchResult _searchResult;
+  String _productName;
+  List<Ingredient> _ingredients;
+  List<Tag> _mustHave;
+  List<Tag> _mustNotHave;
 
   SearchModel() _searchInput: SearchResult.empty();
+
+  SearchResult get searchResult =>
+    SearchResult(productName: _productName, ingredients: _ingredients, mustHave: _mustHave, mustNotHave: _mustNotHave);
+
+  void reset() {
+    _productName = "";
+    _ingredinets = const [];
+    _mustHave = const [];
+    _mustNotHave = const [];
+    notifyListeners();
+  }
+
+  void updateProductName(String productName) {
+    _productName = productName;
+    notifyListeners();
+  }
 }
 
 /**
@@ -92,9 +111,8 @@ class SearchModel extends ChangeNotifier {
  * - search screen closes
  */
 class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
-  final ValueChanged<SearchResult> onSearchChanged;
 
-  HomeAppBar({Key key, this.onSearchChanged}) : super(key: key);
+  HomeAppBar({Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _HomeAppBar();
@@ -120,7 +138,7 @@ class _HomeAppBar extends State<HomeAppBar> {
   void _closeAndResetSearch(BuildContext context) {
     _closeSearch(context);
     _inputController.clear();
-    this.widget.onSearchChanged(SearchResult.empty());
+    Provider.of<SearchResult>(context, listen: false).empty();
   }
 
   void _closeSearch(BuildContext context) {
@@ -132,18 +150,20 @@ class _HomeAppBar extends State<HomeAppBar> {
     if (!currentFocus.hasPrimaryFocus) {
       currentFocus.unfocus();
     }
+    Navigator.pop(context);
     setState(() {
       isSearchEnabled = false;
     });
   }
 
-  void _openSearch() {
+  void _openSearch(BuildContext context) {
     if (isSearchEnabled) {
       return;
     }
     setState(() {
       isSearchEnabled = true;
     });
+    Navigator.of(context).push(SearchModal());
   }
 
   _getLeading(BuildContext context) {
@@ -157,13 +177,12 @@ class _HomeAppBar extends State<HomeAppBar> {
   }
 
   void _submitSearchResult(BuildContext context) {
-    this.widget.onSearchChanged(SearchResult(
-      productName: _inputController.text,
-      ingredients: const [],
-      mustHave: const [],
-      mustNotHave: const []
-    ));
     _closeSearch(context);
+    Provider.of<SearchResult>(context, listen: false).updateProductName(_inputController.text);
+  }
+
+  void _updateSearch(BuildContext context) {
+    Provider.of<SearchResult>(context, listen: false).updateProductName(_inputController.text);
   }
 
   @override
@@ -172,9 +191,9 @@ class _HomeAppBar extends State<HomeAppBar> {
       leading: _getLeading(context),
       title: TextField(
         controller: _inputController,
-        onTap: _openSearch,
-        onSubmitted (_) => _submitSearchResult(context), // should emit a new SearchResult
-        onChanged: // should filter out chips widget.onSearchChanged,
+        onTap: () => _openSearch(context),
+        onSubmitted (_) => _submitSearchResult(context),
+        onChanged: (_) => _updateSearch(context),
         textInputAction: TextInputAction.search,
         decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 25),
@@ -255,28 +274,54 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _bottomNavIndex = 0;
-  String _searchInput = "";
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: HomeAppBar(
-        onSearchChanged: _updateSearchInput,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _bottomNavIndex,
-          onTap: (index) => _bottomNavOnTap(context, index),
-          items: _createBottomNavBarItem()),
-      body: Center(
-          child: ListView(
-        scrollDirection: Axis.vertical,
-        children: <Widget>[
-          AllYourProducts(_searchInput),
-          ForAFewDollarsMore(_searchInput)
-        ],
-      )),
-      resizeToAvoidBottomInset: true,
+    return ChangeNotifierProvider(
+      create: (_) => SearchModel(),
+      child: Scaffold(
+        appBar: HomeAppBar(),
+        bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _bottomNavIndex,
+            onTap: (index) => _bottomNavOnTap(context, index),
+            items: _createBottomNavBarItem()),
+        body: Center(
+          child: Consumer2<AppModel, SearchModel>(
+            builder: (context, appModel, searchModel, _) {
+              final matchingProducts = _findMatchingProduct(appModel, searchModel.searchResult);
+              return ListView(
+                scrollDirection: Axis.vertical,
+                children: <Widget>[
+                  AllYourProducts(matchingProducts),
+                  ForAFewDollarsMore(matchingProducts)
+                ],
+              )
+            }
+          )
+        ),
+        resizeToAvoidBottomInset: true,
+      )
     );
+  }
+
+  List<Product> _findMatchingProduct(AppModel appModel, SearchResult search) {
+    List<Product> matchingProducts = appModel.products;
+
+    if (search.ingredients.isNotEmpty) {
+      matchingProducts = Set<Product>.from(
+        search.ingredients.expand((ingredient) => ingredient.usedBy)
+      )
+    }
+    if (search.productName != "") {
+      matchingProducts = matchingProducts.where((product) => product.name.contains(search.productName));
+    }
+    if (search.mustHave) {
+      matchingProducts = matchingProducts.where((product) => search.mustHave.every((tag) => product.tags.contains(tag)));
+    }
+    if (search.mustNotHave) {
+      matchingProducts = matchingProducts.where((product) => !search.mustNotHave.any((tag) => product.tags.contains(tag)));
+    }
+    return matchingProducts.toList(growable: false);
   }
 
   List<BottomNavigationBarItem> _createBottomNavBarItem() {
@@ -302,32 +347,20 @@ class _HomePageState extends State<HomePage> {
 }
 
 class AllYourProducts extends StatelessWidget {
-  final String searchInput;
+  final List<Product> products;
 
-  AllYourProducts(this.searchInput);
+  AllYourProducts(this.products);
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppModel>(
-      builder: (_, appModel, __) {
-        var eligibleProducts = appModel.products.toList(growable: false);
-        if (searchInput.isNotEmpty) {
-          var eligibleIngredient = appModel.ingredients.where(
-              (ingredient) => containsIgnoreCase(ingredient.name, searchInput));
-          eligibleProducts = Set<Product>.from(
-                  eligibleIngredient.expand((ingredient) => ingredient.usedBy))
-              .toList(growable: false);
-        }
-        var products = eligibleProducts
-            .where((product) =>
-                product.composition.every((compo) => compo.ingredient.isOwned))
-            .toList(growable: false);
-        final builder = (BuildContext context, int index) {
-          return KewlyProductTile(products[index]);
-        };
-        return KewlyCategory(title: 'Toutes vos boissons', itemCount: products.length, builder: builder);
-      },
-    );
+    var ownedProducts = products
+        .where((product) =>
+            product.composition.every((compo) => compo.ingredient.isOwned))
+        .toList(growable: false);
+    final builder = (BuildContext context, int index) {
+      return KewlyProductTile(ownedProducts[index]);
+    };
+    return KewlyCategory(title: 'Toutes vos boissons', itemCount: ownedProducts.length, builder: builder);
   }
 }
 
@@ -339,42 +372,30 @@ class ProductWithMissing {
 }
 
 class ForAFewDollarsMore extends StatelessWidget {
-  final String searchInput;
+  final List<Product> products;
 
-  ForAFewDollarsMore(this.searchInput);
+  ForAFewDollarsMore(this.products);
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppModel>(
-      builder: (_, appModel, __) {
-        var eligibleProducts = appModel.products.toList(growable: false);
-        if (searchInput.isNotEmpty) {
-          var eligibleIngredient = appModel.ingredients.where(
-                  (ingredient) => containsIgnoreCase(ingredient.name, searchInput));
-          eligibleProducts = Set<Product>.from(
-              eligibleIngredient.expand((ingredient) => ingredient.usedBy))
+    List<ProductWithMissing> productWithMissing = products
+        .map((product) {
+          var missing = product.composition
+              .where((compo) => !compo.ingredient.isOwned)
+              .map((compo) => compo.ingredient)
               .toList(growable: false);
-        }
-        List<ProductWithMissing> productWithMissing = eligibleProducts
-            .map((product) {
-              var missing = product.composition
-                  .where((compo) => !compo.ingredient.isOwned)
-                  .map((compo) => compo.ingredient)
-                  .toList(growable: false);
-              return ProductWithMissing(missing: missing, product: product);
-            })
-            .where((ProductWithMissing pwm) => pwm.missing.length == 1)
-            .toList(growable: false);
-        productWithMissing.sort((a, b) {
-          return b.missing[0].usedBy.length
-              .compareTo(a.missing[0].usedBy.length);
-        });
-        final builder = (BuildContext _context, int index) {
-          return KewlyProductTile(productWithMissing[index].product);
-        };
-        return KewlyCategory(
-            title: 'Pour quelques \$ de plus', builder: builder, itemCount: productWithMissing.length);
-      },
-    );
+          return ProductWithMissing(missing: missing, product: product);
+        })
+        .where((ProductWithMissing pwm) => pwm.missing.length == 1)
+        .toList(growable: false);
+    productWithMissing.sort((a, b) {
+      return b.missing[0].usedBy.length
+          .compareTo(a.missing[0].usedBy.length);
+    });
+    final builder = (BuildContext _context, int index) {
+      return KewlyProductTile(productWithMissing[index].product);
+    };
+    return KewlyCategory(
+        title: 'Pour quelques \$ de plus', builder: builder, itemCount: productWithMissing.length);
   }
 }
