@@ -25,11 +25,9 @@ class SearchModal extends ModalRoute<void> {
   bool get maintainState => true;
 
   @override
-  Widget buildPage(
-      BuildContext context,
+  Widget buildPage(BuildContext context,
       Animation<double> animation,
-      Animation<double> secondaryAnimation,
-      ) {
+      Animation<double> secondaryAnimation,) {
     // This makes sure that text and other content follows the material style
     return Material(
       type: MaterialType.transparency,
@@ -59,8 +57,8 @@ class SearchModal extends ModalRoute<void> {
   }
 
   @override
-  Widget buildTransitions(
-      BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation, Widget child) {
     // You can add your own animations for the overlay content
     return FadeTransition(
       opacity: animation,
@@ -78,14 +76,21 @@ class SearchModel extends ChangeNotifier {
   List<Tag> _mustHave;
   List<Tag> _mustNotHave;
 
-  SearchModel() _searchInput: SearchResult.empty();
+  SearchModel()
+      : _productName = "",
+        _ingredients = [],
+        _mustHave = [],
+        _mustNotHave = [];
 
   SearchResult get searchResult =>
-    SearchResult(productName: _productName, ingredients: _ingredients, mustHave: _mustHave, mustNotHave: _mustNotHave);
+      SearchResult(productName: _productName,
+          ingredients: _ingredients,
+          mustHave: _mustHave,
+          mustNotHave: _mustNotHave);
 
   void reset() {
     _productName = "";
-    _ingredinets = const [];
+    _ingredients = const [];
     _mustHave = const [];
     _mustNotHave = const [];
     notifyListeners();
@@ -138,7 +143,7 @@ class _HomeAppBar extends State<HomeAppBar> {
   void _closeAndResetSearch(BuildContext context) {
     _closeSearch(context);
     _inputController.clear();
-    Provider.of<SearchResult>(context, listen: false).empty();
+    Provider.of<SearchModel>(context, listen: false).reset();
   }
 
   void _closeSearch(BuildContext context) {
@@ -169,20 +174,22 @@ class _HomeAppBar extends State<HomeAppBar> {
   _getLeading(BuildContext context) {
     return isSearchEnabled
         ? IconButton(
-            icon: const Icon(Icons.close),
-            tooltip: 'Close search',
-            onPressed: () => _closeAndResetSearch(context),
-          )
+      icon: const Icon(Icons.close),
+      tooltip: 'Close search',
+      onPressed: () => _closeAndResetSearch(context),
+    )
         : null;
   }
 
   void _submitSearchResult(BuildContext context) {
     _closeSearch(context);
-    Provider.of<SearchResult>(context, listen: false).updateProductName(_inputController.text);
+    Provider.of<SearchModel>(context, listen: false).updateProductName(
+        _inputController.text);
   }
 
   void _updateSearch(BuildContext context) {
-    Provider.of<SearchResult>(context, listen: false).updateProductName(_inputController.text);
+    Provider.of<SearchModel>(context, listen: false).updateProductName(
+        _inputController.text);
   }
 
   @override
@@ -192,7 +199,7 @@ class _HomeAppBar extends State<HomeAppBar> {
       title: TextField(
         controller: _inputController,
         onTap: () => _openSearch(context),
-        onSubmitted (_) => _submitSearchResult(context),
+        onSubmitted: (_) => _submitSearchResult(context),
         onChanged: (_) => _updateSearch(context),
         textInputAction: TextInputAction.search,
         decoration: InputDecoration(
@@ -202,9 +209,16 @@ class _HomeAppBar extends State<HomeAppBar> {
             filled: true,
             hasFloatingPlaceholder: false,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
-            fillColor: Theme.of(context).backgroundColor.withAlpha(200)),
-      ),
-      backgroundColor: Colors.transparent,
+            fillColor: Theme
+                .of(context)
+                .backgroundColor
+                .withAlpha(200)),
+      ), backgroundColor
+        :
+    Colors
+        .
+    transparent
+      ,
     );
   }
 
@@ -221,14 +235,15 @@ class SearchResult {
   final List<Tag> mustHave;
   final List<Tag> mustNotHave;
 
-  SearchResult({this.productName, this.ingredients, this.mustHave, this.mustNotHave});
+  SearchResult(
+      {this.productName, this.ingredients, this.mustHave, this.mustNotHave});
 
   static SearchResult empty() {
     return SearchResult(
       productName: "",
-      ingredients: const [];
-      mustHave: const [];
-      mustNotHave: const [];
+      ingredients: const [],
+      mustHave: const [],
+      mustNotHave: const [],
     );
   }
 }
@@ -239,11 +254,10 @@ class NavigationLink {
   final String namedRoute;
   final Color backgroundColor;
 
-  const NavigationLink(
-      {this.icon,
-      this.title,
-      this.namedRoute,
-      this.backgroundColor = Colors.amber});
+  const NavigationLink({this.icon,
+    this.title,
+    this.namedRoute,
+    this.backgroundColor = Colors.amber});
 }
 
 const NavigationLinks = <NavigationLink>[
@@ -278,29 +292,30 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => SearchModel(),
-      child: Scaffold(
-        appBar: HomeAppBar(),
-        bottomNavigationBar: BottomNavigationBar(
-            currentIndex: _bottomNavIndex,
-            onTap: (index) => _bottomNavOnTap(context, index),
-            items: _createBottomNavBarItem()),
-        body: Center(
-          child: Consumer2<AppModel, SearchModel>(
-            builder: (context, appModel, searchModel, _) {
-              final matchingProducts = _findMatchingProduct(appModel, searchModel.searchResult);
-              return ListView(
-                scrollDirection: Axis.vertical,
-                children: <Widget>[
-                  AllYourProducts(matchingProducts),
-                  ForAFewDollarsMore(matchingProducts)
-                ],
+        create: (_) => SearchModel(),
+        child: Scaffold(
+          appBar: HomeAppBar(),
+          bottomNavigationBar: BottomNavigationBar(
+              currentIndex: _bottomNavIndex,
+              onTap: (index) => _bottomNavOnTap(context, index),
+              items: _createBottomNavBarItem()),
+          body: Center(
+              child: Consumer2<AppModel, SearchModel>(
+                  builder: (context, appModel, searchModel, _) {
+                    final matchingProducts = _findMatchingProduct(
+                        appModel, searchModel.searchResult);
+                    return ListView(
+                      scrollDirection: Axis.vertical,
+                      children: <Widget>[
+                        AllYourProducts(matchingProducts),
+                        ForAFewDollarsMore(matchingProducts)
+                      ],
+                    );
+                  }
               )
-            }
-          )
-        ),
-        resizeToAvoidBottomInset: true,
-      )
+          ),
+          resizeToAvoidBottomInset: true,
+        )
     );
   }
 
@@ -309,40 +324,42 @@ class _HomePageState extends State<HomePage> {
 
     if (search.ingredients.isNotEmpty) {
       matchingProducts = Set<Product>.from(
-        search.ingredients.expand((ingredient) => ingredient.usedBy)
-      )
+          search.ingredients.expand((ingredient) => ingredient.usedBy)
+      ).toList(growable: false);
     }
     if (search.productName != "") {
-      matchingProducts = matchingProducts.where((product) => product.name.contains(search.productName));
+      matchingProducts = matchingProducts.where((product) =>
+          product.name.contains(search.productName));
     }
-    if (search.mustHave) {
-      matchingProducts = matchingProducts.where((product) => search.mustHave.every((tag) => product.tags.contains(tag)));
+    if (search.mustHave.isNotEmpty) {
+      matchingProducts = matchingProducts.where((product) =>
+          search.mustHave.every((tag) => product.tags.contains(tag)));
     }
-    if (search.mustNotHave) {
-      matchingProducts = matchingProducts.where((product) => !search.mustNotHave.any((tag) => product.tags.contains(tag)));
+    if (search.mustNotHave.isNotEmpty) {
+      matchingProducts =
+          matchingProducts.where((product) =>
+          !search.mustNotHave.any((tag) =>
+              product.tags.contains(tag)));
     }
     return matchingProducts.toList(growable: false);
   }
 
   List<BottomNavigationBarItem> _createBottomNavBarItem() {
-    return NavigationLinks.map((navLink) => BottomNavigationBarItem(
-        icon: navLink.icon,
-        title: Text(navLink.title),
-        backgroundColor: navLink.backgroundColor)).toList();
+    return NavigationLinks.map((navLink) =>
+        BottomNavigationBarItem(
+            icon: navLink.icon,
+            title: Text(navLink.title),
+            backgroundColor: navLink.backgroundColor)).toList();
   }
 
   void _bottomNavOnTap(BuildContext context, int index) {
     if (_bottomNavIndex == index) {
       return;
     }
-    String route = NavigationLinks.elementAt(index).namedRoute;
+    String route = NavigationLinks
+        .elementAt(index)
+        .namedRoute;
     Navigator.of(context).pushReplacementNamed(route);
-  }
-
-  void _updateSearchInput(newVal) {
-    setState(() {
-      _searchInput = newVal;
-    });
   }
 }
 
@@ -355,12 +372,14 @@ class AllYourProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     var ownedProducts = products
         .where((product) =>
-            product.composition.every((compo) => compo.ingredient.isOwned))
+        product.composition.every((compo) => compo.ingredient.isOwned))
         .toList(growable: false);
     final builder = (BuildContext context, int index) {
-      return KewlyProductTile(ownedProducts[index]);
+      return KewlyProductTile(product: ownedProducts[index]);
     };
-    return KewlyCategory(title: 'Toutes vos boissons', itemCount: ownedProducts.length, builder: builder);
+    return KewlyCategory(title: 'Toutes vos boissons',
+        itemCount: ownedProducts.length,
+        builder: builder);
   }
 }
 
@@ -380,12 +399,12 @@ class ForAFewDollarsMore extends StatelessWidget {
   Widget build(BuildContext context) {
     List<ProductWithMissing> productWithMissing = products
         .map((product) {
-          var missing = product.composition
-              .where((compo) => !compo.ingredient.isOwned)
-              .map((compo) => compo.ingredient)
-              .toList(growable: false);
-          return ProductWithMissing(missing: missing, product: product);
-        })
+      var missing = product.composition
+          .where((compo) => !compo.ingredient.isOwned)
+          .map((compo) => compo.ingredient)
+          .toList(growable: false);
+      return ProductWithMissing(missing: missing, product: product);
+    })
         .where((ProductWithMissing pwm) => pwm.missing.length == 1)
         .toList(growable: false);
     productWithMissing.sort((a, b) {
@@ -393,9 +412,11 @@ class ForAFewDollarsMore extends StatelessWidget {
           .compareTo(a.missing[0].usedBy.length);
     });
     final builder = (BuildContext _context, int index) {
-      return KewlyProductTile(productWithMissing[index].product);
+      return KewlyProductTile(product: productWithMissing[index].product);
     };
     return KewlyCategory(
-        title: 'Pour quelques \$ de plus', builder: builder, itemCount: productWithMissing.length);
+        title: 'Pour quelques \$ de plus',
+        builder: builder,
+        itemCount: productWithMissing.length);
   }
 }

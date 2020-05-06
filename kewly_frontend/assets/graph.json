@@ -1686,7 +1686,7 @@
       "composition": [
         { "ingredientId": 77, "quantity": 25, "unit": "ml" },
         { "ingredientId": 194, "quantity": 150, "unit": "ml" },
-        { "ingredientId": 198, "quantity": 0, "_quantity": -40 }
+        { "ingredientId": 198, "quantity": 0, "_quantity": 50 }
       ],
       "capacity": 270,
       "glass": 26,
@@ -1907,7 +1907,7 @@
       "composition": [
         { "ingredientId": 104, "quantity": 20, "unit": "ml" },
         { "ingredientId": 194, "quantity": 150, "unit": "ml" },
-        { "ingredientId": 198, "quantity": 0, "_quantity": -45 }
+        { "ingredientId": 198, "quantity": 0, "_quantity": 50 }
       ],
       "capacity": 250,
       "glass": 6,
@@ -1921,7 +1921,7 @@
       "composition": [
         { "ingredientId": 141, "quantity": 20, "unit": "ml" },
         { "ingredientId": 194, "quantity": 180, "unit": "ml" },
-        { "ingredientId": 198, "quantity": 0, "_quantity": -75 }
+        { "ingredientId": 198, "quantity": 0, "_quantity": 50 }
       ],
       "capacity": 250,
       "glass": 6,
@@ -2092,7 +2092,7 @@
         { "ingredientId": 212, "quantity": 15, "unit": "ml" },
         { "ingredientId": 166, "quantity": 15, "unit": "ml" },
         { "ingredientId": 27, "quantity": 170, "unit": "ml" },
-        { "ingredientId": 198, "quantity": 0, "_quantity": -65 }
+        { "ingredientId": 198, "quantity": 0, "_quantity": 50 }
       ],
       "capacity": 270,
       "glass": 26,
@@ -2202,7 +2202,7 @@
       "composition": [
         { "ingredientId": 85, "quantity": 30, "unit": "ml" },
         { "ingredientId": 214, "quantity": 150, "unit": "ml" },
-        { "ingredientId": 87, "quantity": 0, "_quantity": 0 }
+        { "ingredientId": 87, "quantity": 0 }
       ],
       "capacity": 360,
       "glass": 11,
@@ -2549,9 +2549,9 @@
         { "ingredientId": 99, "quantity": 40, "unit": "ml" },
         { "ingredientId": 235, "quantity": 2, "unit": "bit" },
         { "ingredientId": 236, "quantity": 3, "unit": "bit" },
-        { "ingredientId": 95, "quantity": 0, "_quantity": -54 }
+        { "ingredientId": 95, "quantity": 0, "_quantity": 117 }
       ],
-      "capacity": 12,
+      "capacity": 355,
       "glass": 11,
       "decoratedWith": [{ "id": 236 }],
       "tags": ["syriup", "alcool", "sparkling", "mixed", "ice"]
@@ -3963,7 +3963,7 @@
         { "ingredientId": 126, "quantity": 1 },
         { "ingredientId": 27, "quantity": 80, "unit": "ml" },
         { "ingredientId": 136, "quantity": 40, "unit": "ml" },
-        { "ingredientId": 298, "quantity": 0, "unit": "tsp", "_quantity": 0 }
+        { "ingredientId": 298, "quantity": 1, "unit": "tsp", "_quantity": 5 }
       ],
       "capacity": 300,
       "glass": 4,
@@ -5215,7 +5215,7 @@
         { "ingredientId": 71, "quantity": 30, "unit": "ml" },
         { "ingredientId": 114, "quantity": 30, "unit": "ml" },
         { "ingredientId": 27, "quantity": 150, "unit": "ml" },
-        { "ingredientId": 198, "quantity": 0, "_quantity": 0 }
+        { "ingredientId": 198, "quantity": 0, "_quantity": 50 }
       ],
       "capacity": 420,
       "glass": 20,
@@ -5660,10 +5660,10 @@
       "composition": [
         { "ingredientId": 330, "quantity": 20, "unit": "ml" },
         { "ingredientId": 41, "quantity": 10, "unit": "ml" },
-        { "ingredientId": 95, "quantity": 0, "_quantity": -24 }
+        { "ingredientId": 95, "quantity": 0, "_quantity": 145 }
       ],
-      "capacity": 12,
-      "glass": 11,
+      "capacity": 350,
+      "glass": 20,
       "decoratedWith": [{ "id": 83, "as": "Tranche de Citron Vert/Morceaux" }],
       "tags": ["syriup", "sparkling", "ice", "mixed"]
     },
@@ -5857,7 +5857,7 @@
       "composition": [
         { "ingredientId": 221, "quantity": 20, "unit": "ml" },
         { "ingredientId": 35, "quantity": 60, "unit": "ml" },
-        { "ingredientId": 146, "quantity": 0, "_quantity": -30 },
+        { "ingredientId": 146, "quantity": 0, "_quantity": 15 },
         { "ingredientId": 227, "quantity": 1, "unit": "slice" }
       ],
       "capacity": 100,
@@ -6543,7 +6543,7 @@
         { "ingredientId": 112, "quantity": 10, "unit": "ml" },
         { "ingredientId": 60, "quantity": 45, "unit": "ml" },
         { "ingredientId": 40, "quantity": 50, "unit": "ml" },
-        { "ingredientId": 372, "quantity": 0, "unit": "dash", "_quantity": 0 },
+        { "ingredientId": 372, "quantity": 0, "unit": "dash", "_quantity": 0.62 },
         { "ingredientId": 227, "quantity": 3, "unit": "slice" }
       ],
       "capacity": 250,
@@ -6675,7 +6675,7 @@
         { "ingredientId": 147, "quantity": 10, "unit": "ml" },
         { "ingredientId": 374, "quantity": 30, "unit": "ml" },
         { "ingredientId": 144, "quantity": 100, "unit": "ml" },
-        { "ingredientId": 136, "quantity": 0, "_quantity": -40 }
+        { "ingredientId": 136, "quantity": 0, "_quantity": 60 }
       ],
       "capacity": 240,
       "glass": 6,
@@ -8140,7 +8140,7 @@
         { "ingredientId": 191, "quantity": 20, "unit": "ml" },
         { "ingredientId": 27, "quantity": 150, "unit": "ml" },
         { "ingredientId": 142, "quantity": 1 },
-        { "ingredientId": 198, "quantity": 0, "_quantity": -45 }
+        { "ingredientId": 198, "quantity": 0, "_quantity": 50 }
       ],
       "capacity": 270,
       "glass": 26,
@@ -8554,10 +8554,10 @@
       "composition": [
         { "ingredientId": 67, "quantity": 30, "unit": "ml" },
         { "ingredientId": 227, "quantity": 3, "unit": "slice" },
-        { "ingredientId": 87, "quantity": 0, "_quantity": -30 },
-        { "ingredientId": 146, "quantity": 0, "_quantity": -30 }
+        { "ingredientId": 87, "quantity": 0 },
+        { "ingredientId": 146, "quantity": 0, "_quantity": 210 }
       ],
-      "capacity": 0,
+      "capacity": 480,
       "glass": 11,
       "decoratedWith": [{ "id": 227, "as": "Tranche de Citron / Morceaux" }],
       "tags": ["syriup", "ice", "sparkling", "mixed"]
@@ -9034,7 +9034,7 @@
         { "ingredientId": 35, "quantity": 60, "unit": "ml" },
         { "ingredientId": 83, "quantity": 2, "unit": "slice" },
         { "ingredientId": 232, "quantity": 90, "unit": "ml" },
-        { "ingredientId": 87, "quantity": 0, "_quantity": 0 }
+        { "ingredientId": 87, "quantity": 0 }
       ],
       "capacity": 330,
       "glass": 23,
@@ -9595,10 +9595,10 @@
         { "ingredientId": 178, "quantity": 15, "unit": "ml" },
         { "ingredientId": 261, "quantity": 40, "unit": "ml" },
         { "ingredientId": 27, "quantity": 15, "unit": "ml" },
-        { "ingredientId": 87, "quantity": 0, "_quantity": -10 }
+        { "ingredientId": 87, "quantity": 0 }
       ],
       "capacity": 150,
-      "glass": 13,
+      "glass": 17,
       "decoratedWith": [{ "id": 380 }, { "id": 614, "as": "Morceaux de Cookie en poudre pour givrer le verre" }, { "id": 188 }],
       "tags": ["syriup", "alcool", "ice", "mixed"]
     },
@@ -11216,7 +11216,7 @@
         { "ingredientId": 243, "quantity": 40, "unit": "ml" },
         { "ingredientId": 258, "quantity": 8, "unit": "leaf" },
         { "ingredientId": 83, "quantity": 4, "unit": "slice" },
-        { "ingredientId": 146, "quantity": 0, "_quantity": -20 }
+        { "ingredientId": 146, "quantity": 0, "_quantity": 20 }
       ],
       "capacity": 100,
       "glass": 17,
@@ -14839,7 +14839,7 @@
         { "ingredientId": 184, "quantity": 10, "unit": "ml" },
         { "ingredientId": 380, "quantity": 5 },
         { "ingredientId": 146, "quantity": 210, "unit": "ml" },
-        { "ingredientId": 87, "quantity": 0, "_quantity": 0 }
+        { "ingredientId": 87, "quantity": 0 }
       ],
       "capacity": 480,
       "glass": 30,
@@ -14911,7 +14911,7 @@
       "composition": [
         { "ingredientId": 96, "quantity": 30, "unit": "ml" },
         { "ingredientId": 146, "quantity": 210, "unit": "ml" },
-        { "ingredientId": 87, "quantity": 0, "_quantity": 0 }
+        { "ingredientId": 87, "quantity": 0 }
       ],
       "capacity": 480,
       "glass": 30,
@@ -15721,7 +15721,7 @@
         { "ingredientId": 278, "quantity": 20, "unit": "ml" },
         { "ingredientId": 333, "quantity": 120, "unit": "ml" },
         { "ingredientId": 146, "quantity": 100, "unit": "ml" },
-        { "ingredientId": 87, "quantity": 0, "_quantity": -45 }
+        { "ingredientId": 87, "quantity": 0 }
       ],
       "capacity": 420,
       "glass": 30,
@@ -16243,7 +16243,7 @@
         { "ingredientId": 195, "quantity": 20, "unit": "ml" },
         { "ingredientId": 363, "quantity": 30, "unit": "ml" },
         { "ingredientId": 222, "quantity": 300, "unit": "ml" },
-        { "ingredientId": 87, "quantity": 0, "_quantity": -100 }
+        { "ingredientId": 87, "quantity": 0 }
       ],
       "capacity": 500,
       "glass": 30,
@@ -17304,9 +17304,9 @@
         { "ingredientId": 242, "quantity": 40, "unit": "ml" },
         { "ingredientId": 40, "quantity": 40, "unit": "ml" },
         { "ingredientId": 41, "quantity": 20, "unit": "ml" },
-        { "ingredientId": 167, "quantity": 0, "_quantity": -114 }
+        { "ingredientId": 167, "quantity": 0, "_quantity": 55 }
       ],
-      "capacity": 12,
+      "capacity": 350,
       "glass": 11,
       "decoratedWith": [{ "id": 83, "as": "Tranche de Citron Vert/Morceaux" }, { "id": 628 }],
       "tags": ["syriup", "alcool", "sparkling", "ice", "mixed"]
@@ -18175,7 +18175,7 @@
         { "ingredientId": 94, "quantity": 20, "unit": "ml" },
         { "ingredientId": 32, "quantity": 30, "unit": "ml" },
         { "ingredientId": 13, "quantity": 100, "unit": "ml" },
-        { "ingredientId": 87, "quantity": 0, "_quantity": 0 }
+        { "ingredientId": 87, "quantity": 0 }
       ],
       "capacity": 360,
       "glass": 11,
@@ -18240,9 +18240,9 @@
         { "ingredientId": 313, "quantity": 10, "unit": "ml" },
         { "ingredientId": 83, "quantity": 4, "unit": "slice" },
         { "ingredientId": 139, "quantity": 10, "unit": "leaf" },
-        { "ingredientId": 146, "quantity": 0, "_quantity": -21.5 }
+        { "ingredientId": 146, "quantity": 0, "_quantity": 55 }
       ],
-      "capacity": 17,
+      "capacity": 170,
       "glass": 11,
       "tags": ["syriup", "sparkling", "mixed"],
       "decoratedWith": []

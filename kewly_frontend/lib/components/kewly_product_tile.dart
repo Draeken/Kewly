@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:math';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:kewly/util.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:kewly/app_model.dart';
@@ -11,7 +9,7 @@ import 'package:kewly/app_model.dart';
 class KewlyProductTile extends StatefulWidget {
   final Product product;
 
-  KewlyProductTile({Key key, this.product}): super(key);
+  KewlyProductTile({Key key, this.product}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _KewlyProductTile();
@@ -19,11 +17,18 @@ class KewlyProductTile extends StatefulWidget {
 
 class _KewlyProductTile extends State<KewlyProductTile> {
   bool _drawGlassDecor = false;
+  Timer delayer;
 
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 1), _enableGlassDecor);
+    delayer = Timer(Duration(seconds: 1), _enableGlassDecor);
+  }
+
+  @override
+  void dispose() {
+    delayer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -35,12 +40,12 @@ class _KewlyProductTile extends State<KewlyProductTile> {
               decoration: BoxDecoration(color: Colors.white),
               child: CustomPaint(
                 size: Size(100, 100),
-                painter: ProductPainter(product, _drawGlassDecor),
+                painter: ProductPainter(widget.product, _drawGlassDecor),
               ),
               height: 104.0,
               width: 104.0),
           Text(
-            '${product.name}',
+            '${widget.product.name}',
             textAlign: TextAlign.center,
           ),
         ]));
@@ -53,7 +58,7 @@ class _KewlyProductTile extends State<KewlyProductTile> {
   }
 
   void _launchDrinkURL(_) async {
-    var url = product.link;
+    var url = widget.product.link;
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -64,7 +69,7 @@ class _KewlyProductTile extends State<KewlyProductTile> {
 
 class ProductPainter extends CustomPainter {
   final Product product;
-  final bool drawGlassDeco
+  final bool drawGlassDeco;
 
   static final rand = Random();
 
@@ -106,9 +111,9 @@ class ProductPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
+  bool shouldRepaint(ProductPainter oldDelegate) {
     // TODO: implement shouldRepaint
-    return false;
+    return drawGlassDeco != oldDelegate.drawGlassDeco;
   }
 
   void _drawIceCubes(Canvas canvas) {
@@ -161,8 +166,11 @@ class ProductPainter extends CustomPainter {
         0, (acc, Composition cur) => acc + (cur.eqQuantity ?? cur.quantity));
     return compos.map((compo) {
       final quantity = compo.eqQuantity ?? compo.quantity;
+      assert(quantity > 0);
       final hslColor = compo.ingredient.color;
-      final quantityFactor = min<double>(sum, quantity * compo.ingredient.colorConcentration) / sum;
+      final quantityFactor =
+          min<double>(sum, quantity * compo.ingredient.colorConcentration) /
+              sum;
       final maxLightness = 1 - hslColor.lightness;
       final newLightness = maxLightness * quantityFactor;
       return hslColor.withLightness(1 - newLightness).toColor();

@@ -138,8 +138,14 @@ class ColorRaw {
   final double hue;
   final double lightness;
   final double saturation;
+  final double concentration;
 
-  ColorRaw({this.lightness, this.alpha, this.hue, this.saturation});
+  ColorRaw(
+      {this.lightness,
+      this.alpha,
+      this.hue,
+      this.saturation,
+      this.concentration});
 
   static ColorRaw fromJson(Map<String, dynamic> json) {
     return ColorRaw(
