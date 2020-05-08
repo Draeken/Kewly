@@ -196,60 +196,60 @@ class GlassPath {
   static final glass11 = [
     Path()
       ..addPolygon(const [
-        const Offset(22, 8),
-        const Offset(22, 93),
-        const Offset(78, 93),
-        const Offset(78, 8)
+        const Offset(30, 32),
+        const Offset(30, 99),
+        const Offset(70, 99),
+        const Offset(70, 32)
       ], false),
     Path()
-      ..moveTo(27, 14)
-      ..lineTo(27, 83)
-      ..arcToPoint(const Offset(32, 88),
+      ..moveTo(33, 35)
+      ..lineTo(33, 91)
+      ..arcToPoint(const Offset(38, 96),
           radius: Radius.circular(5), clockwise: false)
-      ..lineTo(68, 88)
-      ..arcToPoint(const Offset(73, 83),
+      ..lineTo(63, 96)
+      ..arcToPoint(const Offset(67, 91),
           radius: Radius.circular(5), clockwise: false)
-      ..lineTo(73, 14)
+      ..lineTo(67, 35)
   ];
 
   static final glass20 = [
     Path()
-      ..moveTo(25, 4)
-      ..lineTo(29, 93 - 5.0)
-      ..arcToPoint(const Offset(34, 93),
+      ..moveTo(30, 24)
+      ..lineTo(33, 99 - 5.0)
+      ..arcToPoint(const Offset(38, 99),
           radius: Radius.circular(5), clockwise: false)
-      ..lineTo(69 - 4.0, 93)
-      ..arcToPoint(const Offset(70, 93 - 5.0),
+      ..lineTo(67 - 4.0, 99)
+      ..arcToPoint(const Offset(68, 99 - 5.0),
           radius: Radius.circular(5), clockwise: false)
-      ..lineTo(74, 4),
+      ..lineTo(71, 24),
     Path()
-      ..moveTo(28, 6)
-      ..lineTo(32, 88 - 5.0)
-      ..arcToPoint(const Offset(37, 88),
+      ..moveTo(33, 25)
+      ..lineTo(36, 95 - 5.0)
+      ..arcToPoint(const Offset(41, 95),
           radius: Radius.circular(5), clockwise: false)
-      ..lineTo(66 - 4.0, 88)
-      ..arcToPoint(const Offset(67, 88 - 5.0),
+      ..lineTo(64 - 4.0, 95)
+      ..arcToPoint(const Offset(65, 95 - 5.0),
           radius: Radius.circular(5), clockwise: false)
-      ..lineTo(71, 6)
+      ..lineTo(68, 25)
   ];
 
   static final glass26_glass_left = Path()
-    ..moveTo(27, 23.5)
-    ..cubicTo(27, 40, 29.13, 64.5, 31, 69)
-    ..lineTo(31.3, 70.82)
-    ..arcToPoint(const Offset(36.24, 75),
+    ..moveTo(27, 47)
+    ..cubicTo(27, 63.5, 29.13, 88, 31, 92.5)
+    ..lineTo(31.3, 94.32)
+    ..arcToPoint(const Offset(36.24, 98.5),
         radius: Radius.circular(5), clockwise: false)
-    ..lineTo(50, 75);
+    ..lineTo(50, 98.5);
 
   static final glass26 = [
     glass26_glass_left
       ..addPath(glass26_glass_left, const Offset(100, 0),
           matrix4: Mtransform.mirrorX),
     Path()
-      ..moveTo(30, 26)
-      ..cubicTo(29, 45.5, 32.6, 67, 35, 69)
-      ..lineTo(65, 69)
-      ..cubicTo(67.4, 67, 70, 45.5, 70, 26)
+      ..moveTo(30, 49.5)
+      ..cubicTo(30, 69, 32.6, 90.5, 35, 92.5)
+      ..lineTo(65, 92.5)
+      ..cubicTo(67.4, 90.5, 70, 69, 70, 49.5)
   ];
 
   static final glass30_glass_left = Path()
@@ -266,10 +266,33 @@ class GlassPath {
       ..cubicTo(56, 91, 107.5, 71.5, 72.5, 31)
   ];
 
+  static final glass04 = [
+    Path()
+      ..moveTo(34, 16)
+      ..lineTo(40, 99 - 5.0)
+      ..arcToPoint(const Offset(45, 99),
+          radius: Radius.circular(5), clockwise: false)
+      ..lineTo(58 - 4.0, 99)
+      ..arcToPoint(const Offset(59, 99 - 5.0),
+          radius: Radius.circular(5), clockwise: false)
+      ..lineTo(65, 16),
+    Path()
+      ..moveTo(37, 17)
+      ..lineTo(42, 97 - 5.0)
+      ..arcToPoint(const Offset(47, 97),
+          radius: Radius.circular(5), clockwise: false)
+      ..lineTo(56 - 4.0, 97)
+      ..arcToPoint(const Offset(57, 97 - 5.0),
+          radius: Radius.circular(5), clockwise: false)
+      ..lineTo(62, 17)
+  ];
+
   static List<Path> getGlass(int glassId) {
     switch (glassId) {
       case 1:
         return GlassPath.glass1;
+      case 4:
+        return GlassPath.glass04;
       case 11:
         return GlassPath.glass11;
       case 20:
