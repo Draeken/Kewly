@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:kewly/app_model.dart';
 import 'package:kewly/components/kewly_category.dart';
+import 'package:kewly/components/kewly_filter_chip.dart';
 import 'package:kewly/components/kewly_product_tile.dart';
 import 'package:kewly/components/kewly_wrap_category.dart';
 import 'package:kewly/util.dart';
@@ -215,32 +217,26 @@ class SearchCharacteristics extends StatelessWidget {
       final hot = model._mustHave.contains(Tag.hot);
       final iced = model._mustHave.contains(Tag.ice);
       final sparkling = model._mustHave.contains(Tag.sparkling);
-      final List<FilterChip> tags = [
-        FilterChip(
-            label: Text('Avec Alcool'),
-            selected: withAlcohol,
-            onSelected: (_) =>
-                model.updateTag(Tag.alcohol, !withAlcohol, TagKind.mustHave)),
-        FilterChip(
-            label: Text('Sans Alcool'),
-            selected: withoutAlcohol,
-            onSelected: (_) => model.updateTag(
+      final List<KewlyFilterChip> tags = [
+        KewlyFilterChip('Avec Alcool', withAlcohol,
+            () => model.updateTag(Tag.alcohol, !withAlcohol, TagKind.mustHave)),
+        KewlyFilterChip(
+            'Sans Alcool',
+            withoutAlcohol,
+            () => model.updateTag(
                 Tag.alcohol, !withoutAlcohol, TagKind.mustNotHave)),
-        FilterChip(
-            label: Text('Chaud'),
-            selected: hot,
-            onSelected: (_) => model.updateTagWithOpposed(
+        KewlyFilterChip(
+            'Chaud',
+            hot,
+            () => model.updateTagWithOpposed(
                 Tag.hot, Tag.ice, !hot, TagKind.mustHave)),
-        FilterChip(
-            label: Text('Glacé'),
-            selected: iced,
-            onSelected: (_) => model.updateTagWithOpposed(
+        KewlyFilterChip(
+            'Glacé',
+            iced,
+            () => model.updateTagWithOpposed(
                 Tag.ice, Tag.hot, !iced, TagKind.mustHave)),
-        FilterChip(
-            label: Text('Pétillant'),
-            selected: sparkling,
-            onSelected: (_) =>
-                model.updateTag(Tag.sparkling, !sparkling, TagKind.mustHave))
+        KewlyFilterChip('Pétillant', sparkling,
+            () => model.updateTag(Tag.sparkling, !sparkling, TagKind.mustHave))
       ];
       return KewlyWrapCategory(title: 'Caractéristiques', children: tags);
     });
@@ -327,11 +323,13 @@ class _HomePageState extends State<HomePage> {
                 builder: (BuildContext context) => Center(child:
                         Consumer2<AppModel, SearchModel>(
                             builder: (context, appModel, searchModel, _) {
-                      final matchingProducts = _findMatchingProduct(
-                          appModel, searchModel.searchResult);
+                      final searchResult = searchModel.searchResult;
+                      final matchingProducts =
+                          _findMatchingProduct(appModel, searchResult);
                       return ListView(
                         scrollDirection: Axis.vertical,
                         children: <Widget>[
+                          FilterStrip(searchResult),
                           AllYourProducts(matchingProducts),
                           ForAFewDollarsMore(matchingProducts)
                         ],
@@ -352,8 +350,8 @@ class _HomePageState extends State<HomePage> {
           .toList(growable: false);
     }
     if (search.productName != "") {
-      matchingProducts = matchingProducts
-          .where((product) => containsIgnoreCase(product.name, search.productName));
+      matchingProducts = matchingProducts.where(
+          (product) => containsIgnoreCase(product.name, search.productName));
     }
     if (search.mustHave.isNotEmpty) {
       matchingProducts = matchingProducts.where((product) =>
@@ -380,6 +378,46 @@ class _HomePageState extends State<HomePage> {
     String route = NavigationLinks.elementAt(index).namedRoute;
     Navigator.of(context).pushReplacementNamed(route);
   }
+}
+
+class UpdateTagObj {
+  final String tag;
+  final TagKind kind;
+
+  UpdateTagObj(this.tag, this.kind);
+}
+
+class FilterStrip extends StatelessWidget {
+  final SearchResult search;
+
+  FilterStrip(this.search);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 8),
+      child: Wrap(
+        children: _getFilters(context),
+        spacing: 8,
+        alignment: WrapAlignment.start,
+      ),
+    );
+  }
+
+  List<Chip> _getFilters(BuildContext context) {
+    final tags = search.mustHave
+        .map((s) => UpdateTagObj(s, TagKind.mustHave))
+        .followedBy(search.mustNotHave.map((s) => UpdateTagObj(s, TagKind.mustNotHave)));
+    return tags.map(_tagToChip(context)).toList(growable: false);
+  }
+
+  Chip Function(UpdateTagObj) _tagToChip(BuildContext context) => (UpdateTagObj tagObj) => Chip(
+      label: Text((tagObj.kind == TagKind.mustHave ? 'With ' : 'Without ') + tagObj.tag),
+      onDeleted: () => Provider.of<SearchModel>(context, listen: false).updateTag(tagObj.tag, false, tagObj.kind),
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+          side: BorderSide(width: 1.5, color: Colors.black38)));
 }
 
 class AllYourProducts extends StatelessWidget {
