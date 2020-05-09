@@ -59,6 +59,15 @@ class SearchModel extends ChangeNotifier {
     return _mustNotHave.contains(tag) || _mustHave.contains(tag);
   }
 
+  void updateIngredient(Ingredient ingredient, bool add) {
+    if (add) {
+      _ingredients.add(ingredient);
+    } else {
+      _ingredients.remove(ingredient);
+    }
+    notifyListeners();
+  }
+
   void _updateTag(String tag, bool add, TagKind kind) {
     if (kind == TagKind.mustHave) {
       if (add) {
@@ -118,9 +127,11 @@ class _HomeAppBar extends State<HomeAppBar> {
   final _inputController = TextEditingController();
   final _searchOverlay = OverlayEntry(
       builder: (BuildContext context) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[SearchCharacteristics()],
+        return ListView(
+          children: <Widget>[
+            SearchCharacteristics(),
+            SearchComposition(),
+          ],
         );
       },
       opaque: true);
@@ -204,6 +215,28 @@ class _HomeAppBar extends State<HomeAppBar> {
   void dispose() {
     _inputController.dispose();
     super.dispose();
+  }
+}
+
+class SearchComposition extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Consumer2<AppModel, SearchModel>(
+        builder: (BuildContext context, AppModel app, SearchModel search, _) {
+      final Iterable<KewlyFilterChip> selected = search._ingredients.map(
+          (ingredient) => KewlyFilterChip(ingredient.name, true,
+              () => search.updateIngredient(ingredient, false)));
+      final Iterable<KewlyFilterChip> ingredients = app.ingredients
+          .where((ingredient) =>
+              containsIgnoreCase(ingredient.name, search._productName) &&
+              !search._ingredients.contains(ingredient))
+          .take(30)
+          .map((ingredient) => KewlyFilterChip(ingredient.name, false,
+              () => search.updateIngredient(ingredient, true)));
+      return KewlyWrapCategory(
+          title: 'Composition',
+          children: selected.followedBy(ingredients).toList(growable: false));
+    });
   }
 }
 
@@ -407,17 +440,36 @@ class FilterStrip extends StatelessWidget {
   List<Chip> _getFilters(BuildContext context) {
     final tags = search.mustHave
         .map((s) => UpdateTagObj(s, TagKind.mustHave))
-        .followedBy(search.mustNotHave.map((s) => UpdateTagObj(s, TagKind.mustNotHave)));
-    return tags.map(_tagToChip(context)).toList(growable: false);
+        .followedBy(search.mustNotHave
+            .map((s) => UpdateTagObj(s, TagKind.mustNotHave)));
+    final compo = search.ingredients.map(_ingredientToChip(context));
+    return tags
+        .map(_tagToChip(context))
+        .followedBy(compo)
+        .toList(growable: false);
   }
 
-  Chip Function(UpdateTagObj) _tagToChip(BuildContext context) => (UpdateTagObj tagObj) => Chip(
-      label: Text((tagObj.kind == TagKind.mustHave ? 'With ' : 'Without ') + tagObj.tag),
-      onDeleted: () => Provider.of<SearchModel>(context, listen: false).updateTag(tagObj.tag, false, tagObj.kind),
-      backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-          side: BorderSide(width: 1.5, color: Colors.black38)));
+  Chip Function(Ingredient) _ingredientToChip(BuildContext context) =>
+      (Ingredient ingredient) => Chip(
+            label: Text(ingredient.name),
+            onDeleted: () => Provider.of<SearchModel>(context, listen: false)
+                .updateIngredient(ingredient, false),
+            backgroundColor: Colors.white,
+            shape: _getChipShape(),
+          );
+
+  Chip Function(UpdateTagObj) _tagToChip(BuildContext context) =>
+      (UpdateTagObj tagObj) => Chip(
+          label: Text((tagObj.kind == TagKind.mustHave ? 'With ' : 'Without ') +
+              tagObj.tag),
+          onDeleted: () => Provider.of<SearchModel>(context, listen: false)
+              .updateTag(tagObj.tag, false, tagObj.kind),
+          backgroundColor: Colors.white,
+          shape: _getChipShape());
+
+  ShapeBorder _getChipShape() => RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15),
+      side: BorderSide(width: 1.5, color: Colors.black38));
 }
 
 class AllYourProducts extends StatelessWidget {
