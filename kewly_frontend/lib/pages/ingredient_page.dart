@@ -110,23 +110,30 @@ class MoreChoiceWithCategory extends StatelessWidget {
             .toList();
         notOwnedIngredients
             .sort((a, b) => b.usedBy.length.compareTo(a.usedBy.length));
-        var filteredIngredients = searchInput == ''
-            ? notOwnedIngredients.take(100)
+        var filteredIngredients = (searchInput == ''
+            ? notOwnedIngredients
             : notOwnedIngredients.where((ingredient) =>
-                containsIgnoreCase(ingredient.name, searchInput));
-        var children = filteredIngredients
-            .map<KewlyIngredientTile>((ingredient) => KewlyIngredientTile(
-                  ingredient: ingredient,
-                  action: KewlyButtonBadge(
-                    onTap: _onTap(ingredient, appModel),
-                    icon: Icon(Icons.add),
-                  ),
-                ))
-            .toList();
-        return KewlyCategory(title: 'Plus de choix avec', children: children);
+                containsIgnoreCase(ingredient.name, searchInput))).toList(growable: false);
+        return KewlyCategory(
+            title: 'Plus de choix avec',
+            itemCount: filteredIngredients.length,
+            builder: _getBuilder(filteredIngredients, appModel));
       },
     );
   }
+
+  KewlyIngredientTile Function(BuildContext, int) _getBuilder(
+          List<Ingredient> ingredients, AppModel appModel) =>
+      (BuildContext context, int index) {
+        final ingredient = ingredients[index];
+        return KewlyIngredientTile(
+          ingredient: ingredient,
+          action: KewlyButtonBadge(
+            onTap: _onTap(ingredient, appModel),
+            icon: Icon(Icons.add),
+          ),
+        );
+      };
 
   _onTap(Ingredient ingredient, AppModel appModel) {
     return (TapDownDetails _) => appModel.addOwnedIngredient(ingredient);
