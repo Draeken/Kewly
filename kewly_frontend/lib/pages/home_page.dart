@@ -15,12 +15,14 @@ class SearchModel extends ChangeNotifier {
   List<Ingredient> _ingredients;
   List<String> _mustHave;
   List<String> _mustNotHave;
+  bool _isSearchActive;
 
   SearchModel()
       : _productName = "",
         _ingredients = [],
         _mustHave = [],
-        _mustNotHave = [];
+        _mustNotHave = [],
+        _isSearchActive = false;
 
   SearchResult get searchResult => SearchResult(
       productName: _productName,
@@ -33,6 +35,12 @@ class SearchModel extends ChangeNotifier {
     _ingredients = [];
     _mustHave = [];
     _mustNotHave = [];
+    _isSearchActive = false;
+    notifyListeners();
+  }
+
+  void updateSearchState(bool isActive) {
+    _isSearchActive = isActive;
     notifyListeners();
   }
 
@@ -62,6 +70,11 @@ class SearchModel extends ChangeNotifier {
   void updateIngredient(Ingredient ingredient, bool add) {
     if (add) {
       _ingredients.add(ingredient);
+
+      // user searched for an ingredient, not a product name
+      if (containsIgnoreCase(ingredient.name, _productName)) {
+        _productName = "";
+      }
     } else {
       _ingredients.remove(ingredient);
     }
@@ -87,23 +100,8 @@ class SearchModel extends ChangeNotifier {
   }
 }
 
-/**
- * user string should be used to search beverage by name;
- * when user focus textfield:
- * - show recent search (user input; ingredients)
- * - show all filters (chips)
- * - show all ingredients by usage
- * when user type, it should
- * - show relative filters (chips), eg: "alco" -> (With Alcohol) ; (Without Alcohol)
- * - when user validate, unfocus search and display results with selected chips
- * while searching, if user tap on a filter (chips):
- * - toggle on, duplicate below textfield.
- * - search screen closes
- */
 class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
-  final GlobalKey<OverlayState> overlayKey;
-
-  HomeAppBar({Key key, this.overlayKey}) : super(key: key);
+  HomeAppBar({Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _HomeAppBar();
@@ -112,20 +110,10 @@ class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(56);
 }
 
-/**
- * states:
- * - unfocused (default) (after textfield send, after chip toggle)
- * - display search modal (after textfield focus)
- *
- * homeAppBar use overlay
- * textfield update -> call update on SearchModel (ChangeNotifier)
- * modalRoute
- * maybe use SearchModel to compute product set (which will be used by home categories)
- */
 class _HomeAppBar extends State<HomeAppBar> {
-  bool isSearchEnabled = false;
   final _inputController = TextEditingController();
-  final _searchOverlay = OverlayEntry(
+
+  /* final _searchOverlay = OverlayEntry(
       builder: (BuildContext context) {
         return ListView(
           children: <Widget>[
@@ -135,40 +123,32 @@ class _HomeAppBar extends State<HomeAppBar> {
         );
       },
       opaque: true);
-
+*/
   void _closeAndResetSearch(BuildContext context) {
-    _closeSearch(context);
-    _inputController.clear();
+    _unfocus(context);
+    // _inputController.clear();
     Provider.of<SearchModel>(context, listen: false).reset();
   }
 
-  void _closeSearch(BuildContext context) {
-    if (!isSearchEnabled) {
-      return;
-    }
+  void _unfocus(BuildContext context) {
     FocusScopeNode currentFocus = FocusScope.of(context);
     // TODO: user may not be focusing textfield
     if (!currentFocus.hasPrimaryFocus) {
       currentFocus.unfocus();
     }
-    _searchOverlay.remove();
-    setState(() {
-      isSearchEnabled = false;
-    });
+  }
+
+  void _closeSearch(BuildContext context) {
+    _unfocus(context);
+    Provider.of<SearchModel>(context, listen: false).updateSearchState(false);
   }
 
   void _openSearch(BuildContext context) {
-    if (isSearchEnabled) {
-      return;
-    }
-    setState(() {
-      isSearchEnabled = true;
-    });
-    widget.overlayKey.currentState.insert(_searchOverlay);
+    Provider.of<SearchModel>(context, listen: false).updateSearchState(true);
   }
 
-  _getLeading(BuildContext context) {
-    return isSearchEnabled
+  _getLeading(BuildContext context, bool isSearchActive) {
+    return isSearchActive
         ? IconButton(
             icon: const Icon(Icons.close),
             tooltip: 'Close search',
@@ -190,25 +170,31 @@ class _HomeAppBar extends State<HomeAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      leading: _getLeading(context),
-      title: TextField(
-        controller: _inputController,
-        onTap: () => _openSearch(context),
-        onSubmitted: (_) => _submitSearchResult(context),
-        onChanged: (_) => _updateSearch(context),
-        textInputAction: TextInputAction.search,
-        decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 25),
-            isDense: true,
-            labelText: 'Recherche',
-            filled: true,
-            hasFloatingPlaceholder: false,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
-            fillColor: Theme.of(context).backgroundColor.withAlpha(200)),
-      ),
-      backgroundColor: Colors.transparent,
-    );
+    return Consumer<SearchModel>(builder: (context, search, _) {
+      if (search._productName.isEmpty) {
+        _inputController.clear();
+      }
+      return AppBar(
+        leading: _getLeading(context, search._isSearchActive),
+        title: TextField(
+          controller: _inputController,
+          onTap: () => _openSearch(context),
+          onSubmitted: (_) => _submitSearchResult(context),
+          onChanged: (_) => _updateSearch(context),
+          textInputAction: TextInputAction.search,
+          decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 25),
+              isDense: true,
+              labelText: 'Recherche',
+              filled: true,
+              hasFloatingPlaceholder: false,
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
+              fillColor: Theme.of(context).backgroundColor.withAlpha(200)),
+        ),
+        backgroundColor: Colors.transparent,
+      );
+    });
   }
 
   @override
@@ -327,49 +313,41 @@ const NavigationLinks = <NavigationLink>[
       namedRoute: '/profile'),
 ];
 
-class HomePage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _HomePageState();
-  }
-}
-
-/**
- * Is it still useful to be a stateless widget?
- */
-class _HomePageState extends State<HomePage> {
+class HomePage extends StatelessWidget {
   final _bottomNavIndex = 0;
-  final _overlayKey = GlobalKey<OverlayState>();
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
         create: (_) => SearchModel(),
         child: Scaffold(
-          appBar: HomeAppBar(overlayKey: _overlayKey),
+          appBar: HomeAppBar(),
           bottomNavigationBar: BottomNavigationBar(
               currentIndex: _bottomNavIndex,
               onTap: (index) => _bottomNavOnTap(context, index),
               items: _createBottomNavBarItem()),
-          body: Overlay(key: _overlayKey, initialEntries: [
-            OverlayEntry(
-                builder: (BuildContext context) => Center(child:
-                        Consumer2<AppModel, SearchModel>(
-                            builder: (context, appModel, searchModel, _) {
-                      final searchResult = searchModel.searchResult;
-                      final matchingProducts =
-                          _findMatchingProduct(appModel, searchResult);
-                      return ListView(
-                        scrollDirection: Axis.vertical,
-                        children: <Widget>[
-                          FilterStrip(searchResult),
-                          AllYourProducts(matchingProducts),
-                          ForAFewDollarsMore(matchingProducts)
-                        ],
-                      );
-                    })),
-                opaque: true)
-          ]),
+          body: Center(child: Consumer2<AppModel, SearchModel>(
+              builder: (context, appModel, searchModel, _) {
+            final searchResult = searchModel.searchResult;
+            final matchingProducts =
+                _findMatchingProduct(appModel, searchResult);
+            final listChildren = <Widget>[
+              AllYourProducts(matchingProducts),
+              ForAFewDollarsMore(matchingProducts)
+            ];
+            if (searchModel._isSearchActive) {
+              listChildren.insertAll(0, [
+                SearchCharacteristics(),
+                SearchComposition(),
+              ]);
+            } else {
+              listChildren.insert(0, FilterStrip(searchResult));
+            }
+            return ListView(
+              scrollDirection: Axis.vertical,
+              children: listChildren,
+            );
+          })),
           resizeToAvoidBottomInset: true,
         ));
   }
