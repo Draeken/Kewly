@@ -39,6 +39,10 @@ class SearchModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  get isDirty() {
+    return _productName != "" || _ingredients.isNotEmpty() || _mustHave.isNotEmpty() || _mustNotHave.isNotEmpty();
+  }
+
   void updateSearchState(bool isActive) {
     _isSearchActive = isActive;
     notifyListeners();
@@ -113,17 +117,6 @@ class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _HomeAppBar extends State<HomeAppBar> {
   final _inputController = TextEditingController();
 
-  /* final _searchOverlay = OverlayEntry(
-      builder: (BuildContext context) {
-        return ListView(
-          children: <Widget>[
-            SearchCharacteristics(),
-            SearchComposition(),
-          ],
-        );
-      },
-      opaque: true);
-*/
   void _closeAndResetSearch(BuildContext context) {
     _unfocus(context);
     // _inputController.clear();
@@ -343,6 +336,9 @@ class HomePage extends StatelessWidget {
             } else {
               listChildren.insert(0, FilterStrip(searchResult));
             }
+            if (searchModel.isDirty) {
+              listChildren.add(AllProducts(matchingProducts));
+            }
             return ListView(
               scrollDirection: Axis.vertical,
               children: listChildren,
@@ -465,7 +461,24 @@ class AllYourProducts extends StatelessWidget {
       return KewlyProductTile(product: ownedProducts[index]);
     };
     return KewlyCategory(
-        title: 'Toutes vos boissons',
+        title: 'Vos boissons',
+        itemCount: ownedProducts.length,
+        builder: builder);
+  }
+}
+
+class AllProducts extends StatelessWidget {
+  final List<Product> products;
+
+  AllProducts(this.products);
+
+  @override
+  Widget build(BuildContext context) {
+    final builder = (BuildContext context, int index) {
+      return KewlyProductTile(product: products[index]);
+    };
+    return KewlyCategory(
+        title: 'Toutes les boissons',
         itemCount: ownedProducts.length,
         builder: builder);
   }
