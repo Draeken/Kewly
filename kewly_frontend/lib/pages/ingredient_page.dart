@@ -126,6 +126,7 @@ class _IngredientPageState extends State<IngredientPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: ProductAppBar(
         onSearchChanged: _updateSearchInput,
@@ -139,15 +140,22 @@ class _IngredientPageState extends State<IngredientPage> {
             backgroundColor: navLink.backgroundColor)).toList(),
       ),
       body: Center(
-        child: ListView(
-          scrollDirection: Axis.vertical,
-          children: <Widget>[
-            OwnedIngredientCategory(
-              searchInput,
-            ),
-            MoreChoiceWithCategory(searchInput)
-          ],
-        ),
+        child: return Consumer<AppModel>(
+        builder: (context, appModel, _) {
+          final allIngredients = appModel.ingredients.where((ingredient) =>
+                containsIgnoreCase(ingredient.name, searchInput)).toList(growable: false);
+          final ownedIngredients = appModel.ownedIngredients.where((ingredient) =>
+                containsIgnoreCase(ingredient.name, searchInput)).toList(growable: false);
+          return ListView(
+            scrollDirection: Axis.vertical,
+            children: <Widget>[
+              OwnedIngredientCategory(
+                ownedIngredients,
+              ),
+              MoreChoiceWithCategory(allIngredients)
+            ],
+          );
+        }),
       ),
       resizeToAvoidBottomInset: false,
     );
@@ -163,77 +171,108 @@ class _IngredientPageState extends State<IngredientPage> {
 }
 
 class OwnedIngredientCategory extends StatelessWidget {
-  final String searchInput;
+  final List<Ingredient> ingredients;
 
-  OwnedIngredientCategory(this.searchInput);
+  OwnedIngredientCategory(this.ingredients);
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppModel>(
-      builder: (context, appModel, _) {
-        var filteredIngredients = searchInput == ''
-            ? appModel.ownedIngredients
-            : appModel.ownedIngredients.where((ingredient) =>
-                containsIgnoreCase(ingredient.name, searchInput));
-        var children = filteredIngredients
-            .map<KewlyIngredientTile>((ingredient) => KewlyIngredientTile(
-                  ingredient: ingredient,
-                  action: KewlyButtonBadge(
-                    onTap: _onTap(ingredient, appModel),
-                    icon: Icon(Icons.remove),
-                  ),
-                ))
-            .toList();
-        return KewlyCategory(title: 'Vos produits', children: children);
-      },
-    );
+    final children = ingredients
+        .map<KewlyIngredientTile>((ingredient) => KewlyIngredientTile(
+              ingredient: ingredient,
+              action: KewlyButtonBadge(
+                onTap: _onTap(context, ingredient),
+                icon: Icon(Icons.remove),
+              ),
+            ))
+        .toList();
+    return KewlyCategory(title: 'Vos produits', children: children);
   }
 
-  _onTap(Ingredient ingredient, AppModel appModel) {
-    return (TapDownDetails _) => appModel.removeOwnedIngredient(ingredient);
+  _onTap(BuildContext context, Ingredient ingredient) {
+    return (TapDownDetails _) => Provider.of<AppModel>(context, listen: false).removeOwnedIngredient(ingredient);
+  }
+}
+
+class ExpanderInfo {
+  final Ingredient ingredient;
+  final int expandCount;
+
+  ExpanderInfo(ingredient, expandCount);
+}
+
+class ExpandWithCategory extends StatelessWidget {
+  final List<Ingredient> ingredients;
+
+  ExpandWithCategory(this.ingredients);
+
+  @override
+  Widget build(BuildContext context) {
+    List<ExpanderInfo> expander = ingredients.where((ingredient) => ingredient.usedBy.length > 1).map(_ingredientToExpander).toList(growable: false);
+    expander.sort((a, b) => b.expandCount.compareTo(a.expandCount));
+
+    return KewlyCategory(
+        title: 'Plus de choix avec',
+        itemCount: filteredIngredients.length,
+        builder: _getBuilder(context, expander));
+  }
+
+  ExpanderInfo _ingredientToExpander(Ingredient ingredient) {
+    final expandCount = ingredient.usedBy.reduce(0, (int acc, Product product) {
+      final notOwned = product.composition.reduce(0, (int acc2, Composition compo) => compo.ingredient.isOwned ? acc2 : acc2 + 1);
+      return notOwned > 1 ? acc : acc + 1;
+    }
+    return ExpanderInfo(ingredient, expandCount);
+  }
+
+  KewlyIngredientTile Function(BuildContext, int) _getBuilder(BuildContext context, List<Ingredient> ingredients) =>
+    (BuildContext context, int index) {
+      final ingredient = ingredients[index];
+      return KewlyIngredientTile(
+        ingredient: ingredient,
+        action: KewlyButtonBadge(
+          onTap: _onTap(context, ingredient),
+          icon: Icon(Icons.add),
+        ),
+      );
+    };
+
+  _onTap(BuildContext context, Ingredient ingredient) {
+    return (TapDownDetails _) => Provider.of<AppModel>(context, listen: false).addOwnedIngredient(ingredient);
   }
 }
 
 class MoreChoiceWithCategory extends StatelessWidget {
-  final String searchInput;
+  final List<Ingredient> ingredients;
 
-  MoreChoiceWithCategory(this.searchInput);
+  MoreChoiceWithCategory(this.ingredients);
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppModel>(
-      builder: (context, appModel, _) {
-        List<Ingredient> notOwnedIngredients = appModel.ingredients
-            .where((ingredient) => !ingredient.isOwned)
-            .toList();
-        notOwnedIngredients
-            .sort((a, b) => b.usedBy.length.compareTo(a.usedBy.length));
-        var filteredIngredients = (searchInput == ''
-            ? notOwnedIngredients
-            : notOwnedIngredients.where((ingredient) =>
-                containsIgnoreCase(ingredient.name, searchInput))).toList(growable: false);
-        return KewlyCategory(
-            title: 'Plus de choix avec',
-            itemCount: filteredIngredients.length,
-            builder: _getBuilder(filteredIngredients, appModel));
-      },
-    );
+    List<Ingredient> filteredIngredients = ingredients
+        .where((ingredient) => !ingredient.isOwned)
+        .toList(growable: false);
+    filteredIngredients
+        .sort((a, b) => b.usedBy.length.compareTo(a.usedBy.length));
+    return KewlyCategory(
+        title: 'Les plus utilisés',
+        itemCount: filteredIngredients.length,
+        builder: _getBuilder(context, filteredIngredients));
   }
 
-  KewlyIngredientTile Function(BuildContext, int) _getBuilder(
-          List<Ingredient> ingredients, AppModel appModel) =>
+  KewlyIngredientTile Function(BuildContext, int) _getBuilder(BuildContext context, List<Ingredient> ingredients) =>
       (BuildContext context, int index) {
         final ingredient = ingredients[index];
         return KewlyIngredientTile(
           ingredient: ingredient,
           action: KewlyButtonBadge(
-            onTap: _onTap(ingredient, appModel),
+            onTap: _onTap(context, ingredient),
             icon: Icon(Icons.add),
           ),
         );
       };
 
-  _onTap(Ingredient ingredient, AppModel appModel) {
-    return (TapDownDetails _) => appModel.addOwnedIngredient(ingredient);
+  _onTap(BuildContext context, Ingredient ingredient) {
+    return (TapDownDetails _) => Provider.of<AppModel>(context, listen: false).addOwnedIngredient(ingredient);
   }
 }
