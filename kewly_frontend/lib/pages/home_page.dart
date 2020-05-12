@@ -104,6 +104,15 @@ class SearchModel extends ChangeNotifier {
   }
 }
 
+/**
+  TODO:
+  Other search filter:
+  - by colors
+  Other result category:
+  - by easy grocery (ingredients tagged with "easy to get")
+  -
+ */
+
 class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
   HomeAppBar({Key key}) : super(key: key);
 
