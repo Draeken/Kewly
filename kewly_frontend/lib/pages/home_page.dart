@@ -39,8 +39,8 @@ class SearchModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  get isDirty() {
-    return _productName != "" || _ingredients.isNotEmpty() || _mustHave.isNotEmpty() || _mustNotHave.isNotEmpty();
+  get isDirty {
+    return _productName != "" || _ingredients.isNotEmpty || _mustHave.isNotEmpty || _mustNotHave.isNotEmpty;
   }
 
   void updateSearchState(bool isActive) {
@@ -335,7 +335,7 @@ class HomePage extends StatelessWidget {
                 _findMatchingProduct(appModel, searchResult);
             final listChildren = <Widget>[
               AllYourProducts(matchingProducts),
-              ForAFewDollarsMore(matchingProducts)
+              ForAFewDollarsMore(matchingProducts),
             ];
             if (searchModel._isSearchActive) {
               listChildren.insertAll(0, [
@@ -345,7 +345,7 @@ class HomePage extends StatelessWidget {
             } else {
               listChildren.insert(0, FilterStrip(searchResult));
             }
-            if (searchModel.isDirty) {
+            if (searchModel.isDirty) {
               listChildren.add(AllProducts(matchingProducts));
             }
             return ListView(
@@ -488,7 +488,7 @@ class AllProducts extends StatelessWidget {
     };
     return KewlyCategory(
         title: 'Toutes les boissons',
-        itemCount: ownedProducts.length,
+        itemCount: products.length,
         builder: builder);
   }
 }
