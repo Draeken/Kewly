@@ -8,21 +8,32 @@ class IngredientDetail extend StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(ingredient.name)
+        title: Text(ingredient.name),
+        backgroundColor: Colors.transparent,
       ),
-      body: Center(child: Text(ingredient.name)),
+      body: Center(child: ListView(
+        scrollDirection: Axis.vertical,
+        children: <Widget>[
+          Text(ingredient.name),
+          KewlyCategory(
+            title: 'Vous permet de préparer',
+            children: _getAvailableProducts()),
+          KewlyCategory(
+            title: 'Est utilisé dans',
+            children: _getAllProducts()),
+        ])),
       resizeToAvoidBottomInset: false,
     )
   }
 
-  List<Product> _getAllProducts() {
-    return ingredient.usedBy;
+  List<KewlyProductTile> _getAllProducts() {
+    return ingredient.usedBy.map((product) => KewlyProductTile(product: product)).toList(growable: false);
   }
 
-  Iterable<Product> _getAvailableProducts() {
+  Iterable<KewlyProductTile> _getAvailableProducts() {
     return ingredient.usedBy.where(
       (product) => product.composition.every(
-        (compo) => compo.ingredient == ingredient || compo.ingredient.isOwned));
+        (compo) => compo.ingredient == ingredient || compo.ingredient.isOwned)).map((product) => KewlyProductTile(product: product)).toList(growable: false);
   }
 
 }
