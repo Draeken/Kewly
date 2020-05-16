@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:kewly/app_model.dart';
 import 'package:kewly/components/kewly_button_badge.dart';
@@ -7,10 +9,6 @@ import 'package:kewly/pages/home_page.dart';
 import 'package:kewly/util.dart';
 import 'package:provider/provider.dart';
 
-/**
-    Search Result Category:
-    - Products that expand available drinks (eg: with this product, you can mixe 3 new drinks)
- */
 class ProductAppBar extends StatefulWidget implements PreferredSizeWidget {
   final ValueChanged<String> onSearchChanged;
 
@@ -152,7 +150,7 @@ class _IngredientPageState extends State<IngredientPage> {
               OwnedIngredientCategory(
                 ownedIngredients,
               ),
-              ExpandWithCategory(allIngredients),
+              ExpandWithCategory(appModel.products),
               MoreChoiceWithCategory(allIngredients)
             ],
           );
@@ -204,33 +202,33 @@ class ExpanderInfo {
 }
 
 class ExpandWithCategory extends StatelessWidget {
-  final List<Ingredient> ingredients;
+  final List<Product> products;
 
-  ExpandWithCategory(this.ingredients);
+  ExpandWithCategory(this.products);
 
   @override
   Widget build(BuildContext context) {
-    List<ExpanderInfo> expander = ingredients
-        .where((ingredient) => !ingredient.isOwned && ingredient.usedBy.length > 1)
-        .map(_ingredientToExpander)
-        .toList(growable: false);
-    expander.sort((a, b) => b.expandCount.compareTo(a.expandCount));
+    final hashExpander = HashMap<int, ExpanderInfo>();
+    for (var product in products) {
+        final expanders = product.composition.where((compo) => !compo.ingredient.isOwned);
+        if (expanders.length != 1) {
+          continue;
+        }
+        final expander = expanders.first.ingredient;
+        hashExpander.update(expander.id, _incrementExpander, ifAbsent: () => ExpanderInfo(expander, 1));
+    }
+    final expanders = hashExpander.values.toList(growable: false);
+    expanders.sort((a, b) => b.expandCount.compareTo(a.expandCount));
 
     return KewlyCategory(
         title: 'Plus de choix avec',
-        itemCount: expander.length,
-        builder: _getBuilder(context, expander));
+        itemCount: expanders.length,
+        builder: _getBuilder(context, expanders));
   }
 
-  ExpanderInfo _ingredientToExpander(Ingredient ingredient) {
-    final expandCount = ingredient.usedBy.fold(0, (int acc, Product product) {
-      final notOwned = product.composition.fold(
-          0,
-          (int acc2, Composition compo) =>
-              compo.ingredient.isOwned ? acc2 : acc2 + 1);
-      return notOwned > 1 ? acc : acc + 1;
-    });
-    return ExpanderInfo(ingredient, expandCount);
+  ExpanderInfo _incrementExpander(ExpanderInfo expander) {
+    final count = expander.expandCount + 1;
+    return ExpanderInfo(expander.ingredient, count);
   }
 
   KewlyIngredientTile Function(BuildContext, int) _getBuilder(

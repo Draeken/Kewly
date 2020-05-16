@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kewly/app_model.dart';
+import 'package:kewly/pages/ingredient_detail.dart';
 
 class KewlyIngredientTile extends StatelessWidget {
   final Ingredient ingredient;
@@ -53,8 +54,8 @@ class KewlyIngredientTile extends StatelessWidget {
   _viewDetail(BuildContext context) => () {
     Navigator.push(context, MaterialPageRoute(
       builder: (context) => IngredientDetail(ingredient: ingredient),
-    ))
-  }
+    ));
+  };
 
   _getIngredientColor() {
     return ingredient.color.withLightness(min(ingredient.color.lightness + 0.2, 1.0)).toColor();
