@@ -292,11 +292,11 @@ class UserData {
 class AppModel extends ChangeNotifier {
   static const USER_PREF_KEY = 'userData';
 
-  List<Product> _products;
-  List<Ingredient> _ingredients;
+  List<Product> products;
+  List<Ingredient> ingredients;
 
   UserData _userData;
-  List<Ingredient> _ownedIngredients;
+  List<Ingredient> ownedIngredients;
   List<Product> _productsToPurchase;
   List<Ingredient> _ingredientsToPurchase;
   List<Product> _nextToTest;
@@ -307,18 +307,9 @@ class AppModel extends ChangeNotifier {
     _initData(context);
   }
 
-  UnmodifiableListView<Product> get products =>
-      UnmodifiableListView(_products ?? []);
-
-  UnmodifiableListView<Ingredient> get ingredients =>
-      UnmodifiableListView(_ingredients ?? []);
-
-  UnmodifiableListView<Ingredient> get ownedIngredients =>
-      UnmodifiableListView(_ownedIngredients ?? []);
-
   void addOwnedIngredient(Ingredient ingredient) {
     _userData.ownedIngredients.add(ingredient.id);
-    _ownedIngredients.add(ingredient);
+    ownedIngredients.add(ingredient);
     ingredient.isOwned = true;
     _saveUserData();
     notifyListeners();
@@ -326,7 +317,7 @@ class AppModel extends ChangeNotifier {
 
   void removeOwnedIngredient(Ingredient ingredient) {
     _userData.ownedIngredients.remove(ingredient.id);
-    _ownedIngredients.remove(ingredient);
+    ownedIngredients.remove(ingredient);
     ingredient.isOwned = false;
     _saveUserData();
     notifyListeners();
@@ -340,7 +331,7 @@ class AppModel extends ChangeNotifier {
 
   _debugGraph() {
     final List<GlassInfo> glassList = [];
-    for (var product in _products) {
+    for (var product in products) {
       final glassInfo = glassList.firstWhere((g) => g.id == product.glass,
           orElse: () => null);
       if (glassInfo == null) {
@@ -356,12 +347,12 @@ class AppModel extends ChangeNotifier {
   Future<void> _loadGraph(BuildContext context) async {
     final graph = await DefaultAssetBundle.of(context)
         .loadStructuredData('assets/graph.json', (s) async => jsonDecode(s));
-    final Iterable<ProductRaw> products =
+    final Iterable<ProductRaw> productsRaw =
         mapJsonToList(graph['products'], ProductRaw.fromJson, toList: false);
-    final Iterable<IngredientRaw> ingredients = mapJsonToList(
+    final Iterable<IngredientRaw> ingredientsRaw = mapJsonToList(
         graph['ingredients'], IngredientRaw.fromJson,
         toList: false);
-    _products = products
+    products = productsRaw
         .map((productRaw) => Product(
             name: productRaw.name,
             id: productRaw.id,
@@ -381,23 +372,23 @@ class AppModel extends ChangeNotifier {
                     ingredientId: compoRaw.ingredientId))
                 .toList(growable: false)))
         .toList(growable: false);
-    _ingredients = ingredients
+    ingredients = ingredientsRaw
         .map((ingredientRaw) => Ingredient(
             id: ingredientRaw.id,
             name: ingredientRaw.name,
             color: ingredientRaw.color,
             tags: ingredientRaw.tags,
             decorates: _objectifyIdList<Product>(
-                ingredientRaw.decorates, _products, growable: false),
-            usedBy: _objectifyIdList<Product>(ingredientRaw.usedBy, _products,
+                ingredientRaw.decorates, products, growable: false),
+            usedBy: _objectifyIdList<Product>(ingredientRaw.usedBy, products,
                 growable: false)))
         .toList(growable: false);
-    _products.forEach((product) {
+    products.forEach((product) {
       product.composition.forEach((compo) {
-        compo.ingredient = _firstWithId(_ingredients)(compo.ingredientId);
+        compo.ingredient = _firstWithId(ingredients)(compo.ingredientId);
       });
       product.decoratedWith.forEach((deco) {
-        deco.ingredient = _firstWithId(_ingredients)(deco.ingredientId);
+        deco.ingredient = _firstWithId(ingredients)(deco.ingredientId);
       });
     });
   }
@@ -406,22 +397,22 @@ class AppModel extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     final rawJson = jsonDecode(prefs.getString(AppModel.USER_PREF_KEY) ?? '{}');
     _userData = UserData.fromJson(rawJson);
-    _ownedIngredients = _userData.ownedIngredients.map((ingredientId) {
-      final ingredient = _firstWithId(_ingredients)(ingredientId);
+    ownedIngredients = _userData.ownedIngredients.map((ingredientId) {
+      final ingredient = _firstWithId(ingredients)(ingredientId);
       ingredient.isOwned = true;
       return ingredient;
     }).toList();
-    _objectifyIdList(_userData.ownedIngredients, _ingredients);
+    _objectifyIdList(_userData.ownedIngredients, ingredients);
     _productsToPurchase =
-        _objectifyIdList(_userData.productsToPurchase, _products);
+        _objectifyIdList(_userData.productsToPurchase, products);
     _ingredientsToPurchase =
-        _objectifyIdList(_userData.ingredientsToPurchase, _ingredients);
-    _nextToTest = _objectifyIdList(_userData.nextToTest, _products);
-    _historic = _objectifyIdList(_userData.historic, _products);
+        _objectifyIdList(_userData.ingredientsToPurchase, ingredients);
+    _nextToTest = _objectifyIdList(_userData.nextToTest, products);
+    _historic = _objectifyIdList(_userData.historic, products);
     _reviewedProducts = _userData.reviewedProducts
         .map((rawReview) => UserReview(
               rating: rawReview.rating,
-              product: _firstWithId(_products)(rawReview.productId),
+              product: _firstWithId(products)(rawReview.productId),
             ))
         .toList();
   }
