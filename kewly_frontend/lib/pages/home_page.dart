@@ -106,6 +106,10 @@ class SearchModel extends ChangeNotifier {
 
 /**
   TODO:
+  - use same bottom nav bar for each pages
+  - change transition to a Top-level transitions
+
+
   Other search filter:
   - by colors
   Other result category:
