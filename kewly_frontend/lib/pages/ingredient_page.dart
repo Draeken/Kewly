@@ -113,11 +113,18 @@ class IngredientPage extends StatefulWidget {
 class _IngredientPageState extends State<IngredientPage> {
   String searchInput = "";
   final _bottomNavIndex = 1;
+  final _getAllIngredients = imemo2(_filterIngredients);
+  final _getOwnedIngredients = imemo2(_filterIngredients);
 
   void _updateSearchInput(newVal) {
     setState(() {
       searchInput = newVal;
     });
+  }
+
+  List<Ingredient> _filterIngredients(List<Ingredient> ingre, String input) {
+    return ingre.where((ingredient) => containsIgnoreCase(ingredient.name, searchInput))
+                .toList(growable: false));
   }
 
   @override
@@ -136,21 +143,15 @@ class _IngredientPageState extends State<IngredientPage> {
       ),
       body: Center(
         child: Consumer<AppModel>(builder: (context, appModel, _) {
-          final allIngredients = appModel.ingredients
-              .where((ingredient) =>
-                  containsIgnoreCase(ingredient.name, searchInput))
-              .toList(growable: false);
-          final ownedIngredients = appModel.ownedIngredients
-              .where((ingredient) =>
-                  containsIgnoreCase(ingredient.name, searchInput))
-              .toList(growable: false);
+          final allIngredients = _getAllIngredients(appModel.ingredients, searchInput);
+          final ownedIngredients = _getOwnedIngredients(appModel.ownedIngredients, searchInput);
           return ListView(
             scrollDirection: Axis.vertical,
             children: <Widget>[
               OwnedIngredientCategory(
                 ownedIngredients,
               ),
-              ExpandWithCategory(appModel.products),
+              ExpandWithCategory(appModel.products, appModel.ownedIngredients, searchInput),
               MoreChoiceWithCategory(allIngredients)
             ],
           );
@@ -201,15 +202,25 @@ class ExpanderInfo {
   ExpanderInfo(this.ingredient, this.expandCount);
 }
 
-class ExpandWithCategory extends StatelessWidget {
+class ExpandWithCategory extends StatefulWidget {
   final List<Product> products;
+  final List<Ingredient> ownedIngredients;
+  final String searchInput;
 
-  ExpandWithCategory(this.products);
+  ExpandWithCategory({Key key, this.products, this.ownedIngredients, this.searchInput): super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  State<StatefulWidget> createState() {
+    return _ExpandWithCategory();
+  }
+}
+
+class _ExpandWithCategory extends State<ExpandWithCategory>
+  final _getExpanders = imemo2(_expandersFunc);
+
+  List<ExpanderInfo> _expandersFunc(List<Product> products, List<Ingredient> _ownedIngredients) {
     final hashExpander = HashMap<int, ExpanderInfo>();
-    for (var product in products) {
+    for (var product in widget.products) {
         final expanders = product.composition.where((compo) => !compo.ingredient.isOwned);
         if (expanders.length != 1) {
           continue;
@@ -217,7 +228,14 @@ class ExpandWithCategory extends StatelessWidget {
         final expander = expanders.first.ingredient;
         hashExpander.update(expander.id, _incrementExpander, ifAbsent: () => ExpanderInfo(expander, 1));
     }
-    final expanders = hashExpander.values.toList(growable: false);
+    return hashExpander.values.toList(growable: false);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final expanders = _getExpanders(widget.products, widget.ownedIngredients)
+      .where((expander) => containsIgnoreCase(expander.ingredient.name, widget.searchInput))
+      .toList(growable: false);
     expanders.sort((a, b) => b.expandCount.compareTo(a.expandCount));
 
     return KewlyCategory(

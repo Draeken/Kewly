@@ -311,6 +311,7 @@ class AppModel extends ChangeNotifier {
     _userData.ownedIngredients.add(ingredient.id);
     ownedIngredients.add(ingredient);
     ingredient.isOwned = true;
+    ownedIngredients = ownedIngredients.toList();
     _saveUserData();
     notifyListeners();
   }
@@ -319,6 +320,7 @@ class AppModel extends ChangeNotifier {
     _userData.ownedIngredients.remove(ingredient.id);
     ownedIngredients.remove(ingredient);
     ingredient.isOwned = false;
+    ownedIngredients = ownedIngredients.toList();
     _saveUserData();
     notifyListeners();
   }
