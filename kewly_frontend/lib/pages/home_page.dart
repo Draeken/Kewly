@@ -107,6 +107,8 @@ class SearchModel extends ChangeNotifier {
 /**
   TODO:
   - use same bottom nav bar for each pages
+    - move scaffold in main, remove appBar
+    - use customAppBar on each page widget (home & ingredient), wrapped by a columnWidget with the actual body
   - change transition to a Top-level transitions
 
 
