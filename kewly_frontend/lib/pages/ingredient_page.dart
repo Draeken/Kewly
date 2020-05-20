@@ -105,14 +105,13 @@ class _ProductAppBar extends State<ProductAppBar> {
 
 class IngredientPage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
+  _IngredientPageState createState() {
     return _IngredientPageState();
   }
 }
 
 class _IngredientPageState extends State<IngredientPage> {
   String searchInput = "";
-  final _bottomNavIndex = 1;
   final _getAllIngredients = imemo2(_filterIngredients);
   final _getOwnedIngredients = imemo2(_filterIngredients);
 
@@ -129,44 +128,28 @@ class _IngredientPageState extends State<IngredientPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: ProductAppBar(
-        onSearchChanged: _updateSearchInput,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _bottomNavIndex,
-        onTap: (index) => _bottomNavOnTap(context, index),
-        items: NavigationLinks.map((navLink) => BottomNavigationBarItem(
-            icon: navLink.icon,
-            title: Text(navLink.title),
-            backgroundColor: navLink.backgroundColor)).toList(),
-      ),
-      body: Center(
-        child: Consumer<AppModel>(builder: (context, appModel, _) {
-          final allIngredients = _getAllIngredients(appModel.ingredients, searchInput);
-          final ownedIngredients = _getOwnedIngredients(appModel.ownedIngredients, searchInput);
-          return ListView(
-            scrollDirection: Axis.vertical,
-            children: <Widget>[
-              OwnedIngredientCategory(
-                ownedIngredients,
-              ),
-              ExpandWithCategory(appModel.products, appModel.ownedIngredients, searchInput),
-              MoreChoiceWithCategory(allIngredients)
-            ],
-          );
-        }),
-      ),
-      resizeToAvoidBottomInset: false,
-    );
-  }
-
-  void _bottomNavOnTap(BuildContext context, int index) {
-    if (_bottomNavIndex == index) {
-      return;
-    }
-    String route = NavigationLinks.elementAt(index).namedRoute;
-    Navigator.of(context).pushReplacementNamed(route);
+    return Column(
+      children: [
+        ProductAppBar(
+          onSearchChanged: _updateSearchInput,
+        ),
+        Center(
+          child: Consumer<AppModel>(builder: (context, appModel, _) {
+            final allIngredients = _getAllIngredients(appModel.ingredients, searchInput);
+            final ownedIngredients = _getOwnedIngredients(appModel.ownedIngredients, searchInput);
+            return ListView(
+              scrollDirection: Axis.vertical,
+              children: <Widget>[
+                OwnedIngredientCategory(
+                  ownedIngredients,
+                ),
+                ExpandWithCategory(appModel.products, appModel.ownedIngredients, searchInput),
+                MoreChoiceWithCategory(allIngredients)
+              ],
+            );
+          }),
+        )
+      ]);
   }
 }
 
