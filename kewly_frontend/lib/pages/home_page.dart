@@ -106,7 +106,6 @@ class SearchModel extends ChangeNotifier {
 
 /**
   TODO:
-  - use same bottom nav bar for each pages
   - change transition to a Top-level transitions
 
 
@@ -287,78 +286,43 @@ class SearchResult {
   }
 }
 
-class NavigationLink {
-  final Widget icon;
-  final String title;
-  final String namedRoute;
-  final Color backgroundColor;
-
-  const NavigationLink(
-      {this.icon,
-      this.title,
-      this.namedRoute,
-      this.backgroundColor = Colors.amber});
-}
-
-const NavigationLinks = <NavigationLink>[
-  NavigationLink(
-      title: 'Les boissons',
-      icon: const Icon(Icons.local_bar),
-      namedRoute: '/'),
-  NavigationLink(
-      title: 'Vos produits',
-      icon: const Icon(Icons.local_drink),
-      namedRoute: '/ingredients'),
-  NavigationLink(
-      title: 'Votre panier',
-      icon: const Icon(Icons.shopping_cart),
-      namedRoute: '/cart'),
-  NavigationLink(
-      title: 'À goûter',
-      icon: const Icon(Icons.bookmark_border),
-      namedRoute: '/profile'),
-];
-
 class HomePage extends StatelessWidget {
-  final _bottomNavIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
         create: (_) => SearchModel(),
-        child: Scaffold(
-          appBar: HomeAppBar(),
-          bottomNavigationBar: BottomNavigationBar(
-              currentIndex: _bottomNavIndex,
-              onTap: (index) => _bottomNavOnTap(context, index),
-              items: _createBottomNavBarItem()),
-          body: Center(child: Consumer2<AppModel, SearchModel>(
+        child: Column(
+          children: <Widget>[
+          HomeAppBar(),
+          Center(child: Consumer2<AppModel, SearchModel>(
               builder: (context, appModel, searchModel, _) {
-            final searchResult = searchModel.searchResult;
-            final matchingProducts =
-                _findMatchingProduct(appModel, searchResult);
-            final listChildren = <Widget>[
-              AllYourProducts(matchingProducts),
-              ForAFewDollarsMore(matchingProducts),
-            ];
-            if (searchModel._isSearchActive) {
-              listChildren.insertAll(0, [
-                SearchCharacteristics(),
-                SearchComposition(),
-              ]);
-            } else {
-              listChildren.insert(0, FilterStrip(searchResult));
-            }
-            if (searchModel.isDirty) {
-              listChildren.add(AllProducts(matchingProducts));
-            }
-            return ListView(
-              scrollDirection: Axis.vertical,
-              children: listChildren,
-            );
-          })),
-          resizeToAvoidBottomInset: true,
-        ));
+              final searchResult = searchModel.searchResult;
+              final matchingProducts =
+                  _findMatchingProduct(appModel, searchResult);
+              final listChildren = <Widget>[
+                AllYourProducts(matchingProducts),
+                ForAFewDollarsMore(matchingProducts),
+              ];
+              if (searchModel._isSearchActive) {
+                listChildren.insertAll(0, [
+                  SearchCharacteristics(),
+                  SearchComposition(),
+                ]);
+              } else {
+                listChildren.insert(0, FilterStrip(searchResult));
+              }
+              if (searchModel.isDirty) {
+                listChildren.add(AllProducts(matchingProducts));
+              }
+              return ListView(
+                scrollDirection: Axis.vertical,
+                children: listChildren,
+              );
+            }))
+          ]
+        )
+      );
   }
 
   List<Product> _findMatchingProduct(AppModel appModel, SearchResult search) {
@@ -382,21 +346,6 @@ class HomePage extends StatelessWidget {
           !search.mustNotHave.any((tag) => product.tags.contains(tag)));
     }
     return matchingProducts.toList(growable: false);
-  }
-
-  List<BottomNavigationBarItem> _createBottomNavBarItem() {
-    return NavigationLinks.map((navLink) => BottomNavigationBarItem(
-        icon: navLink.icon,
-        title: Text(navLink.title),
-        backgroundColor: navLink.backgroundColor)).toList();
-  }
-
-  void _bottomNavOnTap(BuildContext context, int index) {
-    if (_bottomNavIndex == index) {
-      return;
-    }
-    String route = NavigationLinks.elementAt(index).namedRoute;
-    Navigator.of(context).pushReplacementNamed(route);
   }
 }
 

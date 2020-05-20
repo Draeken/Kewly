@@ -17,11 +17,78 @@ class MyApp extends StatelessWidget {
             title: 'Kewly',
             theme: appTheme,
             initialRoute: '/',
-            routes: {
-              '/': (BuildContext context) => HomePage(),
-              '/ingredients': (BuildContext context) => IngredientPage(),
-              '/cart': (BuildContext context) => HomePage(),
-              '/profile': (BuildContext context) => HomePage(),
-            }));
+            home: KewlyHome(),
+          );
+  }
+}
+
+class KewlyHome extends StatefulWidget {
+  KewlyHome({Key key}) : super(key: key);
+
+  @override
+  _KewlyHomeState createState() => _KewlyHomeState();
+}
+
+class _KewlyHomeState extends State<KewlyHome> {
+  int _navIndex = 0;
+  PageController _pageController();
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  static const List<Widget _pages = <Widget>[
+    HomePage(),
+    IngredientPage()
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _navIndex,
+          onTap: _onItemTapped,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              title: Text('Les boissons'),
+              icon: Icon(Icons.local_bar),
+            ),
+            BottomNavigationBarItem(
+              title: Text('Vos produits'),
+              icon: Icon(Icons.local_drink),
+            ),
+            BottomNavigationBarItem(
+              title: Text('Votre panier'),
+              icon: Icon(Icons.shopping_cart),
+            ),
+            BottomNavigationBarItem(
+              title: Text('À goûter'),
+              icon: Icon(Icons.bookmark_border),
+            ),
+          ]),
+      body: SizedBox.expand(child: PageView(
+        controller: _pageController,
+        children: _pages
+      )),
+      resizeToAvoidBottomInset: true,
+    ));
+  }
+
+  void _onItemTapped(int index) {
+    if (index > 1 || index == _navIndex) {
+      return;
+    }
+    setState(() {
+      _navIndex = index;
+      _pageController.animateToPage(index, duration: Duration(milliseconds: 230), curve: Curves.easeOut);
+    })
   }
 }
