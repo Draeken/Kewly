@@ -362,7 +362,7 @@ class HomePage extends StatelessWidget {
   }
 
   List<Product> _findMatchingProduct(AppModel appModel, SearchResult search) {
-    Iterable<Product> matchingProducts = appModel.products;
+    Iterable<Product> matchingProducts = appModel.products ?? const [];
 
     if (search.ingredients.isNotEmpty) {
       matchingProducts = Set<Product>.from(
