@@ -31,6 +31,19 @@ class KewlyHome extends StatefulWidget {
 
 class _KewlyHomeState extends State<KewlyHome> {
   int _navIndex = 0;
+  PageController _pageController();
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   static const List<Widget _pages = <Widget>[
     HomePage(),
@@ -61,7 +74,10 @@ class _KewlyHomeState extends State<KewlyHome> {
               icon: Icon(Icons.bookmark_border),
             ),
           ]),
-      body: _pages[_navIndex],
+      body: SizedBox.expand(child: PageView(
+        controller: _pageController,
+        children: _pages
+      )),
       resizeToAvoidBottomInset: true,
     ));
   }
@@ -72,6 +88,7 @@ class _KewlyHomeState extends State<KewlyHome> {
     }
     setState(() {
       _navIndex = index;
+      _pageController.animateToPage(index, duration: Duration(milliseconds: 230), curve: Curves.easeOut);
     })
   }
 }
