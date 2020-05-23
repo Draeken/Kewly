@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
             theme: appTheme,
             initialRoute: '/',
             home: KewlyHome(),
-          );
+          )
+    );
   }
 }
 
@@ -31,10 +32,10 @@ class KewlyHome extends StatefulWidget {
 
 class _KewlyHomeState extends State<KewlyHome> {
   int _navIndex = 0;
-  PageController _pageController();
+  PageController _pageController;
 
   @override
-  void initState() {
+  void initState() {
     super.initState();
     _pageController = PageController();
   }
@@ -45,7 +46,7 @@ class _KewlyHomeState extends State<KewlyHome> {
     super.dispose();
   }
 
-  static const List<Widget _pages = <Widget>[
+  static List<Widget> _pages = <Widget>[
     HomePage(),
     IngredientPage()
   ];
@@ -54,7 +55,10 @@ class _KewlyHomeState extends State<KewlyHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Theme.of(context).primaryColor,
+          selectedItemColor: Colors.white,
           currentIndex: _navIndex,
+          type: BottomNavigationBarType.fixed,
           onTap: _onItemTapped,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -74,21 +78,21 @@ class _KewlyHomeState extends State<KewlyHome> {
               icon: Icon(Icons.bookmark_border),
             ),
           ]),
-      body: SizedBox.expand(child: PageView(
+      body: PageView(
         controller: _pageController,
         children: _pages
-      )),
+      ),
       resizeToAvoidBottomInset: true,
-    ));
+    );
   }
 
   void _onItemTapped(int index) {
-    if (index > 1 || index == _navIndex) {
+    if (index > 1 || index == _navIndex) {
       return;
     }
     setState(() {
       _navIndex = index;
       _pageController.animateToPage(index, duration: Duration(milliseconds: 230), curve: Curves.easeOut);
-    })
+    });
   }
 }

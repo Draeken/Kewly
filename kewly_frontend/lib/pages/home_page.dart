@@ -295,7 +295,7 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: <Widget>[
           HomeAppBar(),
-          Center(child: Consumer2<AppModel, SearchModel>(
+          Flexible(child: Consumer2<AppModel, SearchModel>(
               builder: (context, appModel, searchModel, _) {
               final searchResult = searchModel.searchResult;
               final matchingProducts =

@@ -12,7 +12,7 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}/graph_postprocess/add-effects.js"
+      "program": "${workspaceFolder}/graph_postprocess/add-tags.js"
     }
   ]
 }

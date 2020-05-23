@@ -5,7 +5,6 @@ import 'package:kewly/app_model.dart';
 import 'package:kewly/components/kewly_button_badge.dart';
 import 'package:kewly/components/kewly_category.dart';
 import 'package:kewly/components/kewly_ingredient_tile.dart';
-import 'package:kewly/pages/home_page.dart';
 import 'package:kewly/util.dart';
 import 'package:provider/provider.dart';
 
@@ -141,7 +140,7 @@ class _IngredientPageState extends State<IngredientPage> {
         ProductAppBar(
           onSearchChanged: _updateSearchInput,
         ),
-        Center(
+        Flexible(
           child: Consumer<AppModel>(builder: (context, appModel, _) {
             final allIngredients = _getAllIngredients(appModel.ingredients, searchInput);
             final ownedIngredients = _getOwnedIngredients(appModel.ownedIngredients, searchInput);
