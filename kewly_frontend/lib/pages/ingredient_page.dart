@@ -165,6 +165,7 @@ class _IngredientPageState extends State<IngredientPage> {
 
 class OwnedIngredientCategory extends StatelessWidget {
   final List<Ingredient> ingredients;
+  static final heroKey = 'owned';
 
   OwnedIngredientCategory(this.ingredients);
 
@@ -173,6 +174,7 @@ class OwnedIngredientCategory extends StatelessWidget {
     final children = ingredients
         .map<KewlyIngredientTile>((ingredient) => KewlyIngredientTile(
               ingredient: ingredient,
+              heroKey: heroKey,
               action: KewlyButtonBadge(
                 onTap: _onTap(context, ingredient),
                 icon: Icon(Icons.remove),
@@ -211,6 +213,8 @@ class ExpandWithCategory extends StatefulWidget {
 }
 
 class _ExpandWithCategory extends State<ExpandWithCategory> {
+  static final heroKey = 'expand';
+
   Func2<List<Product>, List<Ingredient>, List<ExpanderInfo>> _getExpanders;
 
   List<ExpanderInfo> _expandersFunc(
@@ -260,6 +264,7 @@ class _ExpandWithCategory extends State<ExpandWithCategory> {
         final ingredient = expanders[index].ingredient;
         return KewlyIngredientTile(
           ingredient: ingredient,
+          heroKey: heroKey,
           action: KewlyButtonBadge(
             onTap: _onTap(context, ingredient),
             icon: Icon(Icons.add),
@@ -275,6 +280,7 @@ class _ExpandWithCategory extends State<ExpandWithCategory> {
 
 class MoreChoiceWithCategory extends StatelessWidget {
   final List<Ingredient> ingredients;
+  static final heroKey = 'more';
 
   MoreChoiceWithCategory(this.ingredients);
 
@@ -297,6 +303,7 @@ class MoreChoiceWithCategory extends StatelessWidget {
         final ingredient = ingredients[index];
         return KewlyIngredientTile(
           ingredient: ingredient,
+          heroKey: heroKey,
           action: KewlyButtonBadge(
             onTap: _onTap(context, ingredient),
             icon: Icon(Icons.add),

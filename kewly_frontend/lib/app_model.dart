@@ -203,6 +203,10 @@ class Ingredient implements Id {
             : HSLColor.fromAHSL(
                 color.alpha, color.hue, color.saturation, color.lightness),
         this.colorConcentration = color?.concentration ?? 1;
+
+  get heroTag {
+    return name + id.toString();
+  }
 }
 
 class UserReviewRaw {
