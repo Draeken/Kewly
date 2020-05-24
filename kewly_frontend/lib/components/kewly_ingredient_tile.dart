@@ -76,7 +76,8 @@ class KewlyIngredientTile extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => IngredientDetail(ingredient: ingredient, heroKey: heroKey),
+              builder: (context) =>
+                  IngredientDetail(ingredient: ingredient, heroKey: heroKey),
             ));
       };
 }

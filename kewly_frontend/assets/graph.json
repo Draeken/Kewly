@@ -21793,6 +21793,7 @@
     {
       "name": "Sirop de Gingembre",
       "id": 65,
+      "color": { "alpha": 0.50, "hue": 46, "lightness": 0.76, "saturation": 0.58 },
       "usedBy": [18, 122, 160, 162, 203, 210, 237, 364, 419, 567, 570, 580, 602, 820, 934, 1008, 1038, 1039, 1052, 1082, 1085, 1104, 1144, 1156],
       "decorates": [],
       "tags": ["syriup"]
@@ -22036,7 +22037,8 @@
     },
     {
       "name": "Sirop d'Orgeat",
-      "id": 2,
+      "id": 2,      
+      "color": { "alpha": 0.95, "hue": 43, "lightness": 0.71, "saturation": 0.39 },
       "usedBy": [0, 81, 131, 298, 343, 387, 392, 542, 592, 619, 621, 623, 628, 682, 830, 1012, 1119, 1223, 1222],
       "decorates": [],
       "tags": ["syriup"]
@@ -22044,6 +22046,7 @@
     {
       "name": "bière blonde",
       "id": 63,
+      "color": { "alpha": 0.6, "hue": 47, "lightness": 0.57, "saturation": 0.88 },
       "usedBy": [17, 23, 24, 25, 26, 28, 30, 31, 32, 33, 34, 36, 173, 250, 777, 815, 851, 886, 923],
       "decorates": [],
       "tags": ["alcool", "sparkling"]
@@ -22051,6 +22054,7 @@
     {
       "name": "Sirop de Fraise",
       "id": 81,
+      "color": { "alpha": 0.85, "hue": 350, "lightness": 0.50, "saturation": 0.86 },
       "usedBy": [28, 88, 305, 463, 485, 576, 595, 634, 635, 646, 659, 661, 763, 821, 993, 1062, 1081, 1205, 363],
       "decorates": [],
       "tags": ["syriup"]
@@ -22058,6 +22062,7 @@
     {
       "name": "Sirop Orange Sanguine",
       "id": 89,
+      "color": { "alpha": 0.97, "hue": 358, "lightness": 0.25, "saturation": 1 },
       "usedBy": [32, 43, 44, 93, 287, 304, 673, 674, 748, 755, 800, 809, 868, 958, 1011, 1045, 1077, 1117, 1147],
       "decorates": [],
       "tags": ["syriup"]
@@ -22065,6 +22070,7 @@
     {
       "name": "Le Fruit Yuzu",
       "id": 92,
+      "color": { "alpha": 1, "hue": 44, "lightness": 0.62, "saturation": 0.59 },
       "usedBy": [36, 168, 246, 378, 412, 458, 610, 615, 776, 814, 910, 976, 981, 1129, 1156, 1190, 1238, 1275, 1276],
       "decorates": [],
       "tags": []
@@ -22072,6 +22078,7 @@
     {
       "name": "Sirop de Pamplemousse Rose",
       "id": 0,
+      "color": { "alpha": 0.84, "hue": 358, "lightness": 0.46, "saturation": 0.7 },
       "usedBy": [0, 199, 212, 261, 358, 446, 813, 814, 832, 906, 1046, 1052, 1106, 1133, 1184, 1208, 1252, 593],
       "decorates": [],
       "tags": ["syriup"]
@@ -22079,6 +22086,7 @@
     {
       "name": "Le Fruit Betterave",
       "id": 107,
+      "color": { "alpha": 1, "hue": 341, "lightness": 0.18, "saturation": 1 },
       "usedBy": [45, 152, 172, 415, 466, 494, 728, 786, 860, 899, 939, 967, 978, 1029, 1065, 1191, 1239, 1262],
       "decorates": [],
       "tags": []
@@ -22086,6 +22094,7 @@
     {
       "name": "Sirop d’Epices d’Hiver",
       "id": 115,
+      "color": { "alpha": 0.75, "hue": 4, "lightness": 0.31, "saturation": 0.82 },
       "usedBy": [48, 121, 143, 174, 232, 415, 416, 417, 430, 449, 512, 785, 796, 858, 903, 1097, 1190, 1197],
       "decorates": [],
       "tags": ["syriup"]
@@ -22101,6 +22110,7 @@
     {
       "name": "vin blanc",
       "id": 233,
+      "color": { "alpha": 0.65, "hue": 47, "lightness": 0.74, "saturation": 0.56 },
       "usedBy": [175, 218, 467, 468, 474, 823, 835, 836, 890, 911, 912, 1051, 1053, 1055, 1059, 1060, 1190, 1195],
       "decorates": [],
       "tags": ["alcool"]
@@ -22108,6 +22118,7 @@
     {
       "name": "Le Fruit Framboise",
       "id": 257,
+      "color": { "alpha": 1, "hue": 336, "lightness": 0.36, "saturation": 0.80 },
       "usedBy": [204, 208, 248, 334, 469, 717, 736, 741, 766, 768, 907, 948, 949, 1110, 1126, 1202, 1221, 1232],
       "decorates": [],
       "tags": []
@@ -22122,6 +22133,7 @@
     {
       "name": "Sirop de Falernum",
       "id": 181,
+      "color": { "alpha": 0.96, "hue": 46, "lightness": 0.72, "saturation": 0.47 },
       "usedBy": [98, 134, 181, 193, 292, 293, 556, 622, 818, 856, 1098, 1155, 1162, 1166, 1214, 1231, 1255],
       "decorates": [],
       "tags": ["syriup"]
