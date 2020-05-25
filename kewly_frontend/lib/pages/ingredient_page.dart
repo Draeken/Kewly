@@ -134,31 +134,30 @@ class _IngredientPageState extends State<IngredientPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ProductAppBar(
-          onSearchChanged: _updateSearchInput,
-        ),
-        Flexible(
-          child: Consumer<AppModel>(builder: (context, appModel, _) {
-            final allIngredients = _getAllIngredients(appModel.ingredients, searchInput);
-            final ownedIngredients = _getOwnedIngredients(appModel.ownedIngredients, searchInput);
-            return ListView(
-              scrollDirection: Axis.vertical,
-              children: <Widget>[
-                OwnedIngredientCategory(
-                  ownedIngredients,
-                ),
-                ExpandWithCategory(
+    return Column(children: [
+      ProductAppBar(
+        onSearchChanged: _updateSearchInput,
+      ),
+      Flexible(
+        child: Consumer<AppModel>(builder: (context, appModel, _) {
+          final allIngredients = _getAllIngredients(appModel.ingredients, searchInput);
+          final ownedIngredients = _getOwnedIngredients(appModel.ownedIngredients, searchInput);
+          return ListView(
+            scrollDirection: Axis.vertical,
+            children: <Widget>[
+              OwnedIngredientCategory(
+                ownedIngredients,
+              ),
+              ExpandWithCategory(
                   products: appModel.products,
                   ownedIngredients: appModel.ownedIngredients,
                   searchInput: searchInput),
-                MoreChoiceWithCategory(allIngredients)
-              ],
-            );
-          }),
-        )
-      ]);
+              MoreChoiceWithCategory(ingredients: allIngredients)
+            ],
+          );
+        }),
+      )
+    ]);
   }
 }
 
@@ -184,8 +183,8 @@ class OwnedIngredientCategory extends StatelessWidget {
   }
 
   _onTap(BuildContext context, Ingredient ingredient) {
-    return (TapDownDetails _) => Provider.of<AppModel>(context, listen: false)
-        .removeOwnedIngredient(ingredient);
+    return (TapDownDetails _) =>
+        Provider.of<AppModel>(context, listen: false).removeOwnedIngredient(ingredient);
   }
 }
 
@@ -201,12 +200,11 @@ class ExpandWithCategory extends StatefulWidget {
   final List<Ingredient> ownedIngredients;
   final String searchInput;
 
-  ExpandWithCategory(
-      {Key key, this.products, this.ownedIngredients, this.searchInput})
+  ExpandWithCategory({Key key, this.products, this.ownedIngredients, this.searchInput})
       : super(key: key);
 
   @override
-  State<StatefulWidget> createState() {
+  State<ExpandWithCategory> createState() {
     return _ExpandWithCategory();
   }
 }
@@ -215,13 +213,12 @@ class _ExpandWithCategory extends State<ExpandWithCategory> {
   static final heroKey = 'expand';
 
   Func2<List<Product>, List<Ingredient>, List<ExpanderInfo>> _getExpanders;
+  Func2<List<ExpanderInfo>, String, List<ExpanderInfo>> _getFilteredExpanders;
 
-  List<ExpanderInfo> _expandersFunc(
-      List<Product> products, List<Ingredient> _ownedIngredients) {
+  List<ExpanderInfo> _expandersFunc(List<Product> products, List<Ingredient> _ownedIngredients) {
     final hashExpander = HashMap<int, ExpanderInfo>();
     for (var product in widget.products) {
-      final expanders =
-          product.composition.where((compo) => !compo.ingredient.isOwned);
+      final expanders = product.composition.where((compo) => !compo.ingredient.isOwned);
       if (expanders.length != 1) {
         continue;
       }
@@ -232,19 +229,25 @@ class _ExpandWithCategory extends State<ExpandWithCategory> {
     return hashExpander.values.toList(growable: false);
   }
 
+  List<ExpanderInfo> _filteredExpandersFunc(List<ExpanderInfo> expanders, String name) {
+    final result = expanders
+        .where((expander) => containsIgnoreCase(expander.ingredient.name, widget.searchInput))
+        .toList(growable: false);
+    result.sort((a, b) => b.expandCount.compareTo(a.expandCount));
+    return result;
+  }
+
   @override
   void initState() {
     super.initState();
     _getExpanders = imemo2(_expandersFunc);
+    _getFilteredExpanders = imemo2(_filteredExpandersFunc);
   }
 
   @override
   Widget build(BuildContext context) {
-    final expanders = _getExpanders(widget.products, widget.ownedIngredients)
-        .where((expander) =>
-            containsIgnoreCase(expander.ingredient.name, widget.searchInput))
-        .toList(growable: false);
-    expanders.sort((a, b) => b.expandCount.compareTo(a.expandCount));
+    final expanders = _getFilteredExpanders(
+        _getExpanders(widget.products, widget.ownedIngredients), widget.searchInput);
 
     return KewlyCategory(
         title: 'Plus de choix avec',
@@ -272,28 +275,45 @@ class _ExpandWithCategory extends State<ExpandWithCategory> {
       };
 
   _onTap(BuildContext context, Ingredient ingredient) {
-    return (TapDownDetails _) => Provider.of<AppModel>(context, listen: false)
-        .addOwnedIngredient(ingredient);
+    return (TapDownDetails _) =>
+        Provider.of<AppModel>(context, listen: false).addOwnedIngredient(ingredient);
   }
 }
 
-class MoreChoiceWithCategory extends StatelessWidget {
+class MoreChoiceWithCategory extends StatefulWidget {
   final List<Ingredient> ingredients;
-  static final heroKey = 'more';
 
-  MoreChoiceWithCategory(this.ingredients);
+  MoreChoiceWithCategory({Key key, this.ingredients}) : super(key: key);
+
+  @override
+  State<MoreChoiceWithCategory> createState() {
+    return _MoreChoiceWithCategory();
+  }
+}
+
+class _MoreChoiceWithCategory extends State<MoreChoiceWithCategory> {
+  static final heroKey = 'more';
+  Func1<List<Ingredient>, List<Ingredient>> _getIngredients;
+
+  @override
+  void initState() {
+    super.initState();
+    _getIngredients = imemo1(_getIngredientsFunc);
+  }
+
+  List<Ingredient> _getIngredientsFunc(List<Ingredient> ingredients) {
+    final result = ingredients.where((ingredient) => !ingredient.isOwned).toList(growable: false);
+    result.sort((a, b) => b.usedBy.length.compareTo(a.usedBy.length));
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
-    List<Ingredient> filteredIngredients = ingredients
-        .where((ingredient) => !ingredient.isOwned)
-        .toList(growable: false);
-    filteredIngredients
-        .sort((a, b) => b.usedBy.length.compareTo(a.usedBy.length));
+    List<Ingredient> ingredients = _getIngredients(widget.ingredients);
     return KewlyCategory(
         title: 'Les plus utilisés',
-        itemCount: filteredIngredients.length,
-        builder: _getBuilder(context, filteredIngredients));
+        itemCount: ingredients.length,
+        builder: _getBuilder(context, ingredients));
   }
 
   KewlyIngredientTile Function(BuildContext, int) _getBuilder(
@@ -311,7 +331,7 @@ class MoreChoiceWithCategory extends StatelessWidget {
       };
 
   _onTap(BuildContext context, Ingredient ingredient) {
-    return (TapDownDetails _) => Provider.of<AppModel>(context, listen: false)
-        .addOwnedIngredient(ingredient);
+    return (TapDownDetails _) =>
+        Provider.of<AppModel>(context, listen: false).addOwnedIngredient(ingredient);
   }
 }
