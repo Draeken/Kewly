@@ -105,10 +105,6 @@ class SearchModel extends ChangeNotifier {
 }
 
 /**
-  TODO:
-  - change transition to a Top-level transitions
-
-
   Other search filter:
   - by colors
   Other result category:
@@ -137,7 +133,6 @@ class _HomeAppBar extends State<HomeAppBar> {
 
   void _unfocus(BuildContext context) {
     FocusScopeNode currentFocus = FocusScope.of(context);
-    // TODO: user may not be focusing textfield
     if (!currentFocus.hasPrimaryFocus) {
       currentFocus.unfocus();
     }
@@ -192,7 +187,7 @@ class _HomeAppBar extends State<HomeAppBar> {
               isDense: true,
               labelText: 'Recherche',
               filled: true,
-              hasFloatingPlaceholder: false,
+              floatingLabelBehavior: FloatingLabelBehavior.never,
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
               fillColor: Theme.of(context).backgroundColor.withAlpha(200)),

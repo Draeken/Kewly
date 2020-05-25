@@ -35,7 +35,6 @@ class _ProductAppBar extends State<ProductAppBar> {
 
   void _unfocus(BuildContext context) {
     FocusScopeNode currentFocus = FocusScope.of(context);
-    // TODO: user may not be focusing textfield
     if (!currentFocus.hasPrimaryFocus) {
       currentFocus.unfocus();
     }
@@ -87,7 +86,7 @@ class _ProductAppBar extends State<ProductAppBar> {
             isDense: true,
             labelText: 'Recherche',
             filled: true,
-            hasFloatingPlaceholder: false,
+            floatingLabelBehavior: FloatingLabelBehavior.never,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
             fillColor: Theme.of(context).backgroundColor.withAlpha(200)),
       ),

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:kewly/app_model.dart';
 import 'package:kewly/components/kewly_category.dart';
@@ -36,7 +34,7 @@ class IngredientDetail extends StatelessWidget {
                 fit: BoxFit.scaleDown,
                 child: Text(
                   ingredient.name,
-                  style: Theme.of(context).textTheme.display1.copyWith(color: _getHeroTitleColor()),
+                  style: Theme.of(context).textTheme.headline4.copyWith(color: _getHeroTitleColor()),
                 ))
           ],
         ),
