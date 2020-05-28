@@ -21,8 +21,7 @@ class CompositionRaw {
   final double eqQuantity;
   final String unit;
 
-  CompositionRaw(
-      {this.ingredientId, this.quantity, this.unit, this.eqQuantity});
+  CompositionRaw({this.ingredientId, this.quantity, this.unit, this.eqQuantity});
 
   static CompositionRaw fromJson(Map<String, dynamic> json) {
     return CompositionRaw(
@@ -91,12 +90,7 @@ class Composition {
   final double eqQuantity;
   final String unit;
 
-  Composition(
-      {this.ingredient,
-      this.eqQuantity,
-      this.ingredientId,
-      this.quantity,
-      this.unit});
+  Composition({this.ingredient, this.eqQuantity, this.ingredientId, this.quantity, this.unit});
 }
 
 class Decoration {
@@ -139,12 +133,7 @@ class ColorRaw {
   final double saturation;
   final double concentration;
 
-  ColorRaw(
-      {this.lightness,
-      this.alpha,
-      this.hue,
-      this.saturation,
-      this.concentration});
+  ColorRaw({this.lightness, this.alpha, this.hue, this.saturation, this.concentration});
 
   static ColorRaw fromJson(Map<String, dynamic> json) {
     return ColorRaw(
@@ -165,8 +154,7 @@ class IngredientRaw {
   final List<int> decorates;
   final List<String> tags;
 
-  IngredientRaw(
-      {this.id, this.name, this.color, this.usedBy, this.decorates, this.tags});
+  IngredientRaw({this.id, this.name, this.color, this.usedBy, this.decorates, this.tags});
 
   static IngredientRaw fromJson(Map<String, dynamic> json) {
     return IngredientRaw(
@@ -200,8 +188,7 @@ class Ingredient implements Id {
       this.tags})
       : this.color = color == null
             ? HSLColor.fromColor(Colors.transparent)
-            : HSLColor.fromAHSL(
-                color.alpha, color.hue, color.saturation, color.lightness),
+            : HSLColor.fromAHSL(color.alpha, color.hue, color.saturation, color.lightness),
         this.colorConcentration = color?.concentration ?? 1;
 
   get heroTag {
@@ -216,7 +203,7 @@ class UserReviewRaw {
   UserReviewRaw({this.productId, this.rating});
 
   static UserReviewRaw fromJson(Map<String, dynamic> json) {
-    return UserReviewRaw(productId: json['productId'], rating: json['rating']);
+    return UserReviewRaw(productId: json['productId'], rating: json['rating']?.toDouble());
   }
 
   Map<String, dynamic> toJson() {
@@ -231,12 +218,43 @@ class UserReview {
   UserReview({this.product, this.rating});
 }
 
+enum TagType {
+  contain,
+  without,
+}
+
+class NoGo {
+  final Ingredient ingredient;
+  final String tag;
+  final TagType type;
+
+  NoGo({this.ingredient, this.tag, this.type});
+}
+
+class NoGoRaw {
+  final int ingredientId;
+  final String tag;
+  final TagType type;
+
+  NoGoRaw({this.ingredientId, this.tag, this.type});
+
+  static NoGoRaw fromJson(Map<String, dynamic> json) {
+    final type = json['type'] ? TagType.values[json['type']] : null;
+    return NoGoRaw(ingredientId: json['ingredientId'], tag: json['tag'], type: type);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'ingredientId': ingredientId, 'tag': tag, 'type': type?.index};
+  }
+}
+
 class UserData {
   final List<int> ownedIngredients;
   final List<int> productsToPurchase;
   final List<int> ingredientsToPurchase;
   final List<int> nextToTest;
   final List<int> historic;
+  final List<NoGoRaw> noGo;
   final List<UserReviewRaw> reviewedProducts;
 
   UserData(
@@ -245,6 +263,7 @@ class UserData {
       this.nextToTest,
       this.ownedIngredients,
       this.productsToPurchase,
+      this.noGo,
       this.reviewedProducts});
 
   factory UserData.fromJson(Map<String, dynamic> json) {
@@ -253,12 +272,14 @@ class UserData {
     }
     final List<UserReviewRaw> reviewedProducts =
         mapJsonToList(json['reviewedProducts'], UserReviewRaw.fromJson);
+    final List<NoGoRaw> noGo = mapJsonToList(json['noGo'], NoGoRaw.fromJson);
     return UserData(
         historic: List<int>.from(json['historic']),
         ingredientsToPurchase: List<int>.from(json['ingredientsToPurchase']),
         nextToTest: List<int>.from(json['nextToTest']),
         ownedIngredients: List<int>.from(json['ownedIngredients']),
         productsToPurchase: List<int>.from(json['productsToPurchase']),
+        noGo: noGo,
         reviewedProducts: reviewedProducts);
   }
 
@@ -269,6 +290,7 @@ class UserData {
         nextToTest: [],
         ownedIngredients: [],
         productsToPurchase: [],
+        noGo: [],
         reviewedProducts: []);
   }
 
@@ -279,6 +301,7 @@ class UserData {
       'nextToTest': nextToTest,
       'ownedIngredients': ownedIngredients,
       'productsToPurchase': productsToPurchase,
+      'noGo': noGo,
       'reviewedProducts': reviewedProducts
     };
   }
@@ -286,8 +309,7 @@ class UserData {
   List<IngredientRaw> getOwnedIngredientObj(List<IngredientRaw> ingredients) {
     return this
         .ownedIngredients
-        .map(
-            (ingreId) => ingredients.firstWhere((ingre) => ingre.id == ingreId))
+        .map((ingreId) => ingredients.firstWhere((ingre) => ingre.id == ingreId))
         .toList(growable: false);
   }
 }
@@ -304,6 +326,7 @@ class AppModel extends ChangeNotifier {
   List<Ingredient> _ingredientsToPurchase;
   List<Product> _nextToTest;
   List<Product> _historic;
+  List<NoGo> _noGo;
   List<UserReview> _reviewedProducts;
 
   AppModel(BuildContext context) {
@@ -319,6 +342,13 @@ class AppModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addNoGoIngredient(Ingredient ingredient) {
+    _userData.noGo.add(NoGoRaw(ingredientId: ingredient.id));
+    _saveUserData();
+    _filterProductsFromNoGoIngredient(ingredient.id);
+    notifyListeners();
+  }
+
   void removeOwnedIngredient(Ingredient ingredient) {
     _userData.ownedIngredients.remove(ingredient.id);
     ownedIngredients.remove(ingredient);
@@ -326,6 +356,14 @@ class AppModel extends ChangeNotifier {
     ownedIngredients = ownedIngredients.toList();
     _saveUserData();
     notifyListeners();
+  }
+
+/**
+ * How to recover when user un-blacklist an ingredient?
+ * have an internal list of product and a view list filtered by no-go
+ */
+  void _filterProductsFromNoGoIngredient(int ingredientId) {
+    products = products.where((element) => element.composition.every((element) => element.ingredientId != ingredientId));
   }
 
   void _initData(BuildContext context) async {
@@ -337,8 +375,7 @@ class AppModel extends ChangeNotifier {
   _debugGraph() {
     final List<GlassInfo> glassList = [];
     for (var product in products) {
-      final glassInfo = glassList.firstWhere((g) => g.id == product.glass,
-          orElse: () => null);
+      final glassInfo = glassList.firstWhere((g) => g.id == product.glass, orElse: () => null);
       if (glassInfo == null) {
         glassList.add(GlassInfo(id: product.glass, count: 1));
         continue;
@@ -354,9 +391,8 @@ class AppModel extends ChangeNotifier {
         .loadStructuredData('assets/graph.json', (s) async => jsonDecode(s));
     final Iterable<ProductRaw> productsRaw =
         mapJsonToList(graph['products'], ProductRaw.fromJson, toList: false);
-    final Iterable<IngredientRaw> ingredientsRaw = mapJsonToList(
-        graph['ingredients'], IngredientRaw.fromJson,
-        toList: false);
+    final Iterable<IngredientRaw> ingredientsRaw =
+        mapJsonToList(graph['ingredients'], IngredientRaw.fromJson, toList: false);
     products = productsRaw
         .map((productRaw) => Product(
             name: productRaw.name,
@@ -366,8 +402,7 @@ class AppModel extends ChangeNotifier {
             glass: productRaw.glass,
             tags: productRaw.tags,
             decoratedWith: productRaw.decoratedWith
-                .map((decorateRaw) => Decoration(
-                    ingredientId: decorateRaw.id, as: decorateRaw.as))
+                .map((decorateRaw) => Decoration(ingredientId: decorateRaw.id, as: decorateRaw.as))
                 .toList(growable: false),
             composition: productRaw.composition
                 .map((compoRaw) => Composition(
@@ -383,10 +418,9 @@ class AppModel extends ChangeNotifier {
             name: ingredientRaw.name,
             color: ingredientRaw.color,
             tags: ingredientRaw.tags,
-            decorates: _objectifyIdList<Product>(
-                ingredientRaw.decorates, products, growable: false),
-            usedBy: _objectifyIdList<Product>(ingredientRaw.usedBy, products,
-                growable: false)))
+            decorates:
+                _objectifyIdList<Product>(ingredientRaw.decorates, products, growable: false),
+            usedBy: _objectifyIdList<Product>(ingredientRaw.usedBy, products, growable: false)))
         .toList(growable: false);
     products.forEach((product) {
       product.composition.forEach((compo) {
@@ -408,12 +442,12 @@ class AppModel extends ChangeNotifier {
       return ingredient;
     }).toList();
     _objectifyIdList(_userData.ownedIngredients, ingredients);
-    _productsToPurchase =
-        _objectifyIdList(_userData.productsToPurchase, products);
-    _ingredientsToPurchase =
-        _objectifyIdList(_userData.ingredientsToPurchase, ingredients);
+    _productsToPurchase = _objectifyIdList(_userData.productsToPurchase, products);
+    _ingredientsToPurchase = _objectifyIdList(_userData.ingredientsToPurchase, ingredients);
     _nextToTest = _objectifyIdList(_userData.nextToTest, products);
     _historic = _objectifyIdList(_userData.historic, products);
+    _noGo = _userData.noGo.map((noGo) => NoGo(
+        ingredient: _firstWithId(ingredients)(noGo.ingredientId), tag: noGo.tag, type: noGo.type));
     _reviewedProducts = _userData.reviewedProducts
         .map((rawReview) => UserReview(
               rating: rawReview.rating,
@@ -483,8 +517,7 @@ class GlassInfo {
   GlassInfo({this.id, this.count});
 }
 
-List<U> _objectifyIdList<U extends Id>(List<int> listOfId, List<U> listOfObj,
-    {growable = true}) {
+List<U> _objectifyIdList<U extends Id>(List<int> listOfId, List<U> listOfObj, {growable = true}) {
   return listOfId.map(_firstWithId<U>(listOfObj)).toList(growable: growable);
 }
 

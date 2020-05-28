@@ -3,6 +3,7 @@ import 'package:kewly/app_model.dart';
 import 'package:kewly/components/kewly_category.dart';
 import 'package:kewly/components/kewly_ingredient_tile.dart';
 import 'package:kewly/components/kewly_product_tile.dart';
+import 'package:provider/provider.dart';
 
 class IngredientDetail extends StatelessWidget {
   final Ingredient ingredient;
@@ -15,6 +16,7 @@ class IngredientDetail extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        actions: _getAppBarAction(context),
       ),
       body: Center(
           child: ListView(scrollDirection: Axis.vertical, children: <Widget>[
@@ -34,17 +36,38 @@ class IngredientDetail extends StatelessWidget {
                 fit: BoxFit.scaleDown,
                 child: Text(
                   ingredient.name,
-                  style: Theme.of(context).textTheme.headline4.copyWith(color: _getHeroTitleColor()),
+                  style:
+                      Theme.of(context).textTheme.headline4.copyWith(color: _getHeroTitleColor()),
                 ))
           ],
         ),
-        KewlyCategory(
-            title: 'Vous permet de préparer',
-            children: _getAvailableProducts()),
+        KewlyCategory(title: 'Vous permet de préparer', children: _getAvailableProducts()),
         KewlyCategory(title: 'Est utilisé dans', children: _getAllProducts()),
       ])),
       resizeToAvoidBottomInset: false,
     );
+  }
+
+  List<Widget> _getAppBarAction(BuildContext context) {
+    return ingredient.isOwned
+        ? <Widget>[
+            OutlineButton.icon(
+                label: Text('épuisé'),
+                icon: Icon(Icons.clear),
+                onPressed: () =>
+                    Provider.of<AppModel>(context, listen: false).removeOwnedIngredient(ingredient))
+          ]
+        : <Widget>[
+            OutlineButton.icon(
+                label: Text('en stock'),
+                icon: Icon(Icons.add),
+                onPressed: () =>
+                    Provider.of<AppModel>(context, listen: false).addOwnedIngredient(ingredient)),
+            OutlineButton.icon(
+                label: Text('banni'),
+                icon: Icon(Icons.thumb_down),
+                onPressed: () => Provider.of<AppModel>(context, listen: false).addNoGoIngredient(ingredient))
+          ];
   }
 
   Color _getHeroTitleColor() {
@@ -60,8 +83,8 @@ class IngredientDetail extends StatelessWidget {
 
   List<KewlyProductTile> _getAvailableProducts() {
     return ingredient.usedBy
-        .where((product) => product.composition.every((compo) =>
-            compo.ingredient == ingredient || compo.ingredient.isOwned))
+        .where((product) => product.composition
+            .every((compo) => compo.ingredient == ingredient || compo.ingredient.isOwned))
         .map((product) => KewlyProductTile(product: product))
         .toList(growable: false);
   }
