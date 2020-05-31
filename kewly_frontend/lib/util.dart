@@ -4,6 +4,9 @@ import 'package:flutter/rendering.dart';
 
 Iterable<T> mapJsonToList<T>(
     List<dynamic> rawList, T factory(Map<String, dynamic> data),{ toList = true }) {
+  if (rawList == null) {
+    return const [];
+  }
   var mapped = rawList
       .map((productRaw) => factory(productRaw));
   return toList ? mapped.toList(growable: false) : mapped;
