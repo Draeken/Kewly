@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:kewly/app_model.dart';
 import 'package:kewly/components/kewly_category_title.dart';
 
 class KewlyCategory extends StatelessWidget {
@@ -9,7 +10,11 @@ class KewlyCategory extends StatelessWidget {
   final Widget Function(BuildContext context, int index) builder;
   final int itemCount;
 
-  KewlyCategory({@required this.title, this.children, this.builder, this.itemCount});
+  KewlyCategory(
+      {@required this.title,
+      this.children,
+      this.builder,
+      this.itemCount});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +43,6 @@ class KewlyCategory extends StatelessWidget {
               : GridView.builder(
                   itemCount: itemCount,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-
                       crossAxisCount: crossAxisCount),
                   itemBuilder: builder,
                   primary: false,

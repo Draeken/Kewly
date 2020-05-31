@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:kewly/app_model.dart';
 import 'package:kewly/components/kewly_category.dart';
 import 'package:kewly/components/kewly_filter_chip.dart';
+import 'package:kewly/components/kewly_product_detailed.dart';
 import 'package:kewly/components/kewly_product_tile.dart';
 import 'package:kewly/components/kewly_wrap_category.dart';
 import 'package:kewly/util.dart';
@@ -40,7 +42,10 @@ class SearchModel extends ChangeNotifier {
   }
 
   get isDirty {
-    return _productName != "" || _ingredients.isNotEmpty || _mustHave.isNotEmpty || _mustNotHave.isNotEmpty;
+    return _productName != "" ||
+        _ingredients.isNotEmpty ||
+        _mustHave.isNotEmpty ||
+        _mustNotHave.isNotEmpty;
   }
 
   void updateSearchState(bool isActive) {
@@ -105,11 +110,11 @@ class SearchModel extends ChangeNotifier {
 }
 
 /**
-  Other search filter:
-  - by colors
-  Other result category:
-  - by easy grocery (ingredients tagged with "easy to get")
-  -
+    Other search filter:
+    - by colors
+    Other result category:
+    - by easy grocery (ingredients tagged with "easy to get")
+    -
  */
 
 class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -176,6 +181,7 @@ class _HomeAppBar extends State<HomeAppBar> {
       }
       return AppBar(
         leading: _getLeading(context, search._isSearchActive),
+        actions: _getActions(context),
         title: TextField(
           controller: _inputController,
           onTap: () => _openSearch(context),
@@ -195,6 +201,26 @@ class _HomeAppBar extends State<HomeAppBar> {
         backgroundColor: Colors.transparent,
       );
     });
+  }
+
+  _getActions(BuildContext context) {
+    final appModel = Provider.of<AppModel>(context);
+    final mode = appModel.displayMode;
+    final Widget icon = () {
+      switch (mode) {
+        case DisplayMode.Grid:
+          return Icon(Icons.view_list, color: Theme.of(context).accentColor,);
+        case DisplayMode.Detailed:
+          return Icon(Icons.view_module, color: Theme.of(context).accentColor,);
+      }
+    }();
+    return [
+      IconButton(
+          icon: icon,
+          onPressed: () => appModel.displayMode = mode == DisplayMode.Detailed
+              ? DisplayMode.Grid
+              : DisplayMode.Detailed)
+    ];
   }
 
   @override
@@ -282,42 +308,38 @@ class SearchResult {
 }
 
 class HomePage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
         create: (_) => SearchModel(),
-        child: Column(
-          children: <Widget>[
+        child: Column(children: <Widget>[
           HomeAppBar(),
           Flexible(child: Consumer2<AppModel, SearchModel>(
               builder: (context, appModel, searchModel, _) {
-              final searchResult = searchModel.searchResult;
-              final matchingProducts =
-                  _findMatchingProduct(appModel, searchResult);
-              final listChildren = <Widget>[
-                AllYourProducts(matchingProducts),
-                ForAFewDollarsMore(matchingProducts),
-              ];
-              if (searchModel._isSearchActive) {
-                listChildren.insertAll(0, [
-                  SearchCharacteristics(),
-                  SearchComposition(),
-                ]);
-              } else {
-                listChildren.insert(0, FilterStrip(searchResult));
-              }
-              if (searchModel.isDirty) {
-                listChildren.add(AllProducts(matchingProducts));
-              }
-              return ListView(
-                scrollDirection: Axis.vertical,
-                children: listChildren,
-              );
-            }))
-          ]
-        )
-      );
+            final searchResult = searchModel.searchResult;
+            final matchingProducts =
+                _findMatchingProduct(appModel, searchResult);
+            final listChildren = <Widget>[
+              AllYourProducts(matchingProducts),
+              ForAFewDollarsMore(matchingProducts),
+            ];
+            if (searchModel._isSearchActive) {
+              listChildren.insertAll(0, [
+                SearchCharacteristics(),
+                SearchComposition(),
+              ]);
+            }
+            if (searchModel.isDirty) {
+              listChildren.insert(0, FilterStrip(searchResult));
+              listChildren.add(AllProducts(matchingProducts));
+            }
+            return ListView(
+              padding: EdgeInsets.all(0),
+              scrollDirection: Axis.vertical,
+              children: listChildren,
+            );
+          }))
+        ]));
   }
 
   List<Product> _findMatchingProduct(AppModel appModel, SearchResult search) {
@@ -415,7 +437,7 @@ class AllYourProducts extends StatelessWidget {
             product.composition.every((compo) => compo.ingredient.isOwned))
         .toList(growable: false);
     final builder = (BuildContext context, int index) {
-      return KewlyProductTile(product: ownedProducts[index]);
+      return KewlyProductDetailed(product: ownedProducts[index]);
     };
     return KewlyCategory(
         title: 'Vos boissons',

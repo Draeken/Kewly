@@ -330,6 +330,11 @@ class UserData {
   }
 }
 
+enum DisplayMode {
+  Detailed,
+  Grid
+}
+
 class AppModel extends ChangeNotifier {
   static const USER_PREF_KEY = 'userData';
 
@@ -344,9 +349,19 @@ class AppModel extends ChangeNotifier {
   List<Product> _historic;
   List<NoGo> _noGo;
   List<UserReview> _reviewedProducts;
+  DisplayMode _displayMode = DisplayMode.Grid;
 
   AppModel(BuildContext context) {
     _initData(context);
+  }
+
+  set displayMode(DisplayMode mode) {
+    _displayMode = mode;
+    notifyListeners();
+  }
+
+  DisplayMode get displayMode {
+    return _displayMode;
   }
 
   void addOwnedIngredient(Ingredient ingredient) {
