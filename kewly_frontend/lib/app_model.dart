@@ -21,7 +21,7 @@ class CompositionRaw {
   final double eqQuantity;
   final String unit;
 
-  CompositionRaw(
+  const CompositionRaw(
       {this.ingredientId, this.quantity, this.unit, this.eqQuantity});
 
   static CompositionRaw fromJson(Map<String, dynamic> json) {
@@ -37,7 +37,7 @@ class DecorationRaw {
   final int id;
   final String as;
 
-  DecorationRaw({this.id, this.as});
+  const DecorationRaw({this.id, this.as});
 
   static DecorationRaw fromJson(Map<String, dynamic> json) {
     return DecorationRaw(
@@ -57,7 +57,7 @@ class ProductRaw {
   final double capacity;
   final int glass;
 
-  ProductRaw(
+  const ProductRaw(
       {this.id,
       this.tags,
       this.name,
@@ -121,7 +121,7 @@ class Product implements Id {
   final Iterable<Composition> composition;
   final Iterable<Decoration> decoratedWith;
 
-  Product(
+  const Product(
       {this.id,
       this.name,
       this.link,
@@ -139,7 +139,7 @@ class ColorRaw {
   final double saturation;
   final double concentration;
 
-  ColorRaw(
+  const ColorRaw(
       {this.lightness,
       this.alpha,
       this.hue,
@@ -165,7 +165,7 @@ class IngredientRaw {
   final List<int> decorates;
   final List<String> tags;
 
-  IngredientRaw(
+  const IngredientRaw(
       {this.id, this.name, this.color, this.usedBy, this.decorates, this.tags});
 
   static IngredientRaw fromJson(Map<String, dynamic> json) {
@@ -213,7 +213,7 @@ class UserReviewRaw {
   final int productId;
   final double rating;
 
-  UserReviewRaw({this.productId, this.rating});
+  const UserReviewRaw({this.productId, this.rating});
 
   static UserReviewRaw fromJson(Map<String, dynamic> json) {
     return UserReviewRaw(
@@ -229,7 +229,7 @@ class UserReview {
   final Product product;
   final double rating;
 
-  UserReview({this.product, this.rating});
+  const UserReview({this.product, this.rating});
 }
 
 enum TagType {
@@ -242,7 +242,7 @@ class NoGo {
   final String tag;
   final TagType type;
 
-  NoGo({this.ingredient, this.tag, this.type});
+  const NoGo({this.ingredient, this.tag, this.type});
 }
 
 class NoGoRaw {
@@ -250,7 +250,7 @@ class NoGoRaw {
   final String tag;
   final TagType type;
 
-  NoGoRaw({this.ingredientId, this.tag, this.type});
+  const NoGoRaw({this.ingredientId, this.tag, this.type});
 
   static NoGoRaw fromJson(Map<String, dynamic> json) {
     final type = json['type'] ? TagType.values[json['type']] : null;
@@ -272,7 +272,7 @@ class UserData {
   final List<NoGoRaw> noGo;
   final List<UserReviewRaw> reviewedProducts;
 
-  UserData(
+  const UserData(
       {this.historic,
       this.ingredientsToPurchase,
       this.nextToTest,

@@ -84,7 +84,7 @@ class IngredientDetail extends StatelessWidget {
   void Function() _onAppBarAction(
       BuildContext context, IngredientAction action) {
     return () {
-      final appModel = Provider.of<AppModel>(context, listen: false);
+      final appModel = context.read<AppModel>();
       switch (action) {
         case IngredientAction.Available:
           appModel.addOwnedIngredient(ingredient);

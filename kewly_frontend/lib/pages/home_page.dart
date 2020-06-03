@@ -118,7 +118,7 @@ class SearchModel extends ChangeNotifier {
  */
 
 class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
-  HomeAppBar({Key key}) : super(key: key);
+  const HomeAppBar({Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _HomeAppBar();
@@ -294,7 +294,7 @@ class SearchResult {
   final List<String> mustHave;
   final List<String> mustNotHave;
 
-  SearchResult(
+  const SearchResult(
       {this.productName, this.ingredients, this.mustHave, this.mustNotHave});
 
   static SearchResult empty() {
@@ -316,12 +316,13 @@ class HomePage extends StatelessWidget {
           HomeAppBar(),
           Flexible(child: Consumer2<AppModel, SearchModel>(
               builder: (context, appModel, searchModel, _) {
+            final displayMode = appModel.displayMode;
             final searchResult = searchModel.searchResult;
             final matchingProducts =
                 _findMatchingProduct(appModel, searchResult);
             final listChildren = <Widget>[
-              AllYourProducts(matchingProducts),
-              ForAFewDollarsMore(matchingProducts),
+              AllYourProducts(matchingProducts, displayMode),
+              ForAFewDollarsMore(matchingProducts, displayMode),
             ];
             if (searchModel._isSearchActive) {
               listChildren.insertAll(0, [
@@ -331,7 +332,7 @@ class HomePage extends StatelessWidget {
             }
             if (searchModel.isDirty) {
               listChildren.insert(0, FilterStrip(searchResult));
-              listChildren.add(AllProducts(matchingProducts));
+              listChildren.add(AllProducts(matchingProducts, displayMode));
             }
             return ListView(
               padding: EdgeInsets.all(0),
@@ -376,7 +377,7 @@ class UpdateTagObj {
 class FilterStrip extends StatelessWidget {
   final SearchResult search;
 
-  FilterStrip(this.search);
+  const FilterStrip(this.search);
 
   @override
   Widget build(BuildContext context) {
@@ -425,10 +426,11 @@ class FilterStrip extends StatelessWidget {
       side: BorderSide(width: 1.5, color: Colors.black38));
 }
 
-class AllYourProducts extends StatelessWidget {
+class AllYourProducts extends StatelessWidget with HandleDisplayMode {
   final List<Product> products;
+  final DisplayMode displayMode;
 
-  AllYourProducts(this.products);
+  const AllYourProducts(this.products, this.displayMode);
 
   @override
   Widget build(BuildContext context) {
@@ -436,30 +438,19 @@ class AllYourProducts extends StatelessWidget {
         .where((product) =>
             product.composition.every((compo) => compo.ingredient.isOwned))
         .toList(growable: false);
-    final builder = (BuildContext context, int index) {
-      return KewlyProductDetailed(product: ownedProducts[index]);
-    };
-    return KewlyCategory(
-        title: 'Vos boissons',
-        itemCount: ownedProducts.length,
-        builder: builder);
+    return getKewlyCategory(displayMode, 'Vos boissons', ownedProducts);
   }
 }
 
-class AllProducts extends StatelessWidget {
+class AllProducts extends StatelessWidget with HandleDisplayMode {
   final List<Product> products;
+  final DisplayMode displayMode;
 
-  AllProducts(this.products);
+  AllProducts(this.products, this.displayMode);
 
   @override
   Widget build(BuildContext context) {
-    final builder = (BuildContext context, int index) {
-      return KewlyProductTile(product: products[index]);
-    };
-    return KewlyCategory(
-        title: 'Toutes les boissons',
-        itemCount: products.length,
-        builder: builder);
+    return getKewlyCategory(displayMode, 'Toutes les boissons', products);
   }
 }
 
@@ -467,13 +458,14 @@ class ProductWithMissing {
   final Product product;
   final List<Ingredient> missing;
 
-  ProductWithMissing({this.product, this.missing});
+  const ProductWithMissing({this.product, this.missing });
 }
 
 class ForAFewDollarsMore extends StatelessWidget {
   final List<Product> products;
+  final DisplayMode displayMode;
 
-  ForAFewDollarsMore(this.products);
+  const ForAFewDollarsMore(this.products, this.displayMode);
 
   @override
   Widget build(BuildContext context) {
@@ -490,12 +482,30 @@ class ForAFewDollarsMore extends StatelessWidget {
     productWithMissing.sort((a, b) {
       return b.missing[0].usedBy.length.compareTo(a.missing[0].usedBy.length);
     });
-    final builder = (BuildContext _context, int index) {
+    final builderTile = (BuildContext _context, int index) {
+      return KewlyProductTile(product: productWithMissing[index].product);
+    };
+    final builderDetailled = (BuildContext _context, int index) {
       return KewlyProductTile(product: productWithMissing[index].product);
     };
     return KewlyCategory(
         title: 'Pour quelques \$ de plus',
-        builder: builder,
+        builder: displayMode == DisplayMode.Detailed ? builderDetailled : builderTile,
         itemCount: productWithMissing.length);
+  }
+}
+
+mixin HandleDisplayMode {
+    KewlyCategory getKewlyCategory(DisplayMode displayMode, String title, List<Product> products) {
+    final builderTile = (BuildContext context, int index) {
+      return KewlyProductTile(product: products[index]);
+    };
+    final builderDetailled = (BuildContext context, int index) {
+      return KewlyProductDetailed(product: products[index]);
+    };
+    return KewlyCategory(
+        title: title,
+        itemCount: products.length,
+        builder: displayMode == DisplayMode.Detailed ? builderDetailled : builderTile);
   }
 }
