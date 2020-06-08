@@ -312,7 +312,9 @@ class HomePage extends StatelessWidget {
               ]);
             }
             if (searchModel.isDirty) {
-              listChildren.insert(0, FilterStrip(searchResult));
+              if (!searchModel._isSearchActive) {
+                listChildren.insert(0, FilterStrip(searchResult));
+              }
               listChildren.add(AllProducts(matchingProducts, displayMode));
             }
             return ListView(
@@ -459,7 +461,7 @@ class ForAFewDollarsMore extends StatelessWidget {
       return KewlyProductTile(product: productWithMissing[index].product);
     };
     final builderDetailled = (BuildContext _context, int index) {
-      return KewlyProductTile(product: productWithMissing[index].product);
+      return KewlyProductDetailed(product: productWithMissing[index].product);
     };
     return KewlyCategory(
         title: 'Pour quelques \$ de plus',

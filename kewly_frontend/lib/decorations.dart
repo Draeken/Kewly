@@ -8,4 +8,4 @@ const searchDecoration = InputDecoration(
     floatingLabelBehavior: FloatingLabelBehavior.never,
     border: OutlineInputBorder(
         borderRadius: BorderRadius.all(const Radius.circular(25)), borderSide: BorderSide.none),
-    fillColor: Colors.black12);
+    fillColor: Color(0x0D000000));
