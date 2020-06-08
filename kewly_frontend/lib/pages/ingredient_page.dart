@@ -5,6 +5,7 @@ import 'package:kewly/app_model.dart';
 import 'package:kewly/components/kewly_button_badge.dart';
 import 'package:kewly/components/kewly_category.dart';
 import 'package:kewly/components/kewly_ingredient_tile.dart';
+import 'package:kewly/decorations.dart';
 import 'package:kewly/util.dart';
 import 'package:provider/provider.dart';
 
@@ -81,14 +82,7 @@ class _ProductAppBar extends State<ProductAppBar> {
         onSubmitted: (_) => _submitSearchResult(context),
         onChanged: (_) => _updateSearch(context),
         textInputAction: TextInputAction.search,
-        decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 25),
-            isDense: true,
-            labelText: 'Recherche',
-            filled: true,
-            floatingLabelBehavior: FloatingLabelBehavior.never,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
-            fillColor: Theme.of(context).backgroundColor.withAlpha(200)),
+        decoration: searchDecoration,
       ),
       backgroundColor: Colors.transparent,
     );

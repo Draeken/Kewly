@@ -7,6 +7,7 @@ import 'package:kewly/components/kewly_filter_chip.dart';
 import 'package:kewly/components/kewly_product_detailed.dart';
 import 'package:kewly/components/kewly_product_tile.dart';
 import 'package:kewly/components/kewly_wrap_category.dart';
+import 'package:kewly/decorations.dart';
 import 'package:kewly/util.dart';
 import 'package:provider/provider.dart';
 
@@ -63,8 +64,7 @@ class SearchModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateTagWithOpposed(
-      String mainTag, String opposedTag, bool add, TagKind kind) {
+  void updateTagWithOpposed(String mainTag, String opposedTag, bool add, TagKind kind) {
     _updateTag(mainTag, add, kind);
     if (add) {
       _updateTag(opposedTag, !add, kind);
@@ -164,13 +164,11 @@ class _HomeAppBar extends State<HomeAppBar> {
 
   void _submitSearchResult(BuildContext context) {
     _closeSearch(context);
-    Provider.of<SearchModel>(context, listen: false)
-        .updateProductName(_inputController.text);
+    Provider.of<SearchModel>(context, listen: false).updateProductName(_inputController.text);
   }
 
   void _updateSearch(BuildContext context) {
-    Provider.of<SearchModel>(context, listen: false)
-        .updateProductName(_inputController.text);
+    Provider.of<SearchModel>(context, listen: false).updateProductName(_inputController.text);
   }
 
   @override
@@ -188,15 +186,7 @@ class _HomeAppBar extends State<HomeAppBar> {
           onSubmitted: (_) => _submitSearchResult(context),
           onChanged: (_) => _updateSearch(context),
           textInputAction: TextInputAction.search,
-          decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 25),
-              isDense: true,
-              labelText: 'Recherche',
-              filled: true,
-              floatingLabelBehavior: FloatingLabelBehavior.never,
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
-              fillColor: Theme.of(context).backgroundColor.withAlpha(200)),
+          decoration: searchDecoration,
         ),
         backgroundColor: Colors.transparent,
       );
@@ -209,17 +199,22 @@ class _HomeAppBar extends State<HomeAppBar> {
     final Widget icon = () {
       switch (mode) {
         case DisplayMode.Grid:
-          return Icon(Icons.view_list, color: Theme.of(context).accentColor,);
+          return Icon(
+            Icons.view_list,
+            color: Theme.of(context).accentColor,
+          );
         case DisplayMode.Detailed:
-          return Icon(Icons.view_module, color: Theme.of(context).accentColor,);
+          return Icon(
+            Icons.view_module,
+            color: Theme.of(context).accentColor,
+          );
       }
     }();
     return [
       IconButton(
           icon: icon,
-          onPressed: () => appModel.displayMode = mode == DisplayMode.Detailed
-              ? DisplayMode.Grid
-              : DisplayMode.Detailed)
+          onPressed: () => appModel.displayMode =
+              mode == DisplayMode.Detailed ? DisplayMode.Grid : DisplayMode.Detailed)
     ];
   }
 
@@ -235,19 +230,17 @@ class SearchComposition extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer2<AppModel, SearchModel>(
         builder: (BuildContext context, AppModel app, SearchModel search, _) {
-      final Iterable<KewlyFilterChip> selected = search._ingredients.map(
-          (ingredient) => KewlyFilterChip(ingredient.name, true,
-              () => search.updateIngredient(ingredient, false)));
+      final Iterable<KewlyFilterChip> selected = search._ingredients.map((ingredient) =>
+          KewlyFilterChip(ingredient.name, true, () => search.updateIngredient(ingredient, false)));
       final Iterable<KewlyFilterChip> ingredients = app.ingredients
           .where((ingredient) =>
               containsIgnoreCase(ingredient.name, search._productName) &&
               !search._ingredients.contains(ingredient))
           .take(30)
-          .map((ingredient) => KewlyFilterChip(ingredient.name, false,
-              () => search.updateIngredient(ingredient, true)));
+          .map((ingredient) => KewlyFilterChip(
+              ingredient.name, false, () => search.updateIngredient(ingredient, true)));
       return KewlyWrapCategory(
-          title: 'Composition',
-          children: selected.followedBy(ingredients).toList(growable: false));
+          title: 'Composition', children: selected.followedBy(ingredients).toList(growable: false));
     });
   }
 }
@@ -255,8 +248,7 @@ class SearchComposition extends StatelessWidget {
 class SearchCharacteristics extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<SearchModel>(
-        builder: (BuildContext context, SearchModel model, _) {
+    return Consumer<SearchModel>(builder: (BuildContext context, SearchModel model, _) {
       final withAlcohol = model._mustHave.contains(Tag.alcohol);
       final withoutAlcohol = model._mustNotHave.contains(Tag.alcohol);
       final hot = model._mustHave.contains(Tag.hot);
@@ -265,21 +257,12 @@ class SearchCharacteristics extends StatelessWidget {
       final List<KewlyFilterChip> tags = [
         KewlyFilterChip('Avec Alcool', withAlcohol,
             () => model.updateTag(Tag.alcohol, !withAlcohol, TagKind.mustHave)),
-        KewlyFilterChip(
-            'Sans Alcool',
-            withoutAlcohol,
-            () => model.updateTag(
-                Tag.alcohol, !withoutAlcohol, TagKind.mustNotHave)),
-        KewlyFilterChip(
-            'Chaud',
-            hot,
-            () => model.updateTagWithOpposed(
-                Tag.hot, Tag.ice, !hot, TagKind.mustHave)),
-        KewlyFilterChip(
-            'Glacé',
-            iced,
-            () => model.updateTagWithOpposed(
-                Tag.ice, Tag.hot, !iced, TagKind.mustHave)),
+        KewlyFilterChip('Sans Alcool', withoutAlcohol,
+            () => model.updateTag(Tag.alcohol, !withoutAlcohol, TagKind.mustNotHave)),
+        KewlyFilterChip('Chaud', hot,
+            () => model.updateTagWithOpposed(Tag.hot, Tag.ice, !hot, TagKind.mustHave)),
+        KewlyFilterChip('Glacé', iced,
+            () => model.updateTagWithOpposed(Tag.ice, Tag.hot, !iced, TagKind.mustHave)),
         KewlyFilterChip('Pétillant', sparkling,
             () => model.updateTag(Tag.sparkling, !sparkling, TagKind.mustHave))
       ];
@@ -294,8 +277,7 @@ class SearchResult {
   final List<String> mustHave;
   final List<String> mustNotHave;
 
-  const SearchResult(
-      {this.productName, this.ingredients, this.mustHave, this.mustNotHave});
+  const SearchResult({this.productName, this.ingredients, this.mustHave, this.mustNotHave});
 
   static SearchResult empty() {
     return SearchResult(
@@ -314,12 +296,11 @@ class HomePage extends StatelessWidget {
         create: (_) => SearchModel(),
         child: Column(children: <Widget>[
           HomeAppBar(),
-          Flexible(child: Consumer2<AppModel, SearchModel>(
-              builder: (context, appModel, searchModel, _) {
+          Flexible(
+              child: Consumer2<AppModel, SearchModel>(builder: (context, appModel, searchModel, _) {
             final displayMode = appModel.displayMode;
             final searchResult = searchModel.searchResult;
-            final matchingProducts =
-                _findMatchingProduct(appModel, searchResult);
+            final matchingProducts = _findMatchingProduct(appModel, searchResult);
             final listChildren = <Widget>[
               AllYourProducts(matchingProducts, displayMode),
               ForAFewDollarsMore(matchingProducts, displayMode),
@@ -347,21 +328,21 @@ class HomePage extends StatelessWidget {
     Iterable<Product> matchingProducts = appModel.products ?? const [];
 
     if (search.ingredients.isNotEmpty) {
-      matchingProducts = Set<Product>.from(
-              search.ingredients.expand((ingredient) => ingredient.usedBy))
-          .toList(growable: false);
+      matchingProducts =
+          Set<Product>.from(search.ingredients.expand((ingredient) => ingredient.usedBy))
+              .toList(growable: false);
     }
     if (search.productName != "") {
-      matchingProducts = matchingProducts.where(
-          (product) => containsIgnoreCase(product.name, search.productName));
+      matchingProducts =
+          matchingProducts.where((product) => containsIgnoreCase(product.name, search.productName));
     }
     if (search.mustHave.isNotEmpty) {
-      matchingProducts = matchingProducts.where((product) =>
-          search.mustHave.every((tag) => product.tags.contains(tag)));
+      matchingProducts = matchingProducts
+          .where((product) => search.mustHave.every((tag) => product.tags.contains(tag)));
     }
     if (search.mustNotHave.isNotEmpty) {
-      matchingProducts = matchingProducts.where((product) =>
-          !search.mustNotHave.any((tag) => product.tags.contains(tag)));
+      matchingProducts = matchingProducts
+          .where((product) => !search.mustNotHave.any((tag) => product.tags.contains(tag)));
     }
     return matchingProducts.toList(growable: false);
   }
@@ -394,36 +375,29 @@ class FilterStrip extends StatelessWidget {
   List<Chip> _getFilters(BuildContext context) {
     final tags = search.mustHave
         .map((s) => UpdateTagObj(s, TagKind.mustHave))
-        .followedBy(search.mustNotHave
-            .map((s) => UpdateTagObj(s, TagKind.mustNotHave)));
+        .followedBy(search.mustNotHave.map((s) => UpdateTagObj(s, TagKind.mustNotHave)));
     final compo = search.ingredients.map(_ingredientToChip(context));
-    return tags
-        .map(_tagToChip(context))
-        .followedBy(compo)
-        .toList(growable: false);
+    return tags.map(_tagToChip(context)).followedBy(compo).toList(growable: false);
   }
 
-  Chip Function(Ingredient) _ingredientToChip(BuildContext context) =>
-      (Ingredient ingredient) => Chip(
-            label: Text(ingredient.name),
-            onDeleted: () => Provider.of<SearchModel>(context, listen: false)
-                .updateIngredient(ingredient, false),
-            backgroundColor: Colors.white,
-            shape: _getChipShape(),
-          );
+  Chip Function(Ingredient) _ingredientToChip(BuildContext context) => (Ingredient ingredient) =>
+      Chip(
+        label: Text(ingredient.name),
+        onDeleted: () =>
+            Provider.of<SearchModel>(context, listen: false).updateIngredient(ingredient, false),
+        backgroundColor: Colors.white,
+        shape: _getChipShape(),
+      );
 
-  Chip Function(UpdateTagObj) _tagToChip(BuildContext context) =>
-      (UpdateTagObj tagObj) => Chip(
-          label: Text((tagObj.kind == TagKind.mustHave ? 'With ' : 'Without ') +
-              tagObj.tag),
-          onDeleted: () => Provider.of<SearchModel>(context, listen: false)
-              .updateTag(tagObj.tag, false, tagObj.kind),
-          backgroundColor: Colors.white,
-          shape: _getChipShape());
+  Chip Function(UpdateTagObj) _tagToChip(BuildContext context) => (UpdateTagObj tagObj) => Chip(
+      label: Text((tagObj.kind == TagKind.mustHave ? 'With ' : 'Without ') + tagObj.tag),
+      onDeleted: () => Provider.of<SearchModel>(context, listen: false)
+          .updateTag(tagObj.tag, false, tagObj.kind),
+      backgroundColor: Colors.white,
+      shape: _getChipShape());
 
   ShapeBorder _getChipShape() => RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(15),
-      side: BorderSide(width: 1.5, color: Colors.black38));
+      borderRadius: BorderRadius.circular(15), side: BorderSide(width: 1.5, color: Colors.black38));
 }
 
 class AllYourProducts extends StatelessWidget with HandleDisplayMode {
@@ -435,8 +409,7 @@ class AllYourProducts extends StatelessWidget with HandleDisplayMode {
   @override
   Widget build(BuildContext context) {
     var ownedProducts = products
-        .where((product) =>
-            product.composition.every((compo) => compo.ingredient.isOwned))
+        .where((product) => product.composition.every((compo) => compo.ingredient.isOwned))
         .toList(growable: false);
     return getKewlyCategory(displayMode, 'Vos boissons', ownedProducts);
   }
@@ -458,7 +431,7 @@ class ProductWithMissing {
   final Product product;
   final List<Ingredient> missing;
 
-  const ProductWithMissing({this.product, this.missing });
+  const ProductWithMissing({this.product, this.missing});
 }
 
 class ForAFewDollarsMore extends StatelessWidget {
@@ -496,7 +469,7 @@ class ForAFewDollarsMore extends StatelessWidget {
 }
 
 mixin HandleDisplayMode {
-    KewlyCategory getKewlyCategory(DisplayMode displayMode, String title, List<Product> products) {
+  KewlyCategory getKewlyCategory(DisplayMode displayMode, String title, List<Product> products) {
     final builderTile = (BuildContext context, int index) {
       return KewlyProductTile(product: products[index]);
     };
