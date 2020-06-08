@@ -37,7 +37,7 @@ class _KewlyProductTile extends State<KewlyProductTile> {
         onTapDown: _launchDrinkURL,
         child: Column(children: [
           Container(
-              decoration: BoxDecoration(color: Colors.white),
+              decoration: BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor),
               child: CustomPaint(
                 size: Size(100, 100),
                 painter: ProductPainter(widget.product, _drawGlassDecor),
