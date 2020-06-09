@@ -137,6 +137,7 @@ class _IngredientPageState extends State<IngredientPage> {
           final allIngredients = _getAllIngredients(appModel.ingredients, searchInput);
           final ownedIngredients = _getOwnedIngredients(appModel.ownedIngredients, searchInput);
           return ListView(
+            padding: EdgeInsets.all(0),
             scrollDirection: Axis.vertical,
             children: <Widget>[
               OwnedIngredientCategory(

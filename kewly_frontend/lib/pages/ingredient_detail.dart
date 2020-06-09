@@ -65,20 +65,23 @@ class IngredientDetail extends StatelessWidget {
                 onPressed:
                     _onAppBarAction(context, IngredientAction.Unavailable))
           ]
-        : <Widget>[
-            ActionChip(
-
-                label: Text('en stock', style: TextStyle(color: Colors.white),),
-                backgroundColor: Theme.of(context).accentColor,
-                avatar: Icon(Icons.add, color: Colors.white,),
-                onPressed:
-                    _onAppBarAction(context, IngredientAction.Available)),
-            ActionChip(
-                label: Text('banni', style: TextStyle(color: Colors.white),),
-                backgroundColor: Theme.of(context).accentColor,
-                avatar: Icon(Icons.thumb_down, color: Colors.white,),
-                onPressed: _onAppBarAction(context, IngredientAction.Ban))
-          ];
+        : <Widget>[Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ActionChip(
+                    label: Text('en stock', style: TextStyle(color: Colors.white),),
+                    backgroundColor: Theme.of(context).accentColor,
+                    avatar: Icon(Icons.add, color: Colors.white,),
+                    onPressed:
+                        _onAppBarAction(context, IngredientAction.Available)),
+                        SizedBox(width: 8,),
+                ActionChip(
+                    label: Text('banni', style: TextStyle(color: Colors.white),),
+                    backgroundColor: Theme.of(context).accentColor,
+                    avatar: Icon(Icons.thumb_down, color: Colors.white,),
+                    onPressed: _onAppBarAction(context, IngredientAction.Ban)
+                )],
+          )];
   }
 
   void Function() _onAppBarAction(
