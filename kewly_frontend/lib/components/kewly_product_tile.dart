@@ -265,6 +265,26 @@ class GlassPath {
       ..cubicTo(-7, 70.5, 44.5, 91, 50, 91)
       ..cubicTo(56, 91, 107.5, 71.5, 72.5, 31)
   ];
+  
+  static final glass17_glass_left = Path()
+    ..moveTo(16, 48)
+    ..lineTo(45.5, 94.5)
+    ..cubicTo(46.5, 96, 47, 98, 47, 100);
+  
+  static final glass17 = [
+    glass17_glass_left
+      ..addPath(glass17_glass_left, const Offset(100, 0),
+        matrix4: Mtransform.mirrorX),
+    Path()
+      ..moveTo(24, 56)
+      ..lineTo(45.5-2, 90-3.5)
+      ..arcToPoint(const Offset(50, 90),
+          radius: Radius.circular(8), clockwise: false)
+      ..arcToPoint(const Offset(55.0+2, 90-3.5),
+          radius: Radius.circular(8), clockwise: false)
+      ..lineTo(76, 56)
+  ];
+    
 
   static final glass04 = [
     Path()
@@ -295,6 +315,8 @@ class GlassPath {
         return GlassPath.glass04;
       case 11:
         return GlassPath.glass11;
+      case 17:
+        return GlassPath.glass17;
       case 20:
         return GlassPath.glass20;
       case 26:
@@ -302,7 +324,7 @@ class GlassPath {
       case 30:
         return GlassPath.glass30;
       default:
-        return GlassPath.glass30;
+        return GlassPath.glass17;
     }
   }
 }
