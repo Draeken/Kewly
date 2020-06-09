@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kewly/app_model.dart';
 import 'package:kewly/pages/home_page.dart';
 import 'package:kewly/pages/ingredient_page.dart';
+import 'package:kewly/pages/profile_page.dart';
 import 'package:provider/provider.dart';
 
 import './theme.dart';
@@ -48,7 +49,8 @@ class _KewlyHomeState extends State<KewlyHome> {
 
   static List<Widget> _pages = <Widget>[
     HomePage(),
-    IngredientPage()
+    IngredientPage(),
+    ProfilePage()
   ];
 
   @override
@@ -87,7 +89,7 @@ class _KewlyHomeState extends State<KewlyHome> {
   }
 
   void _onItemTapped(int index) {
-    if (index > 1 || index == _navIndex) {
+    if (index > 2 || index == _navIndex) {
       return;
     }
     setState(() {

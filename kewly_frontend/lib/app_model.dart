@@ -345,7 +345,7 @@ class AppModel extends ChangeNotifier {
   List<Ingredient> ownedIngredients;
   List<Product> _productsToPurchase;
   List<Ingredient> _ingredientsToPurchase;
-  List<Product> _nextToTest;
+  List<Product> nextToTest;
   List<Product> _historic;
   List<NoGo> _noGo;
   List<UserReview> _reviewedProducts;
@@ -481,7 +481,7 @@ class AppModel extends ChangeNotifier {
         _objectifyIdList(_userData.productsToPurchase, products);
     _ingredientsToPurchase =
         _objectifyIdList(_userData.ingredientsToPurchase, ingredients);
-    _nextToTest = _objectifyIdList(_userData.nextToTest, products);
+    nextToTest = _objectifyIdList(_userData.nextToTest, products);
     _historic = _objectifyIdList(_userData.historic, products);
     _noGo = _userData.noGo
         .map((noGo) => NoGo(
