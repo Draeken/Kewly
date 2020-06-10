@@ -8,13 +8,14 @@ class KewlyCategory extends StatelessWidget {
   final String title;
   final Widget Function(BuildContext context, int index) builder;
   final int itemCount;
+  final int maxCrossAxisCount;
 
-  KewlyCategory({@required this.title, this.children, this.builder, this.itemCount});
+  KewlyCategory({@required this.title, this.children, this.builder, this.itemCount, this.maxCrossAxisCount = 3});
 
   @override
   Widget build(BuildContext context) {
     final count = children != null ? children.length : itemCount;
-    var crossAxisCount = min(3, (count / 3).ceil());
+    var crossAxisCount = min(maxCrossAxisCount, (count / maxCrossAxisCount).ceil());
     double maxHeight = crossAxisCount * 150.0;
     if (count == 0) {
       return SizedBox(

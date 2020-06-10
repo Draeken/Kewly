@@ -471,7 +471,7 @@ class ForAFewDollarsMore extends StatelessWidget {
 }
 
 mixin HandleDisplayMode {
-  KewlyCategory getKewlyCategory(DisplayMode displayMode, String title, List<Product> products) {
+  KewlyCategory getKewlyCategory(DisplayMode displayMode, String title, List<Product> products, { int maxCrossAxisCount }) {
     final builderTile = (BuildContext context, int index) {
       return KewlyProductTile(product: products[index]);
     };
@@ -481,6 +481,7 @@ mixin HandleDisplayMode {
     return KewlyCategory(
         title: title,
         itemCount: products.length,
-        builder: displayMode == DisplayMode.Detailed ? builderDetailled : builderTile);
+        builder: displayMode == DisplayMode.Detailed ? builderDetailled : builderTile,
+        maxCrossAxisCount: maxCrossAxisCount,);
   }
 }

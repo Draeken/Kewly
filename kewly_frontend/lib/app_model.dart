@@ -346,9 +346,9 @@ class AppModel extends ChangeNotifier {
   List<Product> _productsToPurchase;
   List<Ingredient> _ingredientsToPurchase;
   List<Product> nextToTest;
-  List<Product> _historic;
-  List<NoGo> _noGo;
-  List<UserReview> _reviewedProducts;
+  List<Product> historic;
+  List<NoGo> noGo;
+  List<UserReview> reviewedProducts;
   DisplayMode _displayMode = DisplayMode.Grid;
 
   AppModel(BuildContext context) {
@@ -483,13 +483,13 @@ class AppModel extends ChangeNotifier {
         _objectifyIdList(_userData.ingredientsToPurchase, ingredients);
     nextToTest = _objectifyIdList(_userData.nextToTest, products);
     _historic = _objectifyIdList(_userData.historic, products);
-    _noGo = _userData.noGo
+    noGo = _userData.noGo
         .map((noGo) => NoGo(
             ingredient: _firstWithId(ingredients)(noGo.ingredientId),
             tag: noGo.tag,
             type: noGo.type))
         .toList(growable: false);
-    _reviewedProducts = _userData.reviewedProducts
+    reviewedProducts = _userData.reviewedProducts
         .map((rawReview) => UserReview(
               rating: rawReview.rating,
               product: _firstWithId(products)(rawReview.productId),
