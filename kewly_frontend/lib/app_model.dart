@@ -338,7 +338,9 @@ enum DisplayMode {
 class AppModel extends ChangeNotifier {
   static const USER_PREF_KEY = 'userData';
 
+  Iterable<Product> _products;
   List<Product> products;
+  Iterable<Ingredient> _ingredients;
   List<Ingredient> ingredients;
 
   UserData _userData;
@@ -376,7 +378,7 @@ class AppModel extends ChangeNotifier {
   void addNoGoIngredient(Ingredient ingredient) {
     _userData.noGo.add(NoGoRaw(ingredientId: ingredient.id));
     _saveUserData();
-    _filterProductsFromNoGoIngredient(ingredient.id);
+    _filterFromNoGoIngredient(ingredient);
     notifyListeners();
   }
 
@@ -389,24 +391,27 @@ class AppModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  /**
-   * How to recover when user un-blacklist an ingredient?
-   * have an internal list of product and a view list filtered by no-go
-   */
-  void _filterProductsFromNoGoIngredient(int ingredientId) {
+  void _filterFromNoGoIngredient(Ingredient ingredient) {
     products = products.where((element) => element.composition
-        .every((element) => element.ingredientId != ingredientId)).toList(growable: false);
+        .every((element) => element.ingredientId != ingredient.id)).toList(growable: false);
+    ingredients = ingredients.where((element) => element != ingredient);
   }
 
   void _initData(BuildContext context) async {
     await _loadGraph(context);
-    _loadUserData();
+    await _loadUserData();
+    _resetDataView();
     notifyListeners();
+  }
+
+  void _resetDataView() {
+    products = _products.toList(growable: false);
+    ingredients = _ingredients.toList(growable: false);
   }
 
   _debugGraph() {
     final List<GlassInfo> glassList = [];
-    for (var product in products) {
+    for (var product in _products) {
       final glassInfo = glassList.firstWhere((g) => g.id == product.glass,
           orElse: () => null);
       if (glassInfo == null) {
@@ -427,7 +432,7 @@ class AppModel extends ChangeNotifier {
     final Iterable<IngredientRaw> ingredientsRaw = mapJsonToList(
         graph['ingredients'], IngredientRaw.fromJson,
         toList: false);
-    products = productsRaw
+    _products = productsRaw
         .map((productRaw) => Product(
             name: productRaw.name,
             id: productRaw.id,
@@ -447,52 +452,52 @@ class AppModel extends ChangeNotifier {
                     ingredientId: compoRaw.ingredientId))
                 .toList(growable: false)))
         .toList(growable: false);
-    ingredients = ingredientsRaw
+    _ingredients = ingredientsRaw
         .map((ingredientRaw) => Ingredient(
             id: ingredientRaw.id,
             name: ingredientRaw.name,
             color: ingredientRaw.color,
             tags: ingredientRaw.tags,
             decorates: _objectifyIdList<Product>(
-                ingredientRaw.decorates, products, growable: false),
-            usedBy: _objectifyIdList<Product>(ingredientRaw.usedBy, products,
+                ingredientRaw.decorates, _products, growable: false),
+            usedBy: _objectifyIdList<Product>(ingredientRaw.usedBy, _products,
                 growable: false)))
         .toList(growable: false);
-    products.forEach((product) {
+    _products.forEach((product) {
       product.composition.forEach((compo) {
-        compo.ingredient = _firstWithId(ingredients)(compo.ingredientId);
+        compo.ingredient = _firstWithId(_ingredients)(compo.ingredientId);
       });
       product.decoratedWith.forEach((deco) {
-        deco.ingredient = _firstWithId(ingredients)(deco.ingredientId);
+        deco.ingredient = _firstWithId(_ingredients)(deco.ingredientId);
       });
     });
   }
 
-  void _loadUserData() async {
+  Future<void> _loadUserData() async {
     final prefs = await SharedPreferences.getInstance();
     final rawJson = jsonDecode(prefs.getString(AppModel.USER_PREF_KEY) ?? '{}');
     _userData = UserData.fromJson(rawJson);
     ownedIngredients = _userData.ownedIngredients.map((ingredientId) {
-      final ingredient = _firstWithId(ingredients)(ingredientId);
+      final ingredient = _firstWithId(_ingredients)(ingredientId);
       ingredient.isOwned = true;
       return ingredient;
     }).toList();
     _productsToPurchase =
-        _objectifyIdList(_userData.productsToPurchase, products);
+        _objectifyIdList(_userData.productsToPurchase, _products);
     _ingredientsToPurchase =
-        _objectifyIdList(_userData.ingredientsToPurchase, ingredients);
-    nextToTest = _objectifyIdList(_userData.nextToTest, products);
-    historic = _objectifyIdList(_userData.historic, products);
+        _objectifyIdList(_userData.ingredientsToPurchase, _ingredients);
+    nextToTest = _objectifyIdList(_userData.nextToTest, _products);
+    historic = _objectifyIdList(_userData.historic, _products);
     noGo = _userData.noGo
         .map((noGo) => NoGo(
-            ingredient: _firstWithId(ingredients)(noGo.ingredientId),
+            ingredient: _firstWithId(_ingredients)(noGo.ingredientId),
             tag: noGo.tag,
             type: noGo.type))
         .toList(growable: false);
     reviewedProducts = _userData.reviewedProducts
         .map((rawReview) => UserReview(
               rating: rawReview.rating,
-              product: _firstWithId(products)(rawReview.productId),
+              product: _firstWithId(_products)(rawReview.productId),
             ))
         .toList();
   }
@@ -563,7 +568,7 @@ List<U> _objectifyIdList<U extends Id>(List<int> listOfId, List<U> listOfObj,
   return listOfId.map(_firstWithId<U>(listOfObj)).toList(growable: growable);
 }
 
-U Function(int) _firstWithId<U extends Id>(List<U> list) {
+U Function(int) _firstWithId<U extends Id>(Iterable<U> list) {
   return (int id) => list.firstWhere(_checkById<U>(id));
 }
 
