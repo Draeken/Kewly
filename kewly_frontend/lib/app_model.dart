@@ -253,7 +253,7 @@ class NoGoRaw {
   const NoGoRaw({this.ingredientId, this.tag, this.type});
 
   static NoGoRaw fromJson(Map<String, dynamic> json) {
-    final type = json['type'] ? TagType.values[json['type']] : null;
+    final type = json['type'] != null ? TagType.values[json['type']] : null;
     return NoGoRaw(
         ingredientId: json['ingredientId'], tag: json['tag'], type: type);
   }
@@ -286,8 +286,8 @@ class UserData {
       return UserData.empty();
     }
     final List<UserReviewRaw> reviewedProducts =
-        mapJsonToList(json['reviewedProducts'], UserReviewRaw.fromJson);
-    final List<NoGoRaw> noGo = mapJsonToList(json['noGo'], NoGoRaw.fromJson);
+        mapJsonToList(json['reviewedProducts'], UserReviewRaw.fromJson, growable: true);
+    final List<NoGoRaw> noGo = mapJsonToList(json['noGo'], NoGoRaw.fromJson, growable: true);
     return UserData(
         historic: List<int>.from(json['historic']),
         ingredientsToPurchase: List<int>.from(json['ingredientsToPurchase']),
@@ -395,7 +395,7 @@ class AppModel extends ChangeNotifier {
    */
   void _filterProductsFromNoGoIngredient(int ingredientId) {
     products = products.where((element) => element.composition
-        .every((element) => element.ingredientId != ingredientId));
+        .every((element) => element.ingredientId != ingredientId)).toList(growable: false);
   }
 
   void _initData(BuildContext context) async {
@@ -482,7 +482,7 @@ class AppModel extends ChangeNotifier {
     _ingredientsToPurchase =
         _objectifyIdList(_userData.ingredientsToPurchase, ingredients);
     nextToTest = _objectifyIdList(_userData.nextToTest, products);
-    _historic = _objectifyIdList(_userData.historic, products);
+    historic = _objectifyIdList(_userData.historic, products);
     noGo = _userData.noGo
         .map((noGo) => NoGo(
             ingredient: _firstWithId(ingredients)(noGo.ingredientId),

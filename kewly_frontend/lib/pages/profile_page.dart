@@ -42,12 +42,11 @@ class ProfilePage extends StatelessWidget {
           title: 'Vos bannis',
           children: model.noGo.map((e) => KewlyFilterChip(e.ingredient.name, false, () => {})).toList(growable: false))
     ];
-    return Flexible(
-        child: ListView(
+    return ListView(
       padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
       scrollDirection: Axis.vertical,
       children: listChildren,
-    ));
+    );
   }
 }
 
