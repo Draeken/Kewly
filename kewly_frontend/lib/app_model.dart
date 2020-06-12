@@ -285,9 +285,11 @@ class UserData {
     if (json['ownedIngredients'] == null) {
       return UserData.empty();
     }
-    final List<UserReviewRaw> reviewedProducts =
-        mapJsonToList(json['reviewedProducts'], UserReviewRaw.fromJson, growable: true);
-    final List<NoGoRaw> noGo = mapJsonToList(json['noGo'], NoGoRaw.fromJson, growable: true);
+    final List<UserReviewRaw> reviewedProducts = mapJsonToList(
+        json['reviewedProducts'], UserReviewRaw.fromJson,
+        growable: true);
+    final List<NoGoRaw> noGo =
+        mapJsonToList(json['noGo'], NoGoRaw.fromJson, growable: true);
     return UserData(
         historic: List<int>.from(json['historic']),
         ingredientsToPurchase: List<int>.from(json['ingredientsToPurchase']),
@@ -330,17 +332,14 @@ class UserData {
   }
 }
 
-enum DisplayMode {
-  Detailed,
-  Grid
-}
+enum DisplayMode { Detailed, Grid }
 
 class AppModel extends ChangeNotifier {
   static const USER_PREF_KEY = 'userData';
 
-  Iterable<Product> _products;
+  List<Product> _products;
   List<Product> products;
-  Iterable<Ingredient> _ingredients;
+  List<Ingredient> _ingredients;
   List<Ingredient> ingredients;
 
   UserData _userData;
@@ -378,7 +377,9 @@ class AppModel extends ChangeNotifier {
   void addNoGoIngredient(Ingredient ingredient) {
     _userData.noGo.add(NoGoRaw(ingredientId: ingredient.id));
     _saveUserData();
-    _filterFromNoGoIngredient(ingredient);
+    final noGo = NoGo(ingredient: ingredient);
+    this.noGo = this.noGo + [noGo];
+    _filterFromNoGoIngredient([noGo], products, ingredients);
     notifyListeners();
   }
 
@@ -391,10 +392,26 @@ class AppModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _filterFromNoGoIngredient(Ingredient ingredient) {
-    products = products.where((element) => element.composition
-        .every((element) => element.ingredientId != ingredient.id)).toList(growable: false);
-    ingredients = ingredients.where((element) => element != ingredient);
+  void _filterFromNoGoIngredient(List<NoGo> noGos,
+      Iterable<Product> productSource, Iterable<Ingredient> ingredientSource) {
+    Iterable<Product> productsTemp = productSource.toList(growable: false);
+    Iterable<Ingredient> ingredientsTemp = ingredientSource.toList(growable: false);
+    for (final noGo in noGos) {
+      if (noGo.ingredient != null) {
+        productsTemp = productsTemp.where((productTemp) => productTemp.composition.every((cp) => cp.ingredient != noGo.ingredient));
+        ingredientsTemp = ingredientsTemp.where((ingredientTemp) => ingredientTemp != noGo.ingredient);
+      } else if (noGo.tag != null) {
+        if (noGo.type == TagType.without) {
+          productsTemp = productsTemp.where((productTemp) => productTemp.composition.every((cp) => cp.ingredient.tags.every((tag) => tag != noGo.tag)));
+          ingredientsTemp = ingredientsTemp.where((ingredientTemp) => ingredientTemp.tags.every((tag) => tag != noGo.tag));
+        } else {
+          productsTemp = productsTemp.where((productTemp) => productTemp.composition.any((cp) => cp.ingredient.tags.any((tag) => tag == noGo.tag)));
+          ingredientsTemp = ingredientsTemp.where((ingredientTemp) => ingredientTemp.tags.any((tag) => tag == noGo.tag));
+        }
+      }
+    }
+    this.products = productsTemp.toList(growable: false);
+    this.ingredients = ingredientsTemp.toList(growable: false);
   }
 
   void _initData(BuildContext context) async {
@@ -405,8 +422,10 @@ class AppModel extends ChangeNotifier {
   }
 
   void _resetDataView() {
-    products = _products.toList(growable: false);
-    ingredients = _ingredients.toList(growable: false);
+    _filterFromNoGoIngredient(
+        noGo,
+        _products,
+        _ingredients);
   }
 
   _debugGraph() {
