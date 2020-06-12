@@ -33,7 +33,7 @@ Inform all the product that needs this ingredient. (minus those listed above)
 
 ## Profil
 ### No-go
-default filter, that apply to all sections. These filter aren't visible on search page. And they are the only way to filter out products with specific ingredient.
+default filter, that apply to all sections. These filter aren't visible on search page. And they are the only way to filter out products with specific ingredient. To ban ingredient, usre must go to the ingredient detail page and tap "ban" button. To ban a tag, user must do it in this section (all tags are displayed). To un-ban, user have to tap on the chip's cross button.
 ### Pinned
 Pinned product to try later, they automatically disappear when user scroll down to the cocktail page and had viewed it for more than 1min (that also add the cocktail to "to be rated" list)
 ### Historic
