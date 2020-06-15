@@ -40,7 +40,9 @@ class ProfilePage extends StatelessWidget {
       ),
       KewlyWrapCategory(
           title: 'Vos bannis',
-          children: model.noGo.map((e) => KewlyFilterChip(e.ingredient.name, false, () => {})).toList(growable: false))
+          children: model.noGo
+              .map((e) => KewlyFilterChip(e.ingredient.name, false, () => {}))
+              .toList(growable: false))
     ];
     return ListView(
       padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
@@ -48,6 +50,66 @@ class ProfilePage extends StatelessWidget {
       children: listChildren,
     );
   }
+}
+
+class NoGoCategory extends StatelessWidget {
+  final List<NoGo> noGos;
+
+  NoGoCategory(this.noGos);
+
+  @override
+  Widget build(BuildContext context) {
+    final List<NoGo> noGoTags = [];
+    final List<NoGo> noGoIngredients = [];
+    for (final noGo in this.noGos) {
+      if (noGo.ingredient != null) {
+        noGoIngredients.add(noGo);
+      } else {
+        noGoTags.add(noGo);
+      }
+    }
+
+    final List<KewlyFilterChip> tags = [
+      KewlyFilterChip(
+          'Alcool', false, () => context.read<AppModel>().addNoGoTagExclusive(Tag.alcohol)),
+      KewlyFilterChip('Chaud', false, () => context.read<AppModel>().addNoGoTagExclusive(Tag.hot)),
+      KewlyFilterChip('Glacé', false, () => context.read<AppModel>().addNoGoTagExclusive(Tag.ice)),
+      KewlyFilterChip(
+          'Pétillant', false, () => context.read<AppModel>().addNoGoTagExclusive(Tag.sparkling)),
+    ];
+    for (final noGo in noGoTags) {
+      final label = _tagToString(noGo.tag);
+      tags.removeWhere((element) => element.label == label);
+      tags.add(KewlyFilterChip(label, true, () => context.read<AppModel>().removeNoGo(noGo)));
+    }
+    final List<Widget> ingredients = noGoIngredients
+        .map((e) => Chip(
+            label: Text(e.ingredient.name),
+            backgroundColor: Colors.white,
+            onDeleted: () => context.read<AppModel>().removeNoGo(e),
+            shape: _getChipShape()))
+        .toList(growable: false);
+
+    return KewlyWrapCategory(title: 'Vos bannis', children: tags + ingredients);
+  }
+
+  String _tagToString(String tag) {
+    switch (tag) {
+      case Tag.alcohol:
+        return 'Alcool';
+      case Tag.hot:
+        return 'Chaud';
+      case Tag.ice:
+        return 'Glacé';
+      case Tag.sparkling:
+        return 'Pétillant';
+      default:
+        return '$tag is unknown';
+    }
+  }
+
+  ShapeBorder _getChipShape() => RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15), side: BorderSide(width: 1.5, color: Colors.black38));
 }
 
 class ProfileCategory extends StatelessWidget with HandleDisplayMode {

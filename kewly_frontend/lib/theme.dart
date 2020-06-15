@@ -6,6 +6,5 @@ final appTheme = ThemeData(
   accentColor: Colors.indigoAccent,
   appBarTheme: AppBarTheme(
     elevation: 0
-  ),
-
+  )
 );

@@ -383,6 +383,24 @@ class AppModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addNoGoTagExclusive(String tag) {
+    _userData.noGo.add(NoGoRaw(tag: tag, type: TagType.without));
+    _saveUserData();
+    final noGo = NoGo(tag: tag, type: TagType.without);
+    this.noGo = this.noGo + [noGo];
+    _filterFromNoGoIngredient([noGo], products, ingredients);
+    notifyListeners();
+  }
+
+  void removeNoGo(NoGo noGo) {
+    _userData.noGo.removeWhere((noGoRaw) => noGoRaw.ingredientId == noGo.ingredient?.id && noGoRaw.tag == noGo.tag && noGoRaw.type == noGo.type);
+    _saveUserData();
+    this.noGo.remove(noGo);
+    this.noGo = this.noGo.toList(growable: false);
+    _filterFromNoGoIngredient(this.noGo, _products, _ingredients);
+    notifyListeners();
+  }
+
   void removeOwnedIngredient(Ingredient ingredient) {
     _userData.ownedIngredients.remove(ingredient.id);
     ownedIngredients.remove(ingredient);
