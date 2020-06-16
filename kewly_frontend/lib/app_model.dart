@@ -395,8 +395,9 @@ class AppModel extends ChangeNotifier {
   void removeNoGo(NoGo noGo) {
     _userData.noGo.removeWhere((noGoRaw) => noGoRaw.ingredientId == noGo.ingredient?.id && noGoRaw.tag == noGo.tag && noGoRaw.type == noGo.type);
     _saveUserData();
-    this.noGo.remove(noGo);
-    this.noGo = this.noGo.toList(growable: false);
+    final noGos = this.noGo.toList(growable: true);
+    noGos.remove(noGo);
+    this.noGo = noGos.toList(growable: false);
     _filterFromNoGoIngredient(this.noGo, _products, _ingredients);
     notifyListeners();
   }

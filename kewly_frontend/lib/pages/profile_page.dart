@@ -38,11 +38,7 @@ class ProfilePage extends StatelessWidget {
         'Historique',
         maxCrossAxisCount: 1,
       ),
-      KewlyWrapCategory(
-          title: 'Vos bannis',
-          children: model.noGo
-              .map((e) => KewlyFilterChip(e.ingredient.name, false, () => {}))
-              .toList(growable: false))
+      NoGoCategory(model.noGo)
     ];
     return ListView(
       padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
@@ -80,7 +76,7 @@ class NoGoCategory extends StatelessWidget {
     for (final noGo in noGoTags) {
       final label = _tagToString(noGo.tag);
       tags.removeWhere((element) => element.label == label);
-      tags.add(KewlyFilterChip(label, true, () => context.read<AppModel>().removeNoGo(noGo)));
+      tags.insert(0, KewlyFilterChip(label, true, () => context.read<AppModel>().removeNoGo(noGo)));
     }
     final List<Widget> ingredients = noGoIngredients
         .map((e) => Chip(
@@ -89,8 +85,8 @@ class NoGoCategory extends StatelessWidget {
             onDeleted: () => context.read<AppModel>().removeNoGo(e),
             shape: _getChipShape()))
         .toList(growable: false);
-
-    return KewlyWrapCategory(title: 'Vos bannis', children: tags + ingredients);
+    final List<Widget> children = [...tags, ...ingredients];
+    return KewlyWrapCategory(title: 'Vos bannis', children: children);
   }
 
   String _tagToString(String tag) {
