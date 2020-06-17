@@ -24,10 +24,13 @@ class ProductBadgePainter extends CustomPainter {
     final myPaint = Paint()..style = PaintingStyle.fill;
     myPaint.color = Colors.red[700];
     canvas.drawPath(computeBadgePath(size), myPaint);
-    final text = ui.ParagraphBuilder(ui.ParagraphStyle())
-      ..addText(_getNotOwnedIngredientCount())
-      ..pushStyle(ui.TextStyle(color: Colors.white70));
-    canvas.drawParagraph(text.build(), Offset.zero);
+
+    final TextPainter textPainter = TextPainter(
+      text: TextSpan(text: _getNotOwnedIngredientCount(), style: TextStyle(color: Colors.white.withOpacity(0.9))),
+          textAlign: TextAlign.center,
+      textDirection: TextDirection.ltr
+    )..layout(maxWidth: size.width / 1.5);
+    textPainter.paint(canvas, Offset(size.width / 2 - textPainter.width / 2, size.height - textPainter.height));
   }
 
   @override
@@ -45,7 +48,7 @@ class ProductBadgePainter extends CustomPainter {
 
   String _getNotOwnedIngredientCount() {
     return product.composition
-        .fold(0, (prev, cur) => prev + cur.ingredient.isOwned ? 0 : 1)
+        .fold(0, (prev, cur) => prev + (cur.ingredient.isOwned ? 0 : 1))
         .toString();
   }
 }

@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:math';
 import 'dart:ui' as ui;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:kewly/components/kewly_product_badge.dart';
 import 'package:kewly/util.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -11,7 +13,8 @@ class KewlyProductTile extends StatefulWidget {
   final Product product;
   final bool displayBadge;
 
-  KewlyProductTile({Key key, this.product, this.displayBadge = false}) : super(key: key);
+  KewlyProductTile({Key key, this.product, this.displayBadge = false})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _KewlyProductTile();
@@ -39,18 +42,29 @@ class _KewlyProductTile extends State<KewlyProductTile> {
         onTapDown: _launchDrinkURL,
         child: Column(children: [
           Container(
-              decoration: BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor),
+              decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor),
               child: CustomPaint(
                 size: Size(100, 100),
                 painter: ProductPainter(widget.product, _drawGlassDecor),
               ),
               height: 104.0,
               width: 104.0),
-          Row(children: [
-            Text('${widget.product.name}', textAlign: TextAlign.center),
-            if (widget.displayBadge)
-              KewlyProductBadge(product: widget.product)
-          ]),
+          Row(
+            children: [
+              Flexible(
+                  child: Text(
+                '${widget.product.name}',
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              )),
+              if (widget.displayBadge)
+                KewlyProductBadge(product: widget.product)
+            ],
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+          ),
         ]));
   }
 
@@ -276,17 +290,16 @@ class GlassPath {
   static final glass17 = [
     glass17_glass_left
       ..addPath(glass17_glass_left, const Offset(100, 0),
-        matrix4: Mtransform.mirrorX),
+          matrix4: Mtransform.mirrorX),
     Path()
       ..moveTo(24, 56)
-      ..lineTo(45.5-2, 90-3.5)
+      ..lineTo(45.5 - 2, 90 - 3.5)
       ..arcToPoint(const Offset(50, 90),
           radius: Radius.circular(8), clockwise: false)
-      ..arcToPoint(const Offset(55.0+2, 90-3.5),
+      ..arcToPoint(const Offset(55.0 + 2, 90 - 3.5),
           radius: Radius.circular(8), clockwise: false)
       ..lineTo(76, 56)
   ];
-
 
   static final glass04 = [
     Path()

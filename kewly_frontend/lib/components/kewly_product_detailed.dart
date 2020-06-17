@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kewly/components/kewly_product_badge.dart';
 import 'package:kewly/app_model.dart';
@@ -8,7 +7,8 @@ class KewlyProductDetailed extends StatefulWidget {
   final Product product;
   final bool displayBadge;
 
-  KewlyProductDetailed({Key key, this.product, this.displayBadge = false}) : super(key: key);
+  KewlyProductDetailed({Key key, this.product, this.displayBadge = false})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _KewlyProductDetailed();
@@ -32,22 +32,31 @@ class _KewlyProductDetailed extends State<KewlyProductDetailed> {
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-                  Row(children: [
-                    Text(
-                      widget.product.name,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    if (widget.displayBadge)
-                      KewlyProductBadge(product: widget.product)
-                  ],)
+                  Row(
+                    children: [
+                      Flexible(
+                          child: Text(
+                        '${widget.product.name}',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      )),
+                      if (widget.displayBadge)
+                        KewlyProductBadge(product: widget.product)
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                  ),
                 ] +
                 widget.product.composition
                     .map((compo) => Row(
                           children: <Widget>[
                             Text(
                               '• ',
-                              style:
-                                  TextStyle(fontSize: 18.0, color: Theme.of(context).primaryColor),
+                              style: TextStyle(
+                                  fontSize: 18.0,
+                                  color: Theme.of(context).primaryColor),
                             ),
                             Expanded(
                                 child: Text(
