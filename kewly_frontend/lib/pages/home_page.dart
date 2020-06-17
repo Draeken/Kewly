@@ -425,7 +425,7 @@ class AllProducts extends StatelessWidget with HandleDisplayMode {
 
   @override
   Widget build(BuildContext context) {
-    return getKewlyCategory(displayMode, 'Toutes les boissons', products);
+    return getKewlyCategory(displayMode, 'Toutes les boissons', products, displayBadge: true);
   }
 }
 
@@ -458,10 +458,10 @@ class ForAFewDollarsMore extends StatelessWidget {
       return b.missing[0].usedBy.length.compareTo(a.missing[0].usedBy.length);
     });
     final builderTile = (BuildContext _context, int index) {
-      return KewlyProductTile(product: productWithMissing[index].product);
+      return KewlyProductTile(product: productWithMissing[index].product, displayBadge: true,);
     };
     final builderDetailled = (BuildContext _context, int index) {
-      return KewlyProductDetailed(product: productWithMissing[index].product);
+      return KewlyProductDetailed(product: productWithMissing[index].product, displayBadge: true,);
     };
     return KewlyCategory(
         title: 'Pour quelques \$ de plus',
@@ -471,12 +471,12 @@ class ForAFewDollarsMore extends StatelessWidget {
 }
 
 mixin HandleDisplayMode {
-  KewlyCategory getKewlyCategory(DisplayMode displayMode, String title, List<Product> products, { int maxCrossAxisCount = 3 }) {
+  KewlyCategory getKewlyCategory(DisplayMode displayMode, String title, List<Product> products, { int maxCrossAxisCount = 3, bool displayBadge = false }) {
     final builderTile = (BuildContext context, int index) {
-      return KewlyProductTile(product: products[index]);
+      return KewlyProductTile(product: products[index], displayBadge: displayBadge,);
     };
     final builderDetailled = (BuildContext context, int index) {
-      return KewlyProductDetailed(product: products[index]);
+      return KewlyProductDetailed(product: products[index], displayBadge: displayBadge);
     };
     return KewlyCategory(
         title: title,

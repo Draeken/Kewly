@@ -2,14 +2,16 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:kewly/components/kewly_product_badge.dart';
 import 'package:kewly/util.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:kewly/app_model.dart';
 
 class KewlyProductTile extends StatefulWidget {
   final Product product;
+  final bool displayBadge;
 
-  KewlyProductTile({Key key, this.product}) : super(key: key);
+  KewlyProductTile({Key key, this.product, this.displayBadge = false}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _KewlyProductTile();
@@ -44,10 +46,11 @@ class _KewlyProductTile extends State<KewlyProductTile> {
               ),
               height: 104.0,
               width: 104.0),
-          Text(
-            '${widget.product.name}',
-            textAlign: TextAlign.center,
-          ),
+          Row(children: [
+            Text('${widget.product.name}', textAlign: TextAlign.center),
+            if (widget.displayBadge)
+              KewlyProductBadge(product: widget.product)
+          ]),
         ]));
   }
 
@@ -112,7 +115,6 @@ class ProductPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(ProductPainter oldDelegate) {
-    // TODO: implement shouldRepaint
     return drawGlassDeco != oldDelegate.drawGlassDeco;
   }
 
@@ -265,12 +267,12 @@ class GlassPath {
       ..cubicTo(-7, 70.5, 44.5, 91, 50, 91)
       ..cubicTo(56, 91, 107.5, 71.5, 72.5, 31)
   ];
-  
+
   static final glass17_glass_left = Path()
     ..moveTo(16, 48)
     ..lineTo(45.5, 94.5)
     ..cubicTo(46.5, 96, 47, 98, 47, 100);
-  
+
   static final glass17 = [
     glass17_glass_left
       ..addPath(glass17_glass_left, const Offset(100, 0),
@@ -284,7 +286,7 @@ class GlassPath {
           radius: Radius.circular(8), clockwise: false)
       ..lineTo(76, 56)
   ];
-    
+
 
   static final glass04 = [
     Path()

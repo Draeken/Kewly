@@ -1,16 +1,14 @@
-import 'dart:async';
-import 'dart:math';
-import 'dart:ui' as ui;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kewly/util.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:kewly/components/kewly_product_badge.dart';
 import 'package:kewly/app_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class KewlyProductDetailed extends StatefulWidget {
   final Product product;
+  final bool displayBadge;
 
-  KewlyProductDetailed({Key key, this.product}) : super(key: key);
+  KewlyProductDetailed({Key key, this.product, this.displayBadge = false}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _KewlyProductDetailed();
@@ -34,21 +32,25 @@ class _KewlyProductDetailed extends State<KewlyProductDetailed> {
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-                  Text(
-                    widget.product.name,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )
+                  Row(children: [
+                    Text(
+                      widget.product.name,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    if (widget.displayBadge)
+                      KewlyProductBadge(product: widget.product)
+                  ],)
                 ] +
                 widget.product.composition
                     .map((compo) => Row(
                           children: <Widget>[
                             Text(
                               '• ',
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                  color: Theme.of(context).primaryColor),
+                              style:
+                                  TextStyle(fontSize: 18.0, color: Theme.of(context).primaryColor),
                             ),
-                            Expanded(child: Text(
+                            Expanded(
+                                child: Text(
                               compo.ingredient.name,
                               style: TextStyle(fontWeight: FontWeight.w300),
                             ))
