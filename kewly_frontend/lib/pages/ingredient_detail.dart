@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kewly/app_model.dart';
 import 'package:kewly/components/kewly_category.dart';
 import 'package:kewly/components/kewly_ingredient_tile.dart';
+import 'package:kewly/components/kewly_product_detailed.dart';
 import 'package:kewly/components/kewly_product_tile.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +17,8 @@ class IngredientDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final displayMode =
+        context.select<AppModel, DisplayMode>((AppModel a) => a.displayMode);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -48,8 +51,9 @@ class IngredientDetail extends StatelessWidget {
         ),
         KewlyCategory(
             title: 'Vous permet de préparer',
-            children: _getAvailableProducts()),
-        KewlyCategory(title: 'Est utilisé dans', children: _getAllProducts()),
+            children: _getAvailableProducts(displayMode)),
+        KewlyCategory(
+            title: 'Est utilisé dans', children: _getAllProducts(displayMode)),
       ])),
       resizeToAvoidBottomInset: false,
     );
@@ -59,29 +63,51 @@ class IngredientDetail extends StatelessWidget {
     return ingredient.isOwned
         ? <Widget>[
             ActionChip(
-                label: Text('épuisé', style: TextStyle(color: Colors.white),),
+                label: Text(
+                  'épuisé',
+                  style: TextStyle(color: Colors.white),
+                ),
                 backgroundColor: Theme.of(context).accentColor,
-                avatar: Icon(Icons.clear, color: Colors.white,),
+                avatar: Icon(
+                  Icons.clear,
+                  color: Colors.white,
+                ),
                 onPressed:
                     _onAppBarAction(context, IngredientAction.Unavailable))
           ]
-        : <Widget>[Row(
+        : <Widget>[
+            Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 ActionChip(
-                    label: Text('en stock', style: TextStyle(color: Colors.white),),
+                    label: Text(
+                      'en stock',
+                      style: TextStyle(color: Colors.white),
+                    ),
                     backgroundColor: Theme.of(context).accentColor,
-                    avatar: Icon(Icons.add, color: Colors.white,),
+                    avatar: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
                     onPressed:
                         _onAppBarAction(context, IngredientAction.Available)),
-                        SizedBox(width: 8,),
+                SizedBox(
+                  width: 8,
+                ),
                 ActionChip(
-                    label: Text('banni', style: TextStyle(color: Colors.white),),
+                    label: Text(
+                      'banni',
+                      style: TextStyle(color: Colors.white),
+                    ),
                     backgroundColor: Theme.of(context).accentColor,
-                    avatar: Icon(Icons.thumb_down, color: Colors.white,),
-                    onPressed: _onAppBarAction(context, IngredientAction.Ban)
-                )],
-          )];
+                    avatar: Icon(
+                      Icons.thumb_down,
+                      color: Colors.white,
+                    ),
+                    onPressed: _onAppBarAction(context, IngredientAction.Ban))
+              ],
+            )
+          ];
   }
 
   void Function() _onAppBarAction(
@@ -109,17 +135,29 @@ class IngredientDetail extends StatelessWidget {
         : Colors.white70;
   }
 
-  List<KewlyProductTile> _getAllProducts() {
+  List<Widget> _getAllProducts(DisplayMode display) {
     return ingredient.usedBy
-        .map((product) => KewlyProductTile(product: product))
+        .map((product) => display == DisplayMode.Detailed
+            ? KewlyProductDetailed(
+                product: product,
+                displayBadge: true,
+              )
+            : KewlyProductTile(
+                product: product,
+                displayBadge: true,
+              ))
         .toList(growable: false);
   }
 
-  List<KewlyProductTile> _getAvailableProducts() {
+  List<Widget> _getAvailableProducts(DisplayMode display) {
     return ingredient.usedBy
         .where((product) => product.composition.every((compo) =>
             compo.ingredient == ingredient || compo.ingredient.isOwned))
-        .map((product) => KewlyProductTile(product: product))
+        .map((product) => display == DisplayMode.Detailed
+            ? KewlyProductDetailed(
+                product: product,
+              )
+            : KewlyProductTile(product: product))
         .toList(growable: false);
   }
 }

@@ -370,6 +370,7 @@ class AppModel extends ChangeNotifier {
     ownedIngredients.add(ingredient);
     ingredient.isOwned = true;
     ownedIngredients = ownedIngredients.toList();
+    ingredients = ingredients.toList();
     _saveUserData();
     notifyListeners();
   }

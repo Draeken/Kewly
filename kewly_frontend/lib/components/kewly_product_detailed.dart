@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kewly/components/kewly_product_badge.dart';
 import 'package:kewly/app_model.dart';
@@ -28,9 +29,9 @@ class _KewlyProductDetailed extends State<KewlyProductDetailed> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTapDown: _launchDrinkURL,
+        onTap: _launchDrinkURL,
         child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
                   Row(
                     children: [
@@ -56,19 +57,26 @@ class _KewlyProductDetailed extends State<KewlyProductDetailed> {
                               '• ',
                               style: TextStyle(
                                   fontSize: 18.0,
-                                  color: Theme.of(context).primaryColor),
+                                  color: compo.ingredient.isOwned ? Theme.of(context).primaryColor : Theme.of(context).dividerColor),
                             ),
                             Expanded(
                                 child: Text(
                               compo.ingredient.name,
-                              style: TextStyle(fontWeight: FontWeight.w300),
+                              style: _getTextStyle(context, compo),
                             ))
                           ],
                         ))
                     .toList(growable: false)));
   }
 
-  void _launchDrinkURL(_) async {
+  TextStyle _getTextStyle(BuildContext context, Composition compo) {
+    if (compo.ingredient.isOwned) {
+      return TextStyle(fontWeight: FontWeight.w300);
+    }
+    return TextStyle(fontWeight: FontWeight.w100, color: Colors.black87);
+  }
+
+  void _launchDrinkURL() async {
     var url = widget.product.link;
     if (await canLaunch(url)) {
       await launch(url);

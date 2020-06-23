@@ -39,7 +39,7 @@ class _KewlyProductTile extends State<KewlyProductTile> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTapDown: _launchDrinkURL,
+        onTap: _launchDrinkURL,
         child: Column(children: [
           Container(
               decoration: BoxDecoration(
@@ -74,7 +74,7 @@ class _KewlyProductTile extends State<KewlyProductTile> {
     });
   }
 
-  void _launchDrinkURL(_) async {
+  void _launchDrinkURL() async {
     var url = widget.product.link;
     if (await canLaunch(url)) {
       await launch(url);
