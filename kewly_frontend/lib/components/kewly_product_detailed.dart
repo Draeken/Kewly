@@ -1,8 +1,28 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kewly/components/kewly_product_badge.dart';
 import 'package:kewly/app_model.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+class ColumnWithOverflow extends StatelessWidget {
+  final int maxItems;
+  final List<Widget> children;
+
+  ColumnWithOverflow({this.maxItems, this.children});
+
+  @override
+  Widget build(BuildContext context) {
+    if (children.length > maxItems) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: children.take(maxItems).toList(growable: false),
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: children,
+    );
+  }
+}
 
 class KewlyProductDetailed extends StatefulWidget {
   final Product product;
@@ -28,10 +48,18 @@ class _KewlyProductDetailed extends State<KewlyProductDetailed> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> composition = [];
+    for (final compo in widget.product.composition) {
+      if (!compo.ingredient.isOwned) {
+        composition.insert(0, _compoToRow(compo, context));
+      } else {
+        composition.add(_compoToRow(compo, context));
+      }
+    }
     return GestureDetector(
         onTap: _launchDrinkURL,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ColumnWithOverflow(
+            maxItems: 6,
             children: <Widget>[
                   Row(
                     children: [
@@ -50,23 +78,27 @@ class _KewlyProductDetailed extends State<KewlyProductDetailed> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                   ),
                 ] +
-                widget.product.composition
-                    .map((compo) => Row(
-                          children: <Widget>[
-                            Text(
-                              '• ',
-                              style: TextStyle(
-                                  fontSize: 18.0,
-                                  color: compo.ingredient.isOwned ? Theme.of(context).primaryColor : Theme.of(context).dividerColor),
-                            ),
-                            Expanded(
-                                child: Text(
-                              compo.ingredient.name,
-                              style: _getTextStyle(context, compo),
-                            ))
-                          ],
-                        ))
-                    .toList(growable: false)));
+                composition));
+  }
+
+  Row _compoToRow(Composition compo, BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Text(
+          '• ',
+          style: TextStyle(
+              fontSize: 18.0,
+              color: compo.ingredient.isOwned
+                  ? Theme.of(context).primaryColor
+                  : Theme.of(context).dividerColor),
+        ),
+        Expanded(
+            child: Text(
+          compo.ingredient.name,
+          style: _getTextStyle(context, compo),
+        ))
+      ],
+    );
   }
 
   TextStyle _getTextStyle(BuildContext context, Composition compo) {
