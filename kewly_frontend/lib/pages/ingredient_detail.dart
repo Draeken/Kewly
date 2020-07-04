@@ -20,41 +20,40 @@ class IngredientDetail extends StatelessWidget {
     final displayMode =
         context.select<AppModel, DisplayMode>((AppModel a) => a.displayMode);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        actions: _getAppBarAction(context),
-      ),
-      body: Center(
-          child: ListView(scrollDirection: Axis.vertical, children: <Widget>[
-        Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            Hero(
-                tag: ingredient.heroTag + (heroKey ?? ''),
-                child: AspectRatio(
-                    aspectRatio: 1.618034,
-                    child: KewlyIngredientVisual(
-                      ingredient,
-                      width: null,
-                      height: null,
-                    ))),
-            FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  ingredient.name,
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            expandedHeight: 150.0,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text(ingredient.name,
                   style: Theme.of(context)
                       .textTheme
                       .headline4
-                      .copyWith(color: _getHeroTitleColor()),
-                ))
-          ],
-        ),
-        KewlyCategory(
-            title: 'Vous permet de préparer',
-            children: _getAvailableProducts(displayMode)),
-        KewlyCategory(
-            title: 'Est utilisé dans', children: _getAllProducts(displayMode)),
-      ])),
+                      .copyWith(color: _getHeroTitleColor())),
+              background: Hero(
+                  tag: ingredient.heroTag + (heroKey ?? ''),
+                  child: AspectRatio(
+                      aspectRatio: 1.618034,
+                      child: KewlyIngredientVisual(
+                        ingredient,
+                        width: null,
+                        height: null,
+                      ))),
+            ),
+            actions: _getAppBarAction(context),
+          ),
+          SliverList(
+              delegate: SliverChildListDelegate([
+            KewlyCategory(
+                title: 'Vous permet de préparer',
+                children: _getAvailableProducts(displayMode)),
+            KewlyCategory(
+                title: 'Est utilisé dans',
+                children: _getAllProducts(displayMode)),
+          ]))
+        ],
+      ),
       resizeToAvoidBottomInset: false,
     );
   }
