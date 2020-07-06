@@ -5,15 +5,38 @@ import 'package:kewly/components/kewly_ingredient_tile.dart';
 import 'package:kewly/components/kewly_product_detailed.dart';
 import 'package:kewly/components/kewly_product_tile.dart';
 import 'package:provider/provider.dart';
+import 'dart:developer' as developer;
 
 enum IngredientAction { Available, Unavailable, Ban }
 
-class IngredientDetail extends StatelessWidget {
+class IngredientDetail extends StatefulWidget {
   final Ingredient ingredient;
   final String heroKey;
 
-  IngredientDetail({Key key, @required this.ingredient, this.heroKey})
-      : super(key: key);
+  IngredientDetail({Key key, @required this.ingredient, this.heroKey}): super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _IngredientDetailState();
+}
+
+class _IngredientDetailState extends State<IngredientDetail> {
+  final _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _scrollController.addListener(() {
+      if (!_scrollController.position.atEdge) {
+        return;
+      }
+      if (_scrollController.position.pixels == 0) {
+        developer.log('TO TOP');
+      } else {
+        developer.log('TO BOTTOM');
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,22 +44,26 @@ class IngredientDetail extends StatelessWidget {
         context.select<AppModel, DisplayMode>((AppModel a) => a.displayMode);
     return Scaffold(
       body: CustomScrollView(
+        controller: _scrollController,
         slivers: <Widget>[
           SliverAppBar(
-            expandedHeight: 150.0,
+            expandedHeight: 200.0,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(ingredient.name,
+              centerTitle: true,
+              collapseMode: CollapseMode.none,
+              stretchModes: const [],
+              title: Text(widget.ingredient.name,
                   style: Theme.of(context)
                       .textTheme
                       .headline4
                       .copyWith(color: _getHeroTitleColor())),
               background: Hero(
-                  tag: ingredient.heroTag + (heroKey ?? ''),
+                  tag: widget.ingredient.heroTag + (widget.heroKey ?? ''),
                   child: AspectRatio(
                       aspectRatio: 1.618034,
                       child: KewlyIngredientVisual(
-                        ingredient,
+                        widget.ingredient,
                         width: null,
                         height: null,
                       ))),
@@ -59,7 +86,7 @@ class IngredientDetail extends StatelessWidget {
   }
 
   List<Widget> _getAppBarAction(BuildContext context) {
-    return ingredient.isOwned
+    return widget.ingredient.isOwned
         ? <Widget>[
             ActionChip(
                 label: Text(
@@ -115,27 +142,27 @@ class IngredientDetail extends StatelessWidget {
       final appModel = context.read<AppModel>();
       switch (action) {
         case IngredientAction.Available:
-          appModel.addOwnedIngredient(ingredient);
+          appModel.addOwnedIngredient(widget.ingredient);
           break;
         case IngredientAction.Ban:
-          appModel.addNoGoIngredient(ingredient);
+          appModel.addNoGoIngredient(widget.ingredient);
           break;
         case IngredientAction.Unavailable:
-          appModel.removeOwnedIngredient(ingredient);
+          appModel.removeOwnedIngredient(widget.ingredient);
       }
       Navigator.of(context).pop();
     };
   }
 
   Color _getHeroTitleColor() {
-    final luminance = ingredient.color.toColor().computeLuminance();
+    final luminance = widget.ingredient.color.toColor().computeLuminance();
     return luminance > 0.14 || luminance == 0.0
         ? Colors.black54
         : Colors.white70;
   }
 
   List<Widget> _getAllProducts(DisplayMode display) {
-    return ingredient.usedBy
+    return widget.ingredient.usedBy
         .map((product) => display == DisplayMode.Detailed
             ? KewlyProductDetailed(
                 product: product,
@@ -149,9 +176,9 @@ class IngredientDetail extends StatelessWidget {
   }
 
   List<Widget> _getAvailableProducts(DisplayMode display) {
-    return ingredient.usedBy
+    return widget.ingredient.usedBy
         .where((product) => product.composition.every((compo) =>
-            compo.ingredient == ingredient || compo.ingredient.isOwned))
+            compo.ingredient == widget.ingredient || compo.ingredient.isOwned))
         .map((product) => display == DisplayMode.Detailed
             ? KewlyProductDetailed(
                 product: product,
