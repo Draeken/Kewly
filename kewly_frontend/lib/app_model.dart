@@ -130,6 +130,10 @@ class Product implements Id {
       this.tags,
       this.capacity,
       this.glass});
+
+  get heroTag {
+    return name + id.toString();
+  }
 }
 
 class ColorRaw {

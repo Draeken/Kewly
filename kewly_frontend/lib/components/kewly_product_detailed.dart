@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kewly/components/kewly_product_badge.dart';
 import 'package:kewly/app_model.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:kewly/components/kewly_product_badge.dart';
+import 'package:kewly/pages/product_detail.dart';
 
 class ColumnWithOverflow extends StatelessWidget {
   final int maxItems;
@@ -27,8 +27,9 @@ class ColumnWithOverflow extends StatelessWidget {
 class KewlyProductDetailed extends StatefulWidget {
   final Product product;
   final bool displayBadge;
+  final String heroKey;
 
-  KewlyProductDetailed({Key key, this.product, this.displayBadge = false})
+  KewlyProductDetailed({Key key, this.product, this.displayBadge = false, this.heroKey})
       : super(key: key);
 
   @override
@@ -58,27 +59,28 @@ class _KewlyProductDetailed extends State<KewlyProductDetailed> {
     }
     return GestureDetector(
         onTap: _launchDrinkURL,
-        child: ColumnWithOverflow(
-            maxItems: 6,
-            children: <Widget>[
-                  Row(
-                    children: [
-                      Flexible(
-                          child: Text(
-                        '${widget.product.name}',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      )),
-                      if (widget.displayBadge)
-                        KewlyProductBadge(product: widget.product)
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                  ),
-                ] +
-                composition));
+        child: Hero(
+            tag: widget.product.heroTag + (widget.heroKey ?? ''),
+            child: ColumnWithOverflow(
+                maxItems: 6,
+                children: <Widget>[
+                      Row(
+                        children: [
+                          Flexible(
+                              child: Text(
+                            '${widget.product.name}',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          )),
+                          if (widget.displayBadge) KewlyProductBadge(product: widget.product)
+                        ],
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                      ),
+                    ] +
+                    composition)));
   }
 
   Row _compoToRow(Composition compo, BuildContext context) {
@@ -109,11 +111,10 @@ class _KewlyProductDetailed extends State<KewlyProductDetailed> {
   }
 
   void _launchDrinkURL() async {
-    var url = widget.product.link;
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProductDetail(product: widget.product, heroKey: widget.heroKey),
+        ));
   }
 }

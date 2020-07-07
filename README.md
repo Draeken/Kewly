@@ -49,6 +49,11 @@ Pinned product to try later, ~~they automatically disappear when user scroll dow
 ### Historic
 List all viewed product, ordered by last time seen.
 
+## Final product
+Adding online experience with sharing option would excessively increase complexity:
+- mix local DB for offline experience and online (exporting recommendation & general computation on a server)
+Should stay an offline experience with opportuniy to load/unload DB of product/ingredient ?
+
 ## Glass priority
 - 11
 - 20

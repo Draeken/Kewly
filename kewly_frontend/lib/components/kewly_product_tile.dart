@@ -5,15 +5,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:kewly/components/kewly_product_badge.dart';
+import 'package:kewly/pages/product_detail.dart';
 import 'package:kewly/util.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:kewly/app_model.dart';
 
 class KewlyProductTile extends StatefulWidget {
   final Product product;
   final bool displayBadge;
+  final String heroKey;
 
-  KewlyProductTile({Key key, this.product, this.displayBadge = false})
+  KewlyProductTile({Key key, this.product, this.displayBadge = false, this.heroKey})
       : super(key: key);
 
   @override
@@ -44,10 +45,10 @@ class _KewlyProductTile extends State<KewlyProductTile> {
           Container(
               decoration: BoxDecoration(
                   color: Theme.of(context).scaffoldBackgroundColor),
-              child: CustomPaint(
+              child: Hero(tag: widget.product.heroTag + (widget.heroKey ?? ''), child: CustomPaint(
                 size: Size(100, 100),
                 painter: ProductPainter(widget.product, _drawGlassDecor),
-              ),
+              )),
               height: 104.0,
               width: 104.0),
           Row(
@@ -75,12 +76,11 @@ class _KewlyProductTile extends State<KewlyProductTile> {
   }
 
   void _launchDrinkURL() async {
-    var url = widget.product.link;
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProductDetail(product: widget.product, heroKey: widget.heroKey),
+        ));
   }
 }
 
