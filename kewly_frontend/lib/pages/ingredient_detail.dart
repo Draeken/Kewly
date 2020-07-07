@@ -5,7 +5,6 @@ import 'package:kewly/components/kewly_ingredient_tile.dart';
 import 'package:kewly/components/kewly_product_detailed.dart';
 import 'package:kewly/components/kewly_product_tile.dart';
 import 'package:provider/provider.dart';
-import 'dart:developer' as developer;
 
 enum IngredientAction { Available, Unavailable, Ban }
 
@@ -13,7 +12,7 @@ class IngredientDetail extends StatefulWidget {
   final Ingredient ingredient;
   final String heroKey;
 
-  IngredientDetail({Key key, @required this.ingredient, this.heroKey}): super(key: key);
+  IngredientDetail({Key key, @required this.ingredient, this.heroKey}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _IngredientDetailState();
@@ -21,27 +20,34 @@ class IngredientDetail extends StatefulWidget {
 
 class _IngredientDetailState extends State<IngredientDetail> {
   final _scrollController = ScrollController();
+  var _isHeroExtended = true;
 
   @override
   void initState() {
     super.initState();
 
     _scrollController.addListener(() {
-      if (!_scrollController.position.atEdge) {
-        return;
-      }
-      if (_scrollController.position.pixels == 0) {
-        developer.log('TO TOP');
+      if (_scrollController.position.pixels > 100) {
+        // leave top
+        if (_isHeroExtended) {
+          setState(() {
+            _isHeroExtended = false;
+          });
+        }
       } else {
-        developer.log('TO BOTTOM');
+        // reached top
+        if (!_isHeroExtended) {
+          setState(() {
+            _isHeroExtended = true;
+          });
+        }
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final displayMode =
-        context.select<AppModel, DisplayMode>((AppModel a) => a.displayMode);
+    final displayMode = context.select<AppModel, DisplayMode>((AppModel a) => a.displayMode);
     return Scaffold(
       body: CustomScrollView(
         controller: _scrollController,
@@ -54,10 +60,8 @@ class _IngredientDetailState extends State<IngredientDetail> {
               collapseMode: CollapseMode.none,
               stretchModes: const [],
               title: Text(widget.ingredient.name,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline4
-                      .copyWith(color: _getHeroTitleColor())),
+                  style:
+                      Theme.of(context).textTheme.headline4.copyWith(color: _getHeroTitleColor())),
               background: Hero(
                   tag: widget.ingredient.heroTag + (widget.heroKey ?? ''),
                   child: AspectRatio(
@@ -73,11 +77,8 @@ class _IngredientDetailState extends State<IngredientDetail> {
           SliverList(
               delegate: SliverChildListDelegate([
             KewlyCategory(
-                title: 'Vous permet de préparer',
-                children: _getAvailableProducts(displayMode)),
-            KewlyCategory(
-                title: 'Est utilisé dans',
-                children: _getAllProducts(displayMode)),
+                title: 'Vous permet de préparer', children: _getAvailableProducts(displayMode)),
+            KewlyCategory(title: 'Est utilisé dans', children: _getAllProducts(displayMode)),
           ]))
         ],
       ),
@@ -86,58 +87,62 @@ class _IngredientDetailState extends State<IngredientDetail> {
   }
 
   List<Widget> _getAppBarAction(BuildContext context) {
-    return widget.ingredient.isOwned
-        ? <Widget>[
-            ActionChip(
-                label: Text(
-                  'épuisé',
-                  style: TextStyle(color: Colors.white),
-                ),
-                backgroundColor: Theme.of(context).accentColor,
-                avatar: Icon(
-                  Icons.clear,
-                  color: Colors.white,
-                ),
-                onPressed:
-                    _onAppBarAction(context, IngredientAction.Unavailable))
-          ]
-        : <Widget>[
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ActionChip(
-                    label: Text(
-                      'en stock',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Theme.of(context).accentColor,
-                    avatar: Icon(
-                      Icons.add,
-                      color: Colors.white,
-                    ),
-                    onPressed:
-                        _onAppBarAction(context, IngredientAction.Available)),
-                SizedBox(
-                  width: 8,
-                ),
-                ActionChip(
-                    label: Text(
-                      'banni',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Theme.of(context).accentColor,
-                    avatar: Icon(
-                      Icons.thumb_down,
-                      color: Colors.white,
-                    ),
-                    onPressed: _onAppBarAction(context, IngredientAction.Ban))
-              ],
+    final List<IngredientAction> actions = [
+      if (widget.ingredient.isOwned)
+        IngredientAction.Unavailable
+      else ...[IngredientAction.Available, IngredientAction.Ban]
+    ];
+    final List<Widget> widgets = [];
+    if (_isHeroExtended) {
+      for (var i = 0; i < actions.length; i++) {
+        final action = actions[i];
+        final visual = _ingredientActionToVisual(action);
+        widgets.addAll([
+          ActionChip(
+            label: Text(visual[0], style: TextStyle(color: Colors.black87)),
+            onPressed: _onAppBarAction(context, action),
+            backgroundColor: Colors.black26,
+            avatar: Icon(
+              visual[1],
+              color: Colors.black87,
+            ),
+          ),
+          if (i < actions.length - 1)
+            SizedBox(
+              width: 8,
             )
-          ];
+        ]);
+      }
+    } else {
+      widgets.add(PopupMenuButton<IngredientAction>(
+          onSelected: (action) => _onAppBarAction(context, action)(),
+          itemBuilder: (BuildContext context) => actions.map((action) {
+                final visual = _ingredientActionToVisual(action);
+                return PopupMenuItem<IngredientAction>(
+                    value: action,
+                    child: ListTile(
+                      leading: Icon(visual[1]),
+                      title: visual[0],
+                    ));
+              }).toList(growable: false)));
+    }
+    return widgets;
   }
 
-  void Function() _onAppBarAction(
-      BuildContext context, IngredientAction action) {
+  List<dynamic> _ingredientActionToVisual(IngredientAction action) {
+    switch (action) {
+      case IngredientAction.Available:
+        return ['en stock', Icons.add];
+      case IngredientAction.Unavailable:
+        return ['épuisé', Icons.clear];
+      case IngredientAction.Ban:
+        return ['banni', Icons.thumb_down];
+      default:
+        return ['error', Icons.error];
+    }
+  }
+
+  void Function() _onAppBarAction(BuildContext context, IngredientAction action) {
     return () {
       final appModel = context.read<AppModel>();
       switch (action) {
@@ -156,9 +161,7 @@ class _IngredientDetailState extends State<IngredientDetail> {
 
   Color _getHeroTitleColor() {
     final luminance = widget.ingredient.color.toColor().computeLuminance();
-    return luminance > 0.14 || luminance == 0.0
-        ? Colors.black54
-        : Colors.white70;
+    return luminance > 0.14 || luminance == 0.0 ? Colors.black54 : Colors.white70;
   }
 
   List<Widget> _getAllProducts(DisplayMode display) {
@@ -177,8 +180,8 @@ class _IngredientDetailState extends State<IngredientDetail> {
 
   List<Widget> _getAvailableProducts(DisplayMode display) {
     return widget.ingredient.usedBy
-        .where((product) => product.composition.every((compo) =>
-            compo.ingredient == widget.ingredient || compo.ingredient.isOwned))
+        .where((product) => product.composition
+            .every((compo) => compo.ingredient == widget.ingredient || compo.ingredient.isOwned))
         .map((product) => display == DisplayMode.Detailed
             ? KewlyProductDetailed(
                 product: product,
