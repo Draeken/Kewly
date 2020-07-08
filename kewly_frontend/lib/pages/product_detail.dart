@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kewly/app_model.dart';
+import 'package:kewly/components/kewly_ingredient_tile.dart';
 import 'package:kewly/components/kewly_product_tile.dart';
 
 enum ProductAction { Available, Unavailable, Ban }
@@ -67,7 +68,13 @@ class _ProductDetailState extends State<ProductDetail> {
           SliverList(
               delegate: SliverChildListDelegate([
             Text('composition'),
-            Text('liste des ingrédients'),
+            ListView(
+              children: widget.product.composition
+                  .map((e) => KewlyIngredientTile(
+                        ingredient: e.ingredient,
+                      ))
+                  .toList(growable: false),
+            ),
             Text('bouton : élaborer'),
           ]))
         ],
