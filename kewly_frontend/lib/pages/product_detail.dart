@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kewly/app_model.dart';
 import 'package:kewly/components/kewly_ingredient_tile.dart';
@@ -9,7 +10,8 @@ class ProductDetail extends StatefulWidget {
   final Product product;
   final String heroKey;
 
-  ProductDetail({Key key, @required this.product, this.heroKey}) : super(key: key);
+  ProductDetail({Key key, @required this.product, this.heroKey})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ProductDetailState();
@@ -56,24 +58,33 @@ class _ProductDetailState extends State<ProductDetail> {
               collapseMode: CollapseMode.none,
               stretchModes: const [],
               title: Text(widget.product.name,
-                  style: Theme.of(context).textTheme.headline4.copyWith(color: Colors.black54)),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline4
+                      .copyWith(color: Colors.black54)),
               background: Hero(
                   tag: widget.product.heroTag + (widget.heroKey ?? ''),
                   child: AspectRatio(
                       aspectRatio: 1.618034,
-                      child: CustomPaint(painter: ProductPainter(widget.product, true)))),
+                      child: CustomPaint(
+                          painter: ProductPainter(widget.product, true)))),
             ),
             actions: _getAppBarAction(context),
           ),
           SliverList(
               delegate: SliverChildListDelegate([
             Text('composition'),
-            ListView(
-              children: widget.product.composition
-                  .map((e) => KewlyIngredientTile(
-                        ingredient: e.ingredient,
-                      ))
-                  .toList(growable: false),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: 150),
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: widget.product.composition
+                    .map((e) => KewlyIngredientTile(
+                          ingredient: e.ingredient,
+                          heroKey: widget.product.heroTag,
+                        ))
+                    .toList(growable: false),
+              ),
             ),
             Text('bouton : élaborer'),
           ]))

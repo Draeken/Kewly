@@ -12,7 +12,8 @@ class IngredientDetail extends StatefulWidget {
   final Ingredient ingredient;
   final String heroKey;
 
-  IngredientDetail({Key key, @required this.ingredient, this.heroKey}) : super(key: key);
+  IngredientDetail({Key key, @required this.ingredient, this.heroKey})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _IngredientDetailState();
@@ -47,7 +48,8 @@ class _IngredientDetailState extends State<IngredientDetail> {
 
   @override
   Widget build(BuildContext context) {
-    final displayMode = context.select<AppModel, DisplayMode>((AppModel a) => a.displayMode);
+    final displayMode =
+        context.select<AppModel, DisplayMode>((AppModel a) => a.displayMode);
     return Scaffold(
       body: CustomScrollView(
         controller: _scrollController,
@@ -60,8 +62,10 @@ class _IngredientDetailState extends State<IngredientDetail> {
               collapseMode: CollapseMode.none,
               stretchModes: const [],
               title: Text(widget.ingredient.name,
-                  style:
-                      Theme.of(context).textTheme.headline4.copyWith(color: _getHeroTitleColor())),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline4
+                      .copyWith(color: _getHeroTitleColor())),
               background: Hero(
                   tag: widget.ingredient.heroTag + (widget.heroKey ?? ''),
                   child: AspectRatio(
@@ -77,8 +81,11 @@ class _IngredientDetailState extends State<IngredientDetail> {
           SliverList(
               delegate: SliverChildListDelegate([
             KewlyCategory(
-                title: 'Vous permet de préparer', children: _getAvailableProducts(displayMode)),
-            KewlyCategory(title: 'Est utilisé dans', children: _getAllProducts(displayMode)),
+                title: 'Vous permet de préparer',
+                children: _getAvailableProducts(displayMode)),
+            KewlyCategory(
+                title: 'Est utilisé dans',
+                children: _getAllProducts(displayMode)),
           ]))
         ],
       ),
@@ -142,7 +149,8 @@ class _IngredientDetailState extends State<IngredientDetail> {
     }
   }
 
-  void Function() _onAppBarAction(BuildContext context, IngredientAction action) {
+  void Function() _onAppBarAction(
+      BuildContext context, IngredientAction action) {
     return () {
       final appModel = context.read<AppModel>();
       switch (action) {
@@ -161,17 +169,21 @@ class _IngredientDetailState extends State<IngredientDetail> {
 
   Color _getHeroTitleColor() {
     final luminance = widget.ingredient.color.toColor().computeLuminance();
-    return luminance > 0.14 || luminance == 0.0 ? Colors.black54 : Colors.white70;
+    return luminance > 0.14 || luminance == 0.0
+        ? Colors.black54
+        : Colors.white70;
   }
 
   List<Widget> _getAllProducts(DisplayMode display) {
     return widget.ingredient.usedBy
         .map((product) => display == DisplayMode.Detailed
             ? KewlyProductDetailed(
+                heroKey: widget.ingredient.heroTag + 'all',
                 product: product,
                 displayBadge: true,
               )
             : KewlyProductTile(
+                heroKey: widget.ingredient.heroTag + 'all',
                 product: product,
                 displayBadge: true,
               ))
@@ -180,13 +192,16 @@ class _IngredientDetailState extends State<IngredientDetail> {
 
   List<Widget> _getAvailableProducts(DisplayMode display) {
     return widget.ingredient.usedBy
-        .where((product) => product.composition
-            .every((compo) => compo.ingredient == widget.ingredient || compo.ingredient.isOwned))
+        .where((product) => product.composition.every((compo) =>
+            compo.ingredient == widget.ingredient || compo.ingredient.isOwned))
         .map((product) => display == DisplayMode.Detailed
             ? KewlyProductDetailed(
+                heroKey: widget.ingredient.heroTag + 'available',
                 product: product,
               )
-            : KewlyProductTile(product: product))
+            : KewlyProductTile(
+                heroKey: widget.ingredient.heroTag + 'available',
+                product: product))
         .toList(growable: false);
   }
 }

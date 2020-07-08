@@ -15,24 +15,28 @@ class ProfilePage extends StatelessWidget {
         .toList(growable: false);
     final List<Widget> listChildren = [
       ProfileCategory(
+        'next',
         model.nextToTest,
         model.displayMode,
         'Les prochains à tester',
         maxCrossAxisCount: 2,
       ),
       ProfileCategory(
+        'exp',
         triedProducts.toList(growable: false),
         model.displayMode,
         'Mes expériences',
         maxCrossAxisCount: 2,
       ),
       ProfileCategory(
+        'review',
         toReview,
         model.displayMode,
         'À noter',
         maxCrossAxisCount: 1,
       ),
       ProfileCategory(
+        'histo',
         model.historic,
         model.displayMode,
         'Historique',
@@ -111,14 +115,15 @@ class NoGoCategory extends StatelessWidget {
 class ProfileCategory extends StatelessWidget with HandleDisplayMode {
   final List<Product> products;
   final DisplayMode displayMode;
+  final String heroKey;
   final String title;
   final int maxCrossAxisCount;
 
-  ProfileCategory(this.products, this.displayMode, this.title, {this.maxCrossAxisCount});
+  ProfileCategory(this.heroKey, this.products, this.displayMode, this.title, {this.maxCrossAxisCount});
 
   @override
   Widget build(BuildContext context) {
-    return getKewlyCategory(displayMode, this.title, products,
+    return getKewlyCategory(heroKey, displayMode, this.title, products,
         maxCrossAxisCount: maxCrossAxisCount);
   }
 }
