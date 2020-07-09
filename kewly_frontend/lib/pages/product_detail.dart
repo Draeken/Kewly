@@ -1,10 +1,53 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
+import 'dart:ui' as ui;
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:kewly/app_model.dart';
 import 'package:kewly/components/kewly_ingredient_tile.dart';
-import 'package:kewly/components/kewly_product_tile.dart';
+import 'package:kewly/components/product_paint.dart';
 
 enum ProductAction { Available, Unavailable, Ban }
+
+class HeroPainter extends CustomPainter {
+  final Product product;
+
+  HeroPainter(this.product);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final fillColor = ProductPaintHelper.getColor(product);
+    final myPaint = Paint()..style = PaintingStyle.fill;
+
+    if (fillColor.alpha < 255) {
+      final hslColor = HSLColor.fromColor(fillColor);
+      myPaint.shader = ui.Gradient.linear(Offset(0, 85), Offset(0, 15), [
+        fillColor,
+        hslColor.withLightness(max(0, hslColor.lightness - 0.15)).toColor()
+      ]);
+    } else {
+      myPaint.color = fillColor;
+    }
+
+    final glassPaths = GlassPath.getGlass(product.glass);
+    canvas.drawPaint(myPaint);
+    if (product.tags.contains(Tag.ice) &&
+        !product.tags.contains(Tag.hot) &&
+        !product.tags.contains(Tag.blended) &&
+        !product.tags.contains(Tag.filtered)) {
+      canvas.scale(size.longestSide / 100);
+      _drawIceCubes(canvas, size);
+    }
+  }
+
+  @override
+  bool shouldRepaint(HeroPainter oldDelegate) {
+    return false;
+  }
+
+  void _drawIceCubes(Canvas canvas, Size size) {
+    canvas.drawPicture(GlassEffect.ice);
+  }
+}
 
 class ProductDetail extends StatefulWidget {
   final Product product;
@@ -20,10 +63,13 @@ class ProductDetail extends StatefulWidget {
 class _ProductDetailState extends State<ProductDetail> {
   final _scrollController = ScrollController();
   var _isHeroExtended = true;
+  var _drawHeroPainter = false;
+  Timer _delayer;
 
   @override
   void initState() {
     super.initState();
+    _delayer = Timer(Duration(milliseconds: 300), _enableHeroPainter);
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels > 100) {
@@ -44,6 +90,12 @@ class _ProductDetailState extends State<ProductDetail> {
     });
   }
 
+  void _enableHeroPainter() {
+    setState(() {
+      _drawHeroPainter = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,8 +105,10 @@ class _ProductDetailState extends State<ProductDetail> {
           SliverAppBar(
             expandedHeight: 200.0,
             pinned: true,
+            backgroundColor: Colors.transparent,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
+
               collapseMode: CollapseMode.none,
               stretchModes: const [],
               title: Text(widget.product.name,
@@ -66,8 +120,12 @@ class _ProductDetailState extends State<ProductDetail> {
                   tag: widget.product.heroTag + (widget.heroKey ?? ''),
                   child: AspectRatio(
                       aspectRatio: 1.618034,
-                      child: CustomPaint(
-                          painter: ProductPainter(widget.product, true)))),
+                      child: _drawHeroPainter
+                          ? CustomPaint(painter: HeroPainter(widget.product))
+                          : Container(
+                              color: ProductPaintHelper.getColor(widget.product)
+                                  .withOpacity(0.8),
+                            ))),
             ),
             actions: _getAppBarAction(context),
           ),
