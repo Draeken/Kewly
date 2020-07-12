@@ -58,6 +58,11 @@ class ProductPainter extends CustomPainter {
 }
 
 class ProductPaintHelper {
+  static double getTotalQuantity(List<Composition> compos) => compos
+      .where((compo) => compo.eqQuantity != null || compo.unit == 'ml')
+      .fold(
+          0, (acc, Composition cur) => acc + (cur.eqQuantity ?? cur.quantity));
+
   static Color getColor(Product product) {
     final compos = product.composition
         .where((compo) => compo.eqQuantity != null || compo.unit == 'ml')
@@ -80,9 +85,10 @@ class ProductPaintHelper {
     return ui.Gradient.linear(Offset(0, 85), Offset(0, 15), colors, colorStops);
   }
 
-  static List<double> _getColorStops(Product product, List<Composition> compos) {
+  static List<double> _getColorStops(
+      Product product, List<Composition> compos) {
     final sum =
-    compos.fold(0, (acc, cur) => acc + (cur.eqQuantity ?? cur.quantity));
+        compos.fold(0, (acc, cur) => acc + (cur.eqQuantity ?? cur.quantity));
     final capacity = ((product.capacity ?? 0) > sum) ? product.capacity : sum;
     final quantities = compos
         .map((compo) => (compo.eqQuantity ?? compo.quantity) / capacity)

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui' as ui;
 import 'dart:math';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kewly/app_model.dart';
 import 'package:kewly/components/kewly_ingredient_tile.dart';
@@ -108,7 +109,6 @@ class _ProductDetailState extends State<ProductDetail> {
             backgroundColor: Colors.transparent,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
-
               collapseMode: CollapseMode.none,
               stretchModes: const [],
               title: Text(widget.product.name,
@@ -131,7 +131,7 @@ class _ProductDetailState extends State<ProductDetail> {
           ),
           SliverList(
               delegate: SliverChildListDelegate([
-            Text('composition'),
+            CompositionBar(widget.product.composition),
             ConstrainedBox(
               constraints: BoxConstraints(maxHeight: 150),
               child: ListView(
@@ -173,5 +173,31 @@ class _ProductDetailState extends State<ProductDetail> {
     return () {
       Navigator.of(context).pop();
     };
+  }
+}
+
+class CompositionBar extends StatelessWidget {
+  final List<Composition> compositions;
+  double totalQuantity;
+
+  CompositionBar(this.compositions) {
+    this.totalQuantity = ProductPaintHelper.getTotalQuantity(compositions);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: compositions
+          .map((compo) => Expanded(
+              flex: ((compo.quantity / totalQuantity) * 100).round(),
+              child: Container(
+                color:
+                    KewlyIngredientVisual.getIngredientColor(compo.ingredient),
+                child: Text("${compo.quantity} ${compo.unit}"),
+              )))
+          .toList(growable: false),
+    );
   }
 }

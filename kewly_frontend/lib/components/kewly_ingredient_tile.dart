@@ -18,12 +18,12 @@ class KewlyIngredientVisual extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
             border: Border.all(width: 1, color: Theme.of(context).dividerColor),
-            color: _getIngredientColor()),
+            color: getIngredientColor(ingredient)),
         height: height,
         width: width);
   }
 
-  _getIngredientColor() {
+  static getIngredientColor(Ingredient ingredient) {
     return ingredient.color
         .withLightness(min(ingredient.color.lightness + 0.2, 1.0))
         .toColor();
