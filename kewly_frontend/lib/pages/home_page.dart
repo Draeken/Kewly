@@ -10,6 +10,7 @@ import 'package:kewly/components/kewly_wrap_category.dart';
 import 'package:kewly/decorations.dart';
 import 'package:kewly/util.dart';
 import 'package:provider/provider.dart';
+import 'package:tuple/tuple.dart';
 
 enum TagKind { mustHave, mustNotHave }
 
@@ -180,7 +181,7 @@ class _HomeAppBar extends State<HomeAppBar> {
       if (search._productName.isEmpty) {
         _inputController.clear();
       }
-      return AppBar(
+      return SliverAppBar(
         leading: _getLeading(context, search._isSearchActive),
         actions: _getActions(context),
         title: TextField(
@@ -311,41 +312,33 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
         create: (_) => SearchModel(),
-        child: Column(children: <Widget>[
+        child: CustomScrollView(shrinkWrap: true, slivers: <Widget>[
           HomeAppBar(),
-          Flexible(child: Consumer2<AppModel, SearchModel>(
-              builder: (context, appModel, searchModel, _) {
-            final displayMode = appModel.displayMode;
-            final searchResult = searchModel.searchResult;
-            final matchingProducts =
-                _findMatchingProduct(appModel, searchResult);
-            final listChildren = <Widget>[
-              AllYourProducts(matchingProducts, displayMode),
-              ForAFewDollarsMore(matchingProducts, displayMode),
+          Selector2<AppModel, SearchModel, Tuple2<Tuple2<DisplayMode, List<Product>>, SearchModel>>(builder: (_, data, __) {
+            final matchingProducts = _findMatchingProduct(data.item1.item2, data.item2.searchResult);
+            final children = <Widget>[
+              AllYourProducts(matchingProducts, data.item1.item1),
+              ForAFewDollarsMore(matchingProducts, data.item1.item1),
             ];
-            if (searchModel._isSearchActive) {
-              listChildren.insertAll(0, [
+            if (data.item2._isSearchActive) {
+              children.insertAll(0, [
                 SearchCharacteristics(),
                 SearchComposition(),
               ]);
             }
-            if (searchModel.isDirty) {
-              if (!searchModel._isSearchActive) {
-                listChildren.insert(0, FilterStrip(searchResult));
+            if (data.item2.isDirty) {
+              if (!data.item2._isSearchActive) {
+                children.insert(0, FilterStrip(data.item2.searchResult));
               }
-              listChildren.add(AllProducts(matchingProducts, displayMode));
+              children.add(AllProducts(matchingProducts, data.item1.item1));
             }
-            return ListView(
-              padding: EdgeInsets.all(0),
-              scrollDirection: Axis.vertical,
-              children: listChildren,
-            );
-          }))
-        ]));
+            return SliverList(delegate: SliverChildListDelegate(children),);
+          }, selector: (_, appModel, searchModel) => Tuple2(Tuple2(appModel.displayMode, appModel.products), searchModel))
+        ],));
   }
 
-  List<Product> _findMatchingProduct(AppModel appModel, SearchResult search) {
-    Iterable<Product> matchingProducts = appModel.products ?? const [];
+  List<Product> _findMatchingProduct(List<Product> products, SearchResult search) {
+    Iterable<Product> matchingProducts = products ?? const [];
 
     if (search.ingredients.isNotEmpty) {
       matchingProducts = Set<Product>.from(
