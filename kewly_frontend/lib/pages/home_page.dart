@@ -15,31 +15,19 @@ import 'package:tuple/tuple.dart';
 enum TagKind { mustHave, mustNotHave }
 
 class SearchModel extends ChangeNotifier {
-  String _productName;
-  List<Ingredient> _ingredients;
-  List<String> _mustHave;
-  List<String> _mustNotHave;
-  bool _isSearchActive;
+  SearchResult searchResult;
+
+  // String _productName;
+  // List<Ingredient> _ingredients;
+  // List<String> _mustHave;
+  // List<String> _mustNotHave;
+  // bool _isSearchActive;
 
   SearchModel()
-      : _productName = "",
-        _ingredients = [],
-        _mustHave = [],
-        _mustNotHave = [],
-        _isSearchActive = false;
-
-  SearchResult get searchResult => SearchResult(
-      productName: _productName,
-      ingredients: _ingredients,
-      mustHave: _mustHave,
-      mustNotHave: _mustNotHave);
+      : searchResult = SearchResult.empty();
 
   void reset() {
-    _productName = "";
-    _ingredients = [];
-    _mustHave = [];
-    _mustNotHave = [];
-    _isSearchActive = false;
+    searchResult = SearchResult.empty();
     notifyListeners();
   }
 
@@ -65,8 +53,8 @@ class SearchModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateTagWithOpposed(
-      String mainTag, String opposedTag, bool add, TagKind kind) {
+  void updateTagWithOpposed(String mainTag, String opposedTag, bool add,
+      TagKind kind) {
     _updateTag(mainTag, add, kind);
     if (add) {
       _updateTag(opposedTag, !add, kind);
@@ -119,14 +107,11 @@ class SearchModel extends ChangeNotifier {
     -
  */
 
-class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
+class HomeAppBar extends StatefulWidget {
   const HomeAppBar({Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _HomeAppBar();
-
-  @override
-  Size get preferredSize => Size.fromHeight(56);
 }
 
 class _HomeAppBar extends State<HomeAppBar> {
@@ -157,10 +142,10 @@ class _HomeAppBar extends State<HomeAppBar> {
   _getLeading(BuildContext context, bool isSearchActive) {
     return isSearchActive
         ? IconButton(
-            icon: const Icon(Icons.close),
-            tooltip: 'Close search',
-            onPressed: () => _closeAndResetSearch(context),
-          )
+      icon: const Icon(Icons.close),
+      tooltip: 'Close search',
+      onPressed: () => _closeAndResetSearch(context),
+    )
         : null;
   }
 
@@ -184,6 +169,7 @@ class _HomeAppBar extends State<HomeAppBar> {
       return SliverAppBar(
         leading: _getLeading(context, search._isSearchActive),
         actions: _getActions(context),
+        pinned: true,
         title: TextField(
           controller: _inputController,
           onTap: () => _openSearch(context),
@@ -192,7 +178,7 @@ class _HomeAppBar extends State<HomeAppBar> {
           textInputAction: TextInputAction.search,
           decoration: searchDecoration,
         ),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
       );
     });
   }
@@ -205,19 +191,24 @@ class _HomeAppBar extends State<HomeAppBar> {
         case DisplayMode.Grid:
           return Icon(
             Icons.view_list,
-            color: Theme.of(context).accentColor,
+            color: Theme
+                .of(context)
+                .accentColor,
           );
         case DisplayMode.Detailed:
           return Icon(
             Icons.view_module,
-            color: Theme.of(context).accentColor,
+            color: Theme
+                .of(context)
+                .accentColor,
           );
       }
     }();
     return [
       IconButton(
           icon: icon,
-          onPressed: () => appModel.displayMode = mode == DisplayMode.Detailed
+          onPressed: () =>
+          appModel.displayMode = mode == DisplayMode.Detailed
               ? DisplayMode.Grid
               : DisplayMode.Detailed)
     ];
@@ -235,20 +226,23 @@ class SearchComposition extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer2<AppModel, SearchModel>(
         builder: (BuildContext context, AppModel app, SearchModel search, _) {
-      final Iterable<KewlyFilterChip> selected = search._ingredients.map(
-          (ingredient) => KewlyFilterChip(ingredient.name, true,
-              () => search.updateIngredient(ingredient, false)));
-      final Iterable<KewlyFilterChip> ingredients = app.ingredients
-          .where((ingredient) =>
-              containsIgnoreCase(ingredient.name, search._productName) &&
+          final Iterable<KewlyFilterChip> selected = search._ingredients.map(
+                  (ingredient) =>
+                  KewlyFilterChip(ingredient.name, true,
+                          () => search.updateIngredient(ingredient, false)));
+          final Iterable<KewlyFilterChip> ingredients = app.ingredients
+              .where((ingredient) =>
+          containsIgnoreCase(ingredient.name, search._productName) &&
               !search._ingredients.contains(ingredient))
-          .take(30)
-          .map((ingredient) => KewlyFilterChip(ingredient.name, false,
-              () => search.updateIngredient(ingredient, true)));
-      return KewlyWrapCategory(
-          title: 'Composition',
-          children: selected.followedBy(ingredients).toList(growable: false));
-    });
+              .take(30)
+              .map((ingredient) =>
+              KewlyFilterChip(ingredient.name, false,
+                      () => search.updateIngredient(ingredient, true)));
+          return KewlyWrapCategory(
+              title: 'Composition',
+              children: selected.followedBy(ingredients).toList(
+                  growable: false));
+        });
   }
 }
 
@@ -257,34 +251,39 @@ class SearchCharacteristics extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<SearchModel>(
         builder: (BuildContext context, SearchModel model, _) {
-      final withAlcohol = model._mustHave.contains(Tag.alcohol);
-      final withoutAlcohol = model._mustNotHave.contains(Tag.alcohol);
-      final hot = model._mustHave.contains(Tag.hot);
-      final iced = model._mustHave.contains(Tag.ice);
-      final sparkling = model._mustHave.contains(Tag.sparkling);
-      final List<KewlyFilterChip> tags = [
-        KewlyFilterChip('Avec Alcool', withAlcohol,
-            () => model.updateTag(Tag.alcohol, !withAlcohol, TagKind.mustHave)),
-        KewlyFilterChip(
-            'Sans Alcool',
-            withoutAlcohol,
-            () => model.updateTag(
-                Tag.alcohol, !withoutAlcohol, TagKind.mustNotHave)),
-        KewlyFilterChip(
-            'Chaud',
-            hot,
-            () => model.updateTagWithOpposed(
-                Tag.hot, Tag.ice, !hot, TagKind.mustHave)),
-        KewlyFilterChip(
-            'Glacé',
-            iced,
-            () => model.updateTagWithOpposed(
-                Tag.ice, Tag.hot, !iced, TagKind.mustHave)),
-        KewlyFilterChip('Pétillant', sparkling,
-            () => model.updateTag(Tag.sparkling, !sparkling, TagKind.mustHave))
-      ];
-      return KewlyWrapCategory(title: 'Caractéristiques', children: tags);
-    });
+          final withAlcohol = model._mustHave.contains(Tag.alcohol);
+          final withoutAlcohol = model._mustNotHave.contains(Tag.alcohol);
+          final hot = model._mustHave.contains(Tag.hot);
+          final iced = model._mustHave.contains(Tag.ice);
+          final sparkling = model._mustHave.contains(Tag.sparkling);
+          final List<KewlyFilterChip> tags = [
+            KewlyFilterChip('Avec Alcool', withAlcohol,
+                    () => model.updateTag(
+                    Tag.alcohol, !withAlcohol, TagKind.mustHave)),
+            KewlyFilterChip(
+                'Sans Alcool',
+                withoutAlcohol,
+                    () =>
+                    model.updateTag(
+                        Tag.alcohol, !withoutAlcohol, TagKind.mustNotHave)),
+            KewlyFilterChip(
+                'Chaud',
+                hot,
+                    () =>
+                    model.updateTagWithOpposed(
+                        Tag.hot, Tag.ice, !hot, TagKind.mustHave)),
+            KewlyFilterChip(
+                'Glacé',
+                iced,
+                    () =>
+                    model.updateTagWithOpposed(
+                        Tag.ice, Tag.hot, !iced, TagKind.mustHave)),
+            KewlyFilterChip('Pétillant', sparkling,
+                    () => model.updateTag(
+                    Tag.sparkling, !sparkling, TagKind.mustHave))
+          ];
+          return KewlyWrapCategory(title: 'Caractéristiques', children: tags);
+        });
   }
 }
 
@@ -305,6 +304,13 @@ class SearchResult {
       mustNotHave: const [],
     );
   }
+
+  get isDirty {
+    return _productName != "" ||
+        _ingredients.isNotEmpty ||
+        _mustHave.isNotEmpty ||
+        _mustNotHave.isNotEmpty;
+  }
 }
 
 class HomePage extends StatelessWidget {
@@ -312,42 +318,59 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
         create: (_) => SearchModel(),
-        child: CustomScrollView(shrinkWrap: true, slivers: <Widget>[
-          HomeAppBar(),
-          Selector2<AppModel, SearchModel, Tuple2<Tuple2<DisplayMode, List<Product>>, SearchModel>>(builder: (_, data, __) {
-            final matchingProducts = _findMatchingProduct(data.item1.item2, data.item2.searchResult);
-            final children = <Widget>[
-              AllYourProducts(matchingProducts, data.item1.item1),
-              ForAFewDollarsMore(matchingProducts, data.item1.item1),
-            ];
-            if (data.item2._isSearchActive) {
-              children.insertAll(0, [
-                SearchCharacteristics(),
-                SearchComposition(),
-              ]);
-            }
-            if (data.item2.isDirty) {
-              if (!data.item2._isSearchActive) {
-                children.insert(0, FilterStrip(data.item2.searchResult));
-              }
-              children.add(AllProducts(matchingProducts, data.item1.item1));
-            }
-            return SliverList(delegate: SliverChildListDelegate(children),);
-          }, selector: (_, appModel, searchModel) => Tuple2(Tuple2(appModel.displayMode, appModel.products), searchModel))
-        ],));
+        child: CustomScrollView(
+          slivers: <Widget>[
+            HomeAppBar(),
+            Selector2<AppModel,
+                SearchModel,
+                Tuple2<Tuple2<DisplayMode, List<Product>>,
+                    Tuple3<SearchResult, bool, bool>>>(
+                selector: (_, appModel, searchModel) =>
+                    Tuple2(
+                        Tuple2(appModel.displayMode, appModel.products),
+                        Tuple3(searchModel.searchResult,
+                            searchModel._isSearchActive, searchModel.isDirty)),
+                builder: (_, data, __) {
+                  final matchingProducts = _findMatchingProduct(
+                      data.item1.item2, data.item2.item1);
+                  final children = <Widget>[
+                    AllYourProducts(matchingProducts, data.item1.item1),
+                    ForAFewDollarsMore(matchingProducts, data.item1.item1),
+                  ];
+                  if (data.item2.item2) {
+                    children.insertAll(0, [
+                      SearchCharacteristics(),
+                      SearchComposition(),
+                    ]);
+                  }
+                  if (data.item2.item3) {
+                    if (!data.item2.item2) {
+                      children.insert(0, FilterStrip(data.item2.item1));
+                    }
+                    children
+                        .add(AllProducts(matchingProducts, data.item1.item1));
+                  }
+                  return SliverList(
+                    delegate: SliverChildListDelegate(children),
+                  );
+                })
+          ],
+        ));
   }
 
-  List<Product> _findMatchingProduct(List<Product> products, SearchResult search) {
+  List<Product> _findMatchingProduct(List<Product> products,
+      SearchResult search) {
     Iterable<Product> matchingProducts = products ?? const [];
 
     if (search.ingredients.isNotEmpty) {
       matchingProducts = Set<Product>.from(
-              search.ingredients.expand((ingredient) => ingredient.usedBy))
+          search.ingredients.expand((ingredient) => ingredient.usedBy))
           .toList(growable: false);
     }
     if (search.productName != "") {
       matchingProducts = matchingProducts.where(
-          (product) => containsIgnoreCase(product.name, search.productName));
+              (product) =>
+              containsIgnoreCase(product.name, search.productName));
     }
     if (search.mustHave.isNotEmpty) {
       matchingProducts = matchingProducts.where((product) =>
@@ -355,7 +378,7 @@ class HomePage extends StatelessWidget {
     }
     if (search.mustNotHave.isNotEmpty) {
       matchingProducts = matchingProducts.where((product) =>
-          !search.mustNotHave.any((tag) => product.tags.contains(tag)));
+      !search.mustNotHave.any((tag) => product.tags.contains(tag)));
     }
     return matchingProducts.toList(growable: false);
   }
@@ -389,7 +412,7 @@ class FilterStrip extends StatelessWidget {
     final tags = search.mustHave
         .map((s) => UpdateTagObj(s, TagKind.mustHave))
         .followedBy(search.mustNotHave
-            .map((s) => UpdateTagObj(s, TagKind.mustNotHave)));
+        .map((s) => UpdateTagObj(s, TagKind.mustNotHave)));
     final compo = search.ingredients.map(_ingredientToChip(context));
     return tags
         .map(_tagToChip(context))
@@ -398,26 +421,32 @@ class FilterStrip extends StatelessWidget {
   }
 
   Chip Function(Ingredient) _ingredientToChip(BuildContext context) =>
-      (Ingredient ingredient) => Chip(
+          (Ingredient ingredient) =>
+          Chip(
             label: Text(ingredient.name),
-            onDeleted: () => Provider.of<SearchModel>(context, listen: false)
-                .updateIngredient(ingredient, false),
+            onDeleted: () =>
+                Provider.of<SearchModel>(context, listen: false)
+                    .updateIngredient(ingredient, false),
             backgroundColor: Colors.white,
             shape: _getChipShape(),
           );
 
   Chip Function(UpdateTagObj) _tagToChip(BuildContext context) =>
-      (UpdateTagObj tagObj) => Chip(
-          label: Text((tagObj.kind == TagKind.mustHave ? 'With ' : 'Without ') +
-              tagObj.tag),
-          onDeleted: () => Provider.of<SearchModel>(context, listen: false)
-              .updateTag(tagObj.tag, false, tagObj.kind),
-          backgroundColor: Colors.white,
-          shape: _getChipShape());
+          (UpdateTagObj tagObj) =>
+          Chip(
+              label: Text(
+                  (tagObj.kind == TagKind.mustHave ? 'With ' : 'Without ') +
+                      tagObj.tag),
+              onDeleted: () =>
+                  Provider.of<SearchModel>(context, listen: false)
+                      .updateTag(tagObj.tag, false, tagObj.kind),
+              backgroundColor: Colors.white,
+              shape: _getChipShape());
 
-  ShapeBorder _getChipShape() => RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(15),
-      side: BorderSide(width: 1.5, color: Colors.black38));
+  ShapeBorder _getChipShape() =>
+      RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+          side: BorderSide(width: 1.5, color: Colors.black38));
 }
 
 class AllYourProducts extends StatelessWidget with HandleDisplayMode {
@@ -430,7 +459,7 @@ class AllYourProducts extends StatelessWidget with HandleDisplayMode {
   Widget build(BuildContext context) {
     var ownedProducts = products
         .where((product) =>
-            product.composition.every((compo) => compo.ingredient.isOwned))
+        product.composition.every((compo) => compo.ingredient.isOwned))
         .toList(growable: false);
     return getKewlyCategory(
         'yours', displayMode, 'Vos boissons', ownedProducts);
@@ -467,12 +496,12 @@ class ForAFewDollarsMore extends StatelessWidget {
   Widget build(BuildContext context) {
     List<ProductWithMissing> productWithMissing = products
         .map((product) {
-          var missing = product.composition
-              .where((compo) => !compo.ingredient.isOwned)
-              .map((compo) => compo.ingredient)
-              .toList(growable: false);
-          return ProductWithMissing(missing: missing, product: product);
-        })
+      var missing = product.composition
+          .where((compo) => !compo.ingredient.isOwned)
+          .map((compo) => compo.ingredient)
+          .toList(growable: false);
+      return ProductWithMissing(missing: missing, product: product);
+    })
         .where((ProductWithMissing pwm) => pwm.missing.length == 1)
         .toList(growable: false);
     productWithMissing.sort((a, b) {
@@ -522,7 +551,7 @@ mixin HandleDisplayMode {
       title: title,
       itemCount: products.length,
       builder:
-          displayMode == DisplayMode.Detailed ? builderDetailed : builderTile,
+      displayMode == DisplayMode.Detailed ? builderDetailed : builderTile,
       maxCrossAxisCount: maxCrossAxisCount,
     );
   }
