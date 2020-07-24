@@ -21,7 +21,7 @@ class SearchModel extends ChangeNotifier {
   // List<Ingredient> _ingredients;
   // List<String> _mustHave;
   // List<String> _mustNotHave;
-  // bool _isSearchActive;
+  bool _isSearchActive;
 
   SearchModel()
       : searchResult = SearchResult.empty();
@@ -32,10 +32,7 @@ class SearchModel extends ChangeNotifier {
   }
 
   get isDirty {
-    return _productName != "" ||
-        _ingredients.isNotEmpty ||
-        _mustHave.isNotEmpty ||
-        _mustNotHave.isNotEmpty;
+    return searchResult.isDirty;
   }
 
   void updateSearchState(bool isActive) {
@@ -44,7 +41,7 @@ class SearchModel extends ChangeNotifier {
   }
 
   void updateProductName(String productName) {
-    _productName = productName;
+    this.searchResult = searchResult.copyWith(productName: productName);
     notifyListeners();
   }
 
@@ -63,39 +60,46 @@ class SearchModel extends ChangeNotifier {
   }
 
   bool containTag(String tag) {
-    return _mustNotHave.contains(tag) || _mustHave.contains(tag);
+    return searchResult.mustNotHave.contains(tag) || searchResult.mustHave.contains(tag);
   }
 
   void updateIngredient(Ingredient ingredient, bool add) {
+    final ingredients = searchResult.ingredients;
+    String productName = searchResult.productName;
+
     if (add) {
-      _ingredients.add(ingredient);
+      ingredients.add(ingredient);
 
       // user searched for an ingredient, not a product name
-      if (containsIgnoreCase(ingredient.name, _productName)) {
-        _productName = "";
+      if (containsIgnoreCase(ingredient.name, productName)) {
+        productName = "";
       }
     } else {
-      _ingredients.remove(ingredient);
+      ingredients.remove(ingredient);
     }
+    this.searchResult = searchResult.copyWith(ingredients: ingredients, productName: productName);
     notifyListeners();
   }
 
   void _updateTag(String tag, bool add, TagKind kind) {
+    final mustHave = searchResult.mustHave;
+    final mustNotHave = searchResult.mustNotHave;
     if (kind == TagKind.mustHave) {
       if (add) {
-        _mustHave.add(tag);
-        _mustNotHave.remove(tag);
+        mustHave.add(tag);
+        mustNotHave.remove(tag);
       } else {
-        _mustHave.remove(tag);
+        mustHave.remove(tag);
       }
     } else {
       if (add) {
-        _mustNotHave.add(tag);
-        _mustHave.remove(tag);
+        mustNotHave.add(tag);
+        mustHave.remove(tag);
       } else {
-        _mustNotHave.remove(tag);
+        mustNotHave.remove(tag);
       }
     }
+    this.searchResult = searchResult.copyWith(mustHave: mustHave, mustNotHave: mustNotHave);
   }
 }
 
@@ -163,7 +167,7 @@ class _HomeAppBar extends State<HomeAppBar> {
   @override
   Widget build(BuildContext context) {
     return Consumer<SearchModel>(builder: (context, search, _) {
-      if (search._productName.isEmpty) {
+      if (search.searchResult.productName.isEmpty) {
         _inputController.clear();
       }
       return SliverAppBar(
@@ -226,14 +230,15 @@ class SearchComposition extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer2<AppModel, SearchModel>(
         builder: (BuildContext context, AppModel app, SearchModel search, _) {
-          final Iterable<KewlyFilterChip> selected = search._ingredients.map(
+          final res = search.searchResult;
+          final Iterable<KewlyFilterChip> selected = res.ingredients.map(
                   (ingredient) =>
                   KewlyFilterChip(ingredient.name, true,
                           () => search.updateIngredient(ingredient, false)));
           final Iterable<KewlyFilterChip> ingredients = app.ingredients
               .where((ingredient) =>
-          containsIgnoreCase(ingredient.name, search._productName) &&
-              !search._ingredients.contains(ingredient))
+          containsIgnoreCase(ingredient.name, res.productName) &&
+              !res.ingredients.contains(ingredient))
               .take(30)
               .map((ingredient) =>
               KewlyFilterChip(ingredient.name, false,
@@ -251,11 +256,12 @@ class SearchCharacteristics extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<SearchModel>(
         builder: (BuildContext context, SearchModel model, _) {
-          final withAlcohol = model._mustHave.contains(Tag.alcohol);
-          final withoutAlcohol = model._mustNotHave.contains(Tag.alcohol);
-          final hot = model._mustHave.contains(Tag.hot);
-          final iced = model._mustHave.contains(Tag.ice);
-          final sparkling = model._mustHave.contains(Tag.sparkling);
+          final result = model.searchResult;
+          final withAlcohol = result.mustHave.contains(Tag.alcohol);
+          final withoutAlcohol = result.mustNotHave.contains(Tag.alcohol);
+          final hot = result.mustHave.contains(Tag.hot);
+          final iced = result.mustHave.contains(Tag.ice);
+          final sparkling = result.mustHave.contains(Tag.sparkling);
           final List<KewlyFilterChip> tags = [
             KewlyFilterChip('Avec Alcool', withAlcohol,
                     () => model.updateTag(
@@ -305,11 +311,20 @@ class SearchResult {
     );
   }
 
+  copyWith({ String productName, List<Ingredient> ingredients, List<String> mustHave, List<String> mustNotHave}) {
+    return SearchResult(
+      productName: productName ?? this.productName,
+      ingredients: ingredients ?? this.ingredients,
+      mustHave: mustHave ?? this.mustHave,
+      mustNotHave: mustNotHave ?? this.mustNotHave
+    );
+  }
+
   get isDirty {
-    return _productName != "" ||
-        _ingredients.isNotEmpty ||
-        _mustHave.isNotEmpty ||
-        _mustNotHave.isNotEmpty;
+    return productName != "" ||
+        ingredients.isNotEmpty ||
+        mustHave.isNotEmpty ||
+        mustNotHave.isNotEmpty;
   }
 }
 
