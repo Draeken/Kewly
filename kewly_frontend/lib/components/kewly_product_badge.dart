@@ -21,12 +21,16 @@ class ProductBadgePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    final missingIngredients = _getMissingIngredientCount();
+    if (missingIngredients == "0") {
+      return;
+    }
     final myPaint = Paint()..style = PaintingStyle.fill;
     myPaint.color = Colors.red[700];
     canvas.drawPath(computeBadgePath(size), myPaint);
 
     final TextPainter textPainter = TextPainter(
-      text: TextSpan(text: _getNotOwnedIngredientCount(), style: TextStyle(color: Colors.white.withOpacity(0.9))),
+      text: TextSpan(text: missingIngredients, style: TextStyle(color: Colors.white.withOpacity(0.9))),
           textAlign: TextAlign.center,
       textDirection: TextDirection.ltr
     )..layout(maxWidth: size.width / 1.5);
@@ -46,7 +50,7 @@ class ProductBadgePainter extends CustomPainter {
       ..close();
   }
 
-  String _getNotOwnedIngredientCount() {
+  String _getMissingIngredientCount() {
     return product.composition
         .fold(0, (prev, cur) => prev + (cur.ingredient.isOwned ? 0 : 1))
         .toString();
