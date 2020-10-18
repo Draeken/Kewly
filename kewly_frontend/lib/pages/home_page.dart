@@ -21,7 +21,7 @@ class SearchModel extends ChangeNotifier {
   // List<Ingredient> _ingredients;
   // List<String> _mustHave;
   // List<String> _mustNotHave;
-  bool _isSearchActive;
+  bool _isSearchActive = false;
 
   SearchModel()
       : searchResult = SearchResult.empty();
@@ -305,9 +305,9 @@ class SearchResult {
   static SearchResult empty() {
     return SearchResult(
       productName: "",
-      ingredients: const [],
-      mustHave: const [],
-      mustNotHave: const [],
+      ingredients: [],
+      mustHave: [],
+      mustNotHave: [],
     );
   }
 
